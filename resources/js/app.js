@@ -1,9 +1,12 @@
+import 'jquery'
 
 require('./bootstrap');
 
 window.Vue = require('vue');
 
-Vue.component('yandex-refresh-token', require('./components/Yandex/RefreshToken.vue'));
+import YandexRefreshToken from './components/Yandex/RefreshToken.vue';
+
+Vue.component('yandex-refresh-token', YandexRefreshToken);
 
 
 const app = new Vue({

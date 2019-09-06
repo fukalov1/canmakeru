@@ -8,9 +8,13 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <yandex-refresh-token>
-
-            </yandex-refresh-token>
+            @if(!$YANDEX_CLIENT_ID)
+             <span class="h3 danger">
+                Заполните данные для доступа к Яндекс.Диску для приложений в Конфигурации сайта
+            </span>
+            @else
+                <button type="button" id="getToken">запустить</button>
+            @endif
         </div>
     </div>
 </div>

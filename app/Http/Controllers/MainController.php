@@ -27,11 +27,11 @@ class MainController extends Controller
     public function index() {
 
 
-        $client = new OAuthClient(env('YANDEX_CLIENT_ID'), env('YANDEX_PASS'));
+        $client = new OAuthClient(config('YANDEX_CLIENT_ID'), config('YANDEX_PASS'));
 
             try {
     // осуществляем обмен
-            $client->requestAccessToken('9531932');
+            $client->requestAccessToken('2997989');
             } catch (AuthRequestException $ex) {
                 echo $ex->getMessage();
             }

@@ -18,4 +18,6 @@
  *
  */
 
+//Admin::js('/js/app.js');
+
 Encore\Admin\Form::forget(['map', 'editor']);
