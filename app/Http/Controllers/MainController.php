@@ -31,7 +31,7 @@ class MainController extends Controller
 
             try {
     // осуществляем обмен
-            $client->requestAccessToken('2997989');
+            $client->requestAccessToken('1817294');
             } catch (AuthRequestException $ex) {
                 echo $ex->getMessage();
             }

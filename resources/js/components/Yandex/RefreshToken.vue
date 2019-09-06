@@ -4,7 +4,7 @@
         <span class="h3 danger" v-if="!clientId">
             Заполните данные для доступа к Яндекс.Диску для приложений в Конфигурации сайта
         </span>
-        <button v-if="!processing" type="button">запустить</button>
+        <button type="button" id="refreshToken">запустить</button>
         <span class="h4" v-else>
             {{ message }}
         </span>

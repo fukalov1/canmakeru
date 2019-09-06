@@ -1,3 +1,4 @@
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="col-lg-12">
     <div class="row">
         <div class="col-lg-12">
@@ -13,7 +14,18 @@
                 Заполните данные для доступа к Яндекс.Диску для приложений в Конфигурации сайта
             </span>
             @else
-                <button type="button" id="getToken">запустить</button>
+                <input type="hidden" id="clientId" value="{{$YANDEX_CLIENT_ID}}"/>
+                {{--<a href="https://oauth.yandex.ru/authorize?response_type=code&client_id={{$YANDEX_CLIENT_ID}}">получить</a>--}}
+                <ol>
+                    <li>
+                        <button type="button" id="getCode">получить код</button>
+                    </li>
+                    <li>
+                        <input type="text" id="code" placeholder="введите код">
+                        <button type="button" id="refreshToken">обновить</button>
+                    </li>
+                </ol>
+
             @endif
         </div>
     </div>
