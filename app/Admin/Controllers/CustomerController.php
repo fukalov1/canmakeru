@@ -15,7 +15,7 @@ class CustomerController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Customer';
+    protected $title = 'Клиенты компании';
 
     /**
      * Make a grid builder.
@@ -25,11 +25,27 @@ class CustomerController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Customer);
+        $grid->filter(function($filter){
 
-        $grid->column('id', __('Id'));
-        $grid->column('code', __('Code'));
-        $grid->column('name', __('Name'));
-        $grid->column('enabled', __('Enabled'));
+            // Remove the default id filter
+            $filter->disableIdFilter();
+
+            // Add a column filter
+            $filter->like('name', 'ФИО');
+            $filter->equal('enabled')->radio([
+                ''   => 'Все',
+                0    => 'Не активны',
+                1    => 'Активны',
+            ]);
+
+        });
+        $grid->column('id', __('ID'));
+        $grid->column('code', __('Код'));
+//        $grid->column('name', __('ФИО'));
+        $grid->column('ФИО')->display(function () {
+            return '<a href="/admin/protokols?set='.$this->id.'" title="Протоколы клиента '.$this->name.'">'.$this->name.'</a>';
+        });
+        $grid->column('enabled', __('Активен'));
 
         return $grid;
     }
@@ -45,9 +61,9 @@ class CustomerController extends AdminController
         $show = new Show(Customer::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('code', __('Code'));
-        $show->field('name', __('Name'));
-        $show->field('enabled', __('Enabled'));
+        $show->field('code', __('Код'));
+        $show->field('name', __('ФИО'));
+        $show->field('enabled', __('Активен'));
 
         return $show;
     }
@@ -61,9 +77,9 @@ class CustomerController extends AdminController
     {
         $form = new Form(new Customer);
 
-        $form->text('code', __('Code'));
-        $form->text('name', __('Name'));
-        $form->number('enabled', __('Enabled'))->default(1);
+        $form->text('code', __('Код'));
+        $form->text('name', __('ФИО'));
+        $form->switch('enabled', __('Активен'))->default(1);
 
         return $form;
     }

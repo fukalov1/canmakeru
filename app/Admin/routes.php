@@ -13,7 +13,7 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('admin.home');
     $router->post('/refresh_token', 'HomeController@refreshToken');
     $router->resource('customers', CustomerController::class);
-    $router->resource('protokols', ProtokolController::class);
+    $router->resource('protokols', ProtokolController::class)->middleware('set_customer');;
 
 
 });

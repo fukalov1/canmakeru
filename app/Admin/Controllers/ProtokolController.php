@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Customer;
 use App\Protokol;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -15,7 +16,10 @@ class ProtokolController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Protokol';
+
+    protected $customer='';
+    protected $title = 'Протоколы';
+
 
     /**
      * Make a grid builder.
@@ -24,7 +28,12 @@ class ProtokolController extends AdminController
      */
     protected function grid()
     {
+
+        $this->getHeader();
+
         $grid = new Grid(new Protokol);
+
+        $grid->model()->where('customer_id',session('customer_id'));
 
         $grid->column('id', __('Id'));
         $grid->column('protokol_num', __('Protokol num'));
@@ -32,7 +41,7 @@ class ProtokolController extends AdminController
         $grid->column('protokol_photo', __('Protokol photo'));
         $grid->column('protokol_photo1', __('Protokol photo1'));
         $grid->column('meter_photo', __('Meter photo'));
-        $grid->column('customer_id', __('Customer id'));
+//        $grid->column('customer_id', __('Customer id'));
         $grid->column('updated_dt', __('Updated dt'));
         $grid->column('lat', __('Lat'));
         $grid->column('lng', __('Lng'));
@@ -57,7 +66,7 @@ class ProtokolController extends AdminController
         $show->field('protokol_photo', __('Protokol photo'));
         $show->field('protokol_photo1', __('Protokol photo1'));
         $show->field('meter_photo', __('Meter photo'));
-        $show->field('customer_id', __('Customer id'));
+//        $show->field('customer_id', __('Customer id'));
         $show->field('updated_dt', __('Updated dt'));
         $show->field('lat', __('Lat'));
         $show->field('lng', __('Lng'));
@@ -80,7 +89,7 @@ class ProtokolController extends AdminController
         $form->text('protokol_photo', __('Protokol photo'));
         $form->text('protokol_photo1', __('Protokol photo1'));
         $form->text('meter_photo', __('Meter photo'));
-        $form->number('customer_id', __('Customer id'));
+//        $form->number('customer_id', __('Customer id'));
         $form->datetime('updated_dt', __('Updated dt'))->default(date('Y-m-d H:i:s'));
         $form->decimal('lat', __('Lat'));
         $form->decimal('lng', __('Lng'));
@@ -88,4 +97,14 @@ class ProtokolController extends AdminController
 
         return $form;
     }
+
+    public function getHeader()
+    {
+        $customers = Customer::find(session('customer_id'));
+//        dd($customers->name);
+            $this->customer = $customers->name;
+            $this->title .= ' - '.$customers->name;
+//            dd($this->title);
+    }
+
 }
