@@ -26,6 +26,7 @@ $(function () {
                 success: function (response) {
                     console.log('result', response);
                     alert('Токен успешно обновлен!',response.message);
+                    document.location = '/admin/';
                 },
                 error: function (result) {
                     alert('Error refresh token', result);

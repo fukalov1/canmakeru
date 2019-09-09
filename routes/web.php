@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/', 'MainController@index');
 Route::get('/get_space', 'MainController@getSpaceDisk');
-Route::get('/preview/{href}', 'MainController@getPreview');
+Route::get('/preview/{year}/{month}/{file}', 'MainController@getPreview');
 
 Route::post('/uploads', 'MainController@uploadFile');
 

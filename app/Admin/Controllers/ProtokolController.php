@@ -33,19 +33,26 @@ class ProtokolController extends AdminController
 
         $grid = new Grid(new Protokol);
 
+        $grid->header(function ($query) {
+            return "<div style='padding: 10px;'>Клиент: <b>".$this->customer."</b></div>";
+        });
+
         $grid->model()->where('customer_id',session('customer_id'));
 
-        $grid->column('id', __('Id'));
-        $grid->column('protokol_num', __('Protokol num'));
+        $grid->column('protokol_num', __('№ протокола'));
+        $grid->column('protokol_dt', __('Дата протокола'));
         $grid->column('pin', __('Pin'));
-        $grid->column('protokol_photo', __('Protokol photo'));
-        $grid->column('protokol_photo1', __('Protokol photo1'));
-        $grid->column('meter_photo', __('Meter photo'));
-//        $grid->column('customer_id', __('Customer id'));
-        $grid->column('updated_dt', __('Updated dt'));
-        $grid->column('lat', __('Lat'));
-        $grid->column('lng', __('Lng'));
-        $grid->column('protokol_dt', __('Protokol dt'));
+        $grid->photos('Фото')->modal('Фото поверки', function ($model) {
+            $matches = [];
+            preg_match('/(\d\d\d\d)\-(\d\d)/', $this->protokol_dt,$matches);
+            $str = '<div class="row"><div class="col-lg-4"><label>Протокол 1</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$this->protokol_photo.'"></div>';
+            $str .= '<div class="col-lg-4"><label>Протокол 2</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$this->protokol_photo1.'"></div>';
+            $str .= '<div class="col-lg-4"><label>Результаты измерений</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$this->meter_photo.'"></div></div>';
+            return $str;
+        });
+        $grid->column('lat', __('Шир.'));
+        $grid->column('lng', __('Дол.'));
+        $grid->column('updated_dt', __('Дата изменения'));
 
         return $grid;
     }

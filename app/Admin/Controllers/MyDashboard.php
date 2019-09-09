@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Customer;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\Dashboard;
 use GuzzleHttp;
@@ -51,6 +52,22 @@ class MyDashboard extends Dashboard
         ];
 
         return view('serviceDashboard', $data);
+    }
+
+    public static function  viewDinamic() {
+
+        $quest  = Customer::join('protokols','customers.id','protokols.customer_id')
+            ->select(\DB::raw('date_format(protokols.protokol_dt, "%Y-%m") as date, count(customer_id) count'))
+            ->whereRaw('date_format(protokol_dt, "%Y-%m") <> "0000-00"')
+            ->groupBy(\DB::raw('date_format(protokol_dt, "%Y-%m")'))
+            ->get()->toArray();
+//        dd($quest);
+
+        $data = [
+            'dinamic' => $quest
+        ];
+
+        return view('dinamicDashboard', $data);
     }
 
 }

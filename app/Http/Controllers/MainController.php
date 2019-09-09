@@ -214,16 +214,16 @@ class MainController extends Controller
 
     }
 
-   public function getPreview($href)
+   public function getPreview($year='2019',$month='01',$file='')
     {
         $disk = new DiskClient();
         //Устанавливаем полученный токен
 
-        $disk->setAccessToken(env('YANDEX_TOKEN'));
+        $disk->setAccessToken(config('YANDEX_TOKEN'));
 
         //Вывод превьюшки
-        $size = '100x100';
-        $img = $disk->getImagePreview($href, $size);
+        $size = '300x300';
+        $img = $disk->getImagePreview('/'.$year.$month.'/'.$file, $size);
         header("Content-type: image/jpeg");
 
         echo $img['body'];

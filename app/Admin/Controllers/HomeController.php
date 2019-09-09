@@ -24,15 +24,19 @@ class HomeController extends Controller
 
                 $row->column(4, function (Column $column) {
                     $column->append(MyDashboard::info());
+
                 });
 
-                $row->column(4, function (Column $column) {
+                $row->column(8, function (Column $column) {
                     $column->append(MyDashboard::refreshToken());
+                    $column->append(MyDashboard::viewDinamic());
                 });
 
-                $row->column(4, function (Column $column) {
-                    $column->append(MyDashboard::dependencies());
-                });
+//                $row->column(8, function (Column $column) {
+//                    $column->append(MyDashboard::dependencies());
+//                    $column->append(MyDashboard::viewDinamic());
+//
+//                });
             });
     }
 
