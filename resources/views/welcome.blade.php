@@ -94,8 +94,12 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
 
-                <form action="/uploads" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file">
+                <form action="/upl.php" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="appUUID" value="437447dcb8b8"/>
+                    <input type="text" name="partnerKey" value="0911f8H1n2"/>
+                    <input type="file" name="protokol_photo">
+                    <input type="file" name="protokol_photo1">
+                    <input type="file" name="meter_photo">
                     {{ csrf_field() }}
                     <input type="submit" value="upload">
                 </form>

@@ -19,7 +19,9 @@ Route::get('/', 'MainController@index');
 Route::get('/get_space', 'MainController@getSpaceDisk');
 Route::get('/preview/{year}/{month}/{file}', 'MainController@getPreview');
 
-Route::post('/uploads', 'MainController@uploadFile');
+
+
+Route::post('/uploads', 'MainController@saveResultMeter');
 
 Route::get('/redirect', function () {
     $query = http_build_query([

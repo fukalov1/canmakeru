@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Protokol;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\Passport;
 use GuzzleHttp;
 use Yandex\Disk\DiskClient;
 use Illuminate\Http\Request;
 use Yandex\OAuth\OAuthClient;
+use App\Customer;
+use Illuminate\Support\Facades\Log;
 
 use Yandex\OAuth\Exception\AuthRequestException;
 
@@ -27,18 +30,18 @@ class MainController extends Controller
     public function index() {
 
 
-        $client = new OAuthClient(config('YANDEX_CLIENT_ID'), config('YANDEX_PASS'));
+//        $client = new OAuthClient(config('YANDEX_CLIENT_ID'), config('YANDEX_PASS'));
 
-            try {
+//            try {
     // осуществляем обмен
-            $client->requestAccessToken('1817294');
-            } catch (AuthRequestException $ex) {
-                echo $ex->getMessage();
-            }
+//            $client->requestAccessToken('1817294');
+//            } catch (AuthRequestException $ex) {
+//                echo $ex->getMessage();
+//            }
 
 // забираем полученный токен
-        $token = $client->getAccessToken();
-        dd($token);
+//        $token = $client->getAccessToken();
+//        dd($token);
 
 //        echo '<a href="https://oauth.yandex.ru/authorize?response_type=code&client_id='.$client_id.'">Страница запроса доступа</a>';
 //        $client = new OAuthClient(env('YANDEX_CLIENT_ID'));
@@ -162,9 +165,38 @@ class MainController extends Controller
 
     }
 
-    public function uploadFile(Request $request)
+
+    public function saveResultMeter(Request $request) {
+
+        if ($request->input("appUUID") != '437447dcb8b8') {
+            die ("Загрузка невозможна");
+        }
+        else {
+
+//            dd(request()->post());
+            $code = request()->post('partnerKey');
+            $customer = Customer::where('code', $code)->where('enabled', 1)->get();
+            $protokol = new Protokol();
+
+//            dd($code, $customer);
+
+            if (count($customer) > 0) {
+                $photo = 'protokol_' . uniqid() . '.jpg';
+                $photo1 = 'protokol1_' . uniqid() . '.jpg';
+                $meter = 'meter_' . uniqid() . '.jpg';
+                foreach ($customer as $item) {
+//                    dd($photo, $photo1, $meter);
+                    $protokol->uploadFile($_FILES, $photo, $photo1, $meter);
+                }
+            } else {
+                Log::info("Клиент с $code не найден.");
+            }
+        }
+    }
+
+    public function uploadFile()
     {
-        $file = $request->file('file');
+        //$file = $request->file('file');
         $error = '';
         $success = false;
 
@@ -190,6 +222,7 @@ class MainController extends Controller
                     echo 'Создана новая директория "' . $path . '"!';
                 }
             }
+
 
 //            dd($file);
 
@@ -223,7 +256,7 @@ class MainController extends Controller
 
         //Вывод превьюшки
         $size = '300x300';
-        $img = $disk->getImagePreview('/'.$year.$month.'/'.$file, $size);
+        $img = $disk->getImagePreview('/'.$year.'-'.$month.'/'.$file, $size);
         header("Content-type: image/jpeg");
 
         echo $img['body'];
