@@ -32,6 +32,7 @@ class CustomerController extends AdminController
 
             // Add a column filter
             $filter->like('name', 'ФИО');
+            $filter->like('code', 'Код клиента');
             $filter->equal('enabled')->radio([
                 ''   => 'Все',
                 0    => 'Не активны',
@@ -39,7 +40,7 @@ class CustomerController extends AdminController
             ]);
 
         });
-        $grid->column('id', __('ID'));
+//        $grid->column('id', __('ID'));
         $grid->column('code', __('Код'));
 //        $grid->column('name', __('ФИО'));
         $grid->column('ФИО')->display(function () {

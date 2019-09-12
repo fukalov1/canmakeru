@@ -1,109 +1,97 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.layout')
 
-        <title>Laravel</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+@section('content')
+    <div class="content">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-
-                <form action="/upl.php" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="appUUID" value="437447dcb8b8"/>
-                    <input type="text" name="partnerKey" value="0911f8H1n2"/>
-                    <input type="file" name="protokol_photo">
-                    <input type="file" name="protokol_photo1">
-                    <input type="file" name="meter_photo">
-                    {{ csrf_field() }}
-                    <input type="submit" value="upload">
-                </form>
+        <div class="row page-check">
+            <div class="col-lg-12 col-12 text-center">
+                <img src="/images/logo.png"/>
             </div>
         </div>
-    </body>
-</html>
+        <div class="row">
+            <div class="col-lg-4 col-sm-4 col-md-4 col-12">
+
+            </div>
+            <div class="col-lg-4 col-sm-4 col-md-4 col-12 text-center form-check">
+                <div class="h3">
+                    Информационная база <br/>выполненных поверок
+                </div>
+                <div class="h3">
+                    Введите № свидетельства и PIN-код
+                </div>
+                <section class="container">
+                    <form method="post" action="/show_result">
+                        {{csrf_field()}}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>
+                                    Номер протокола
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <input type="text" name="nmbr1" class="form-control" maxlength=3 value="" placeholder="№">
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" name="nmbr2" class="form-control"  maxlength=2 value="" placeholder="">
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" name="nmbr3" class="form-control"  maxlength=5 value="" placeholder="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>
+                                    PIN-код
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-4">
+                                  <input type="text" class="form-control" name="pin" value="" placeholder="PIN-код">
+                            </div>
+                            <div class="col-lg-4">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-4 text-center">
+                                    <input type="submit" class="btn btn-danger" name="commit" value="Проверить">
+                            </div>
+                            <div class="col-lg-4">
+                            </div>
+                        </div>
+
+                    </form>
+                </section>
+            </div>
+            <div class="col-lg-4 col-sm-4 col-md-4 col-12">
+
+            </div>
+        </div>
+
+
+        {{--<form action="/upl.php" method="post" enctype="multipart/form-data">--}}
+        {{--<input type="hidden" name="appUUID" value="437447dcb8b8"/>--}}
+        {{--<input type="text" name="partnerKey" value="0911f8H1n2"/>--}}
+        {{--<input type="file" name="protokol_photo">--}}
+        {{--<input type="file" name="protokol_photo1">--}}
+        {{--<input type="file" name="meter_photo">--}}
+        {{--{{ csrf_field() }}--}}
+        {{--<input type="submit" value="upload">--}}
+        {{--</form>--}}
+    </div>
+
+@stop

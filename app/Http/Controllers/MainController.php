@@ -263,4 +263,30 @@ class MainController extends Controller
 
     }
 
+    public function showResult()
+    {
+        $data['error'] = 'empty';
+        $nmbr1 = request()->post('nmbr1');
+        $nmbr2 = request()->post('nmbr2');
+        $nmbr3 = request()->post('nmbr3');
+        $pin = request()->post('pin');
+
+//        dd($pin, (int)($nmbr1.$nmbr2.$nmbr3));
+
+        $protokol = Protokol::where('pin', $pin)
+            ->where('protokol_num', (int)($nmbr1.$nmbr2.$nmbr3))
+            ->get();
+        foreach ($protokol as $item) {
+            preg_match('/(\d\d\d\d)\-(\d\d)/', $item->protokol_dt,$matches);
+            $data['protokol_photo'] = $matches[1].'/'.$matches[2].'/'.$item->protokol_photo;
+            $data['protokol_photo1'] = $matches[1].'/'.$matches[2].'/'.$item->protokol_photo1;
+            $data['meter_photo'] = $matches[1].'/'.$matches[2].'/'.$item->meter_photo;
+            $data['error'] = '';
+            $data['number'] = (int)($nmbr1.$nmbr2.$nmbr3);
+        }
+//        dd($data);
+
+        return view('showResult', $data);
+    }
+
 }

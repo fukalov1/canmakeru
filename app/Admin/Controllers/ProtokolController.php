@@ -33,10 +33,21 @@ class ProtokolController extends AdminController
 
         $grid = new Grid(new Protokol);
 
+
+
         $grid->header(function ($query) {
             return "<div style='padding: 10px;'>Клиент: <b>".$this->customer."</b></div>";
         });
 
+        $grid->filter(function($filter){
+
+            // Remove the default id filter
+            $filter->disableIdFilter();
+
+            $filter->like('protokol_num', 'Номер протокола');
+            $filter->between('protokol_dt', 'Дата протокола')->date();
+
+        });
         $grid->model()->where('customer_id',session('customer_id'));
 
         $grid->column('protokol_num', __('№ протокола'));
@@ -52,7 +63,7 @@ class ProtokolController extends AdminController
         });
         $grid->column('lat', __('Шир.'));
         $grid->column('lng', __('Дол.'));
-        $grid->column('updated_dt', __('Дата изменения'));
+//        $grid->column('updated_dt', __('Дата изменения'));
 
         return $grid;
     }
