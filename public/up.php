@@ -42,11 +42,7 @@ $conn->close();
 
 $protokol_formated_num = intval(substr($protokol_num, 0,-7)).'-'.intval(substr($protokol_num, -7,2)).'-'.intval(substr($protokol_num, -5));
 
-
 ?>
-
-
-
 
 <table class="protokol_tbl">
     <tr>
