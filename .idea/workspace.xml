@@ -4,7 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/app/Admin/Controllers/HomeController.php" line="39" mnemonic="0" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a243e355-4b01-481f-94e3-1400a702b076" name="Default Changelist" comment="" />
+    <list default="true" id="a243e355-4b01-481f-94e3-1400a702b076" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +39,7 @@
           <entry key="js" value="4" />
           <entry key="json" value="3" />
           <entry key="map" value="1" />
-          <entry key="php" value="52" />
+          <entry key="php" value="54" />
           <entry key="scss" value="3" />
           <entry key="vue" value="3" />
         </counts>
@@ -49,7 +51,7 @@
           <entry key="Image" value="1" />
           <entry key="JSON" value="3" />
           <entry key="JavaScript" value="4" />
-          <entry key="PHP" value="40" />
+          <entry key="PHP" value="42" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="SCSS" value="3" />
           <entry key="SourceMap" value="1" />
@@ -62,7 +64,7 @@
           <entry key="env" value="101" />
           <entry key="js" value="664" />
           <entry key="json" value="4" />
-          <entry key="php" value="11155" />
+          <entry key="php" value="11156" />
           <entry key="scss" value="1" />
           <entry key="txt" value="56" />
           <entry key="vue" value="326" />
@@ -73,7 +75,7 @@
           <entry key="Blade" value="2377" />
           <entry key="JSON" value="4" />
           <entry key="JavaScript" value="664" />
-          <entry key="PHP" value="8778" />
+          <entry key="PHP" value="8779" />
           <entry key="PLAIN_TEXT" value="158" />
           <entry key="SCSS" value="1" />
           <entry key="Vue.js" value="326" />
@@ -149,11 +151,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/up.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="131">
               <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/filesystems.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="59" column="10" selection-start-line="59" selection-start-column="10" selection-end-line="59" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -228,6 +239,7 @@
         <option value="$PROJECT_DIR$/resources/views/layouts/styles.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/showResult.blade.php" />
         <option value="$PROJECT_DIR$/public/up.php" />
+        <option value="$PROJECT_DIR$/config/filesystems.php" />
       </list>
     </option>
   </component>
@@ -374,62 +386,7 @@
             <path>
               <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
               <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Admin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Admin" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Console" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Console" type="462c0819:PsiDirectoryNode" />
-              <item name="Commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Providers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canmakeru" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="canmakeru" type="b2602c69:ProjectViewProjectNode" />
@@ -530,7 +487,7 @@
       <workItem from="1567701882284" duration="19780000" />
       <workItem from="1567883008137" duration="36467000" />
       <workItem from="1568299160610" duration="7748000" />
-      <workItem from="1568311257063" duration="704000" />
+      <workItem from="1568311257063" duration="1658000" />
     </task>
     <task id="LOCAL-00001" summary="show protokols for customers">
       <created>1567820560267</created>
@@ -564,7 +521,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="90398000" />
+    <option name="totallyTimeSpent" value="91352000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -577,8 +534,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="100" y="20" width="1417" height="826" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30606282" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30606282" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -591,7 +549,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.2735043" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.2735043" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5006435" side_tool="true" weight="0.33688414" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -789,13 +747,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/admin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="401" column="9" selection-start-line="401" selection-start-column="9" selection-end-line="401" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -948,10 +899,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="401" column="9" selection-start-line="401" selection-start-column="9" selection-end-line="401" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/up.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
           <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/filesystems.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="59" column="10" selection-start-line="59" selection-start-column="10" selection-end-line="59" selection-end-column="10" />
         </state>
       </provider>
     </entry>
