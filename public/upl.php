@@ -79,9 +79,9 @@ $stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, 
 $stmt->execute();
 
 
-$output = `cd ../; php7.2 artisan yandex:export \Q$p_photo\E`;
-$output = `cd ../; php7.2 artisan yandex:export \Q$p_photo1\E`;
-$output = `cd ../; php7.2 artisan yandex:export \Q$m_photo\E`;
+$output = `cd ../; php7.2 artisan yandex:export $p_photo`;
+$output = `cd ../; php7.2 artisan yandex:export $p_photo1`;
+$output = `cd ../; php7.2 artisan yandex:export $m_photo`;
 
 echo $output;
 echo "Ok";
