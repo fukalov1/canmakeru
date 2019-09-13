@@ -278,9 +278,12 @@ class MainController extends Controller
             ->get();
         foreach ($protokol as $item) {
             preg_match('/(\d\d\d\d)\-(\d\d)/', $item->protokol_dt,$matches);
-            $data['protokol_photo'] = $matches[1].'/'.$matches[2].'/'.$item->protokol_photo;
-            $data['protokol_photo1'] = $matches[1].'/'.$matches[2].'/'.$item->protokol_photo1;
-            $data['meter_photo'] = $matches[1].'/'.$matches[2].'/'.$item->meter_photo;
+            $file = preg_replace('/photos\//','',$item->protokol_photo);
+            $data['protokol_photo'] = $matches[1].'/'.$matches[2].'/'.$file;
+            $file = preg_replace('/photos\//','',$this->protokol_photo1);
+            $data['protokol_photo1'] = $matches[1].'/'.$matches[2].'/'.$file;
+            $file = preg_replace('/photos\//','',$this->meter_photo);
+            $data['meter_photo'] = $matches[1].'/'.$matches[2].'/'.$file;
             $data['error'] = '';
             $data['number'] = (int)($nmbr1.$nmbr2.$nmbr3);
         }
