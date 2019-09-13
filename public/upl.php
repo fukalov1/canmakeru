@@ -83,7 +83,7 @@ $output = `cd ../; php7.2 artisan yandex:export $p_photo`;
 $output = `cd ../; php7.2 artisan yandex:export $p_photo1`;
 $output = `cd ../; php7.2 artisan yandex:export $m_photo`;
 
-echo $output;
+//echo $output;
 echo "Ok";
 
 $stmt->close();
