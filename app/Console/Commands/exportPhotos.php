@@ -12,7 +12,7 @@ class exportPhotos extends Command
      *
      * @var string
      */
-    protected $signature = 'yandex:export  {id : обязательный параметр идентификатор файла}';
+    protected $signature = 'yandex:export  {file : обязательный параметр имя файла}';
 
     /**
      * The console command description.
@@ -41,10 +41,11 @@ class exportPhotos extends Command
      */
     public function handle()
     {
+
         $this->info($this->description);
-        $id = $this->argument('id');
-        if($id) {
-            $result = $this->protokol->uploadFile($id);
+        $file = $this->argument('file');
+        if($file) {
+            $result = $this->protokol->uploadFile($file);
             if ($result) {
                 echo "Upload files to Yandex.disk successfully\n";
             }

@@ -3,8 +3,6 @@
 include 'config.php';
 header('Content-Type: text/plain; charset=utf-8');
 
-
-
 if($_SERVER['REQUEST_METHOD'] != 'POST'){
     die("Загрузка невозможна");
 }
@@ -18,11 +16,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 //Output any connection error
 if ($conn->connect_error) {
-    throw new RuntimeException('Error : ('. $conn->connect_errno .') '. $mysqli->connect_error);
+    throw new RuntimeException('Error : ('. $conn->connect_errno .') ');
 }
-
-
-
 
 $stmt = $conn->prepare("select id FROM customers where code=? and enabled=1");
 $stmt->bind_param("s", $_POST['partnerKey']);
@@ -37,11 +32,14 @@ if (!$stmt->fetch()) {
 $stmt->close();
 
 
+$uid = uniqid();
+$uid1 = uniqid();
+$uid2 = uniqid();
 
 $uploaddir = 'photos/temp/';
-$p_photo = 'protokol_'.uniqid().'.jpg';
-$p_photo1 = 'protokol1_'.uniqid().'.jpg';
-$m_photo = 'meter_'.uniqid().'.jpg';
+$p_photo = 'protokol_'.$uid.'.jpg';
+$p_photo1 = 'protokol1_'.$uid1.'.jpg';
+$m_photo = 'meter_'.$uid2.'.jpg';
 
 if (empty($p_photo)||empty($p_photo1)||empty($m_photo)) {
     die("Не все фото загружены");
@@ -80,9 +78,10 @@ $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo
 $stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
 $stmt->execute();
 
-$name = uniqid();
 
-$output = `cd ../; php72 artisan yandex:export \Q$name\E`;
+$output = `cd ../; php7.2 artisan yandex:export \Q$p_photo\E`;
+$output = `cd ../; php7.2 artisan yandex:export \Q$p_photo1\E`;
+$output = `cd ../; php7.2 artisan yandex:export \Q$m_photo\E`;
 
 echo $output;
 echo "Ok";

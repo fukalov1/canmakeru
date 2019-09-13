@@ -56,9 +56,12 @@ class ProtokolController extends AdminController
         $grid->photos('Фото')->modal('Фото поверки', function ($model) {
             $matches = [];
             preg_match('/(\d\d\d\d)\-(\d\d)/', $this->protokol_dt,$matches);
-            $str = '<div class="row"><div class="col-lg-4"><label>Протокол 1</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$this->protokol_photo.'"></div>';
-            $str .= '<div class="col-lg-4"><label>Протокол 2</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$this->protokol_photo1.'"></div>';
-            $str .= '<div class="col-lg-4"><label>Результаты измерений</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$this->meter_photo.'"></div></div>';
+            $file = preg_replace('/photos\//','',$this->protokol_photo);
+            $str = '<div class="row"><div class="col-lg-4"><label>Свидетельство</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></div>';
+            $file = preg_replace('/photos\//','',$this->protokol_photo1);
+            $str .= '<div class="col-lg-4"><label>Свидетельство (обратная сторона)</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></div>';
+            $file = preg_replace('/photos\//','',$this->meter_photo);
+            $str .= '<div class="col-lg-4"><label>Счетчик</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></div></div>';
             return $str;
         });
         $grid->column('lat', __('Шир.'));
