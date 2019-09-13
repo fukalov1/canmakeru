@@ -26,11 +26,11 @@
                 </div>
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-4 text-center">
-                <label>Протокол 1</label>
+                <label>Свидетельство</label>
                 <img src="/preview/{{ $protokol_photo }}">
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-4 text-center">
-                <label>Протокол 1</label>
+                <label>Свидетельство (обратная сторона)</label>
                 <img src="/preview/{{ $protokol_photo1 }}">
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-4 text-center">
