@@ -1,6 +1,6 @@
 <?php
 
-
+include 'config.php';
 header('Content-Type: text/plain; charset=utf-8');
 
 
@@ -82,7 +82,7 @@ $stmt->execute();
 
 $name = uniqid();
 
-$output = `cd ../; php artisan yandex:export \Q$name\E`;
+$output = `cd ../; php72 artisan yandex:export \Q$name\E`;
 
 echo $output;
 echo "Ok";
