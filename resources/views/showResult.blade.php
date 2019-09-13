@@ -26,15 +26,15 @@
                 </div>
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-4 text-center">
-                <label>Свидетельство</label>
+                <label>Свидетельство</label><br/>
                 <img src="/preview/{{ $protokol_photo }}">
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-4 text-center">
-                <label>Свидетельство (обратная сторона)</label>
+                <label>Свидетельство (обратная сторона)</label><br/>
                 <img src="/preview/{{ $protokol_photo1 }}">
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-4 text-center">
-                <label>Счетчик</label>
+                <label>Счетчик</label><br/>
                 <img src="/preview/{{ $meter_photo }}">
             </div>
             @endif
