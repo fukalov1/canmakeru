@@ -66,11 +66,8 @@ class Protokol extends Model
 
     }
 
-    public function uploadFile($id)
+    public function uploadFile($file)
     {
-        $dest1 = "protokol_$id.jpg";
-        $dest2 = "protokol1_$id.jpg";
-        $dest3 = "meter_$id.jpg";
         $error = '';
         $success = false;
 
@@ -109,35 +106,13 @@ class Protokol extends Model
             $disk->uploadFile(
                 "/$path/",
                 array(
-                    'path' => public_path('photos/temp/').$dest1,
-                    'size' => filesize(public_path('photos/temp/').$dest1),
-                    'name' => $dest1
+                    'path' => public_path('photos/temp/').$file,
+                    'size' => filesize(public_path('photos/temp/').$file),
+                    'name' => $file
                 )
             );
 
-//dd('end upload '.$dest1.' to yandex disk');
-
-            $disk->uploadFile(
-                "/$path/",
-                array(
-                    'path' => public_path('photos/temp/').$dest2,
-                    'size' => filesize(public_path('photos/temp/').$dest2),
-                    'name' => $dest2
-                )
-            );
-
-            $disk->uploadFile(
-                "/$path/",
-                array(
-                    'path' => public_path('photos/temp/').$dest3,
-                    'size' => filesize(public_path('photos/temp/').$dest3),
-                    'name' => $dest3
-                )
-            );
-
-            unlink(public_path('photos/temp/').$dest1);
-            unlink(public_path('photos/temp/').$dest2);
-            unlink(public_path('photos/temp/').$dest3);
+            unlink(public_path('photos/temp/').$file);
 
             $success = true;
 
