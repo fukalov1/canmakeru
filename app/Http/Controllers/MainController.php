@@ -255,7 +255,39 @@ class MainController extends Controller
         $disk->setAccessToken(config('YANDEX_TOKEN'));
 
         //Вывод превьюшки
-        $size = '300x300';
+        $size = '250';
+        $img = $disk->getImagePreview('/'.$year.'-'.$month.'/'.$file, $size);
+        header("Content-type: image/jpeg");
+
+        echo $img['body'];
+
+    }
+
+   public function getMiddlePhoto($year='2019',$month='01',$file='')
+    {
+        $disk = new DiskClient();
+        //Устанавливаем полученный токен
+
+        $disk->setAccessToken(config('YANDEX_TOKEN'));
+
+        //Вывод превьюшки
+        $size = 'M';
+        $img = $disk->getImagePreview('/'.$year.'-'.$month.'/'.$file, $size);
+        header("Content-type: image/jpeg");
+
+        echo $img['body'];
+
+    }
+
+   public function getPhoto($year='2019',$month='01',$file='')
+    {
+        $disk = new DiskClient();
+        //Устанавливаем полученный токен
+
+        $disk->setAccessToken(config('YANDEX_TOKEN'));
+
+        //Вывод превьюшки
+        $size = 'XXL';
         $img = $disk->getImagePreview('/'.$year.'-'.$month.'/'.$file, $size);
         header("Content-type: image/jpeg");
 

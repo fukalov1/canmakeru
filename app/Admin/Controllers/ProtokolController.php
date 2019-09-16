@@ -67,11 +67,11 @@ class ProtokolController extends AdminController
             $matches = [];
             preg_match('/(\d\d\d\d)\-(\d\d)/', $this->protokol_dt,$matches);
             $file = preg_replace('/photos\//','',$this->protokol_photo);
-            $str = '<div class="row"><div class="col-lg-4"><label>Свидетельство</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></div>';
+            $str = '<div class="row"><div class="col-lg-4"><label>Свидетельство</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/'.$file.'"><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></a></div>';
             $file = preg_replace('/photos\//','',$this->protokol_photo1);
-            $str .= '<div class="col-lg-4"><label>Свидетельство (обратная сторона)</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></div>';
+            $str .= '<div class="col-lg-4"><label>Свидетельство (обратная сторона)</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/'.$file.'"><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></a></div>';
             $file = preg_replace('/photos\//','',$this->meter_photo);
-            $str .= '<div class="col-lg-4"><label>Счетчик</label><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></div></div>';
+            $str .= '<div class="col-lg-4"><label>Счетчик</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/'.$file.'"><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></a></div></div>';
             return $str;
         });
         $grid->column('lat', __('Шир.'));

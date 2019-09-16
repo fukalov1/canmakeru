@@ -19,6 +19,7 @@ Route::get('/', 'MainController@index');
 Route::get('/get_space', 'MainController@getSpaceDisk');
 Route::post('/show_result', 'MainController@showResult');
 Route::get('/preview/{year}/{month}/{file}', 'MainController@getPreview');
+Route::get('/photo/{year}/{month}/{file}', 'MainController@getPhoto');
 
 
 
