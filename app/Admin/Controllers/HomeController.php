@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 //use Encore\Admin\Controllers\Dashboard;
 use App\Admin\Controllers\MyDashboard;
 use App\Protokol;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
@@ -29,7 +30,9 @@ class HomeController extends Controller
                 });
 
                 $row->column(8, function (Column $column) {
-                    $column->append(MyDashboard::refreshToken());
+                    if (Admin::user()->roles[0]->slug=='administrator') {
+                        $column->append(MyDashboard::refreshToken());
+                    }
                     $column->append(MyDashboard::viewDinamic());
                 });
 

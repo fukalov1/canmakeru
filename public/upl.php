@@ -19,7 +19,7 @@ if ($conn->connect_error) {
     throw new RuntimeException('Error : ('. $conn->connect_errno .') ');
 }
 
-$stmt = $conn->prepare("select id FROM customers where code=? and enabled=1");
+$stmt = $conn->prepare("select id cust_id FROM customers where code=? and enabled=1");
 $stmt->bind_param("s", $_POST['partnerKey']);
 $stmt->execute();
 $stmt->bind_result($cust_id);
@@ -74,20 +74,51 @@ if (!move_uploaded_file($_FILES['meter_photo']['tmp_name'], $uploaddir.$m_photo)
 }
 
 
-$stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
-$stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
-$stmt->execute();
+//$stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
+//$stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
+//$stmt->execute();
 
+$result = UpdateOrCreate($_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
 
-$output = `cd ../; php7.2 artisan yandex:export $p_photo`;
-$output = `cd ../; php7.2 artisan yandex:export $p_photo1`;
-$output = `cd ../; php7.2 artisan yandex:export $m_photo`;
+if ($result) {
+    $output = `cd ../; php7.2 artisan yandex:export $p_photo`;
+    $output = `cd ../; php7.2 artisan yandex:export $p_photo1`;
+    $output = `cd ../; php7.2 artisan yandex:export $m_photo`;
 
 //echo $output;
-echo "Ok";
-
+    echo "Ok";
+}
+else {
+    echo "error";
+}
 $stmt->close();
 $conn->close();
 
+
+function UpdateOrCreate($conn, $id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng) {
+
+    $result = false;
+    try {
+        $stmt = $conn->prepare('select id from protokols where protokol_num=? and pin=?');
+        $stmt->bind_param("ii", $id, $pin);
+        $stmt->execute();
+        $stmt->bind_result($id);
+        if (!$stmt->fetch()) {
+            $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
+            $stmt->bind_param("iisssisdd", $id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng);
+            $stmt->execute();
+        } else {
+            $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=?) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt1->bind_param("ssssdd", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng);
+            $stmt1->execute();
+        }
+        $result = true;
+    }
+    catch (Exception $e) {
+        error_log("Ошибка сохранения данных поверки. ".$e->getMessage(), 0);
+        die("Ошибка сохранения данных поверки. ".$e->getMessage());
+    }
+    return $result;
+}
 
 ?>

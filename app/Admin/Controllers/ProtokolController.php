@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Customer;
 use App\Protokol;
 use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
@@ -48,6 +49,15 @@ class ProtokolController extends AdminController
             $filter->between('protokol_dt', 'Дата протокола')->date();
 
         });
+
+        if (Admin::user()->roles[0]->slug!='administrator') {
+            $grid->actions(function ($actions) {
+                $actions->disableDelete();
+                $actions->disableEdit();
+                $actions->disableView();
+            });
+        }
+
         $grid->model()->where('customer_id',session('customer_id'));
 
         $grid->column('protokol_num', __('№ протокола'));

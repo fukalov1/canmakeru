@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Customer;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\Dashboard;
+use Encore\Admin\Facades\Admin;
 use GuzzleHttp;
 use Yandex\Disk\DiskClient;
 
