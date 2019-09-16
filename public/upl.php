@@ -102,19 +102,25 @@ function UpdateOrCreate($conn, $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust
         $stmt = $conn->prepare('select id from protokols where protokol_num=? and pin=?');
         $stmt->bind_param("ii", $p_id, $pin);
         $stmt->execute();
-        if (!$stmt->fetch()) {
-            $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
-            $stmt->bind_param("iisssisdd", $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng);
+        if ($stmt->fetch()) {
+            $stmt = $conn->prepare("delete from protokols  where  protokol_num=? and pin=?");
+            $stmt->bind_param("ii", $p_id, $pin);
             $stmt->execute();
-        } else {
+        }
+
+    $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
+    $stmt->bind_param("iisssisdd", $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng);
+    $stmt->execute();
+
+//        else {
 //            echo "update protokols  set protokol_photo='$p_photo', protokol_photo1='$p_photo1', meter_photo='$m_photo', protokol_dt='$dt', lat=$lat, lng=$lng where protokol_num=$p_id and pin=$pin";
 //            die("update protokols  set protokol_photo='$p_photo', protokol_photo1='$p_photo1', meter_photo='$m_photo', protokol_dt='$dt', lat=$lat, lng=$lng where protokol_num=$p_id and pin=$pin");
 //            $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=? where protokol_num=? and pin=?");
-            $stmt1 = $conn->prepare("update protokols  set protokol_photo='$p_photo' where protokol_num=$p_id and pin=$pin");
+//            $stmt1 = $conn->prepare("update protokols  set protokol_photo='$p_photo' where protokol_num=$p_id and pin=$pin");
 //            $stmt1->bind_param("ssssddii", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng, $p_id, $pin);
 //            $stmt1->bind_param("sii", $p_photo, $p_id, $pin);
-            $stmt1->execute();
-        }
+//            $stmt1->execute();
+//        }
         $result = true;
 //    }
 //    catch (Exception $e) {
