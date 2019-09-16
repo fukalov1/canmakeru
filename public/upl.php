@@ -95,21 +95,20 @@ $stmt->close();
 $conn->close();
 
 
-function UpdateOrCreate($conn, $id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng) {
+function UpdateOrCreate($conn, $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng) {
 
     $result = false;
     try {
         $stmt = $conn->prepare('select id from protokols where protokol_num=? and pin=?');
-        $stmt->bind_param("ii", $id, $pin);
+        $stmt->bind_param("ii", $p_id, $pin);
         $stmt->execute();
-        $stmt->bind_result($id);
         if (!$stmt->fetch()) {
             $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
-            $stmt->bind_param("iisssisdd", $id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng);
+            $stmt->bind_param("iisssisdd", $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng);
             $stmt->execute();
         } else {
-            $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=? where id=?)");
-            $stmt1->bind_param("ssssddi", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng, $id);
+            $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=? where protokol_num=? and pin=?)");
+            $stmt1->bind_param("ssssddii", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng, $p_id, $pin);
             $stmt1->execute();
         }
         $result = true;
