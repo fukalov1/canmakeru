@@ -6,8 +6,11 @@
 
 
 <style>
+    .myimg {
+        width: 100%;
+    }
     .page-check {
-        padding-top: 10%;
+        padding-top: 3%;
     }
     .form-check {
         padding: 10px;
