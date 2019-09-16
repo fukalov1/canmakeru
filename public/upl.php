@@ -74,60 +74,30 @@ if (!move_uploaded_file($_FILES['meter_photo']['tmp_name'], $uploaddir.$m_photo)
 }
 
 
-//$stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
-//$stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
-//$stmt->execute();
 
-$result = UpdateOrCreate($conn, $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
+$stmt = $conn->prepare('select id from protokols where protokol_num=? and pin=?');
+$stmt->bind_param("ii", $_POST['id'], $_POST['pin']);
+$stmt->execute();
+if ($stmt->fetch()) {
+    $stmt = $conn->prepare("delete from protokols  where  protokol_num=? and pin=?");
+    $stmt->bind_param("ii", $_POST['id'], $_POST['pin']);
+    $stmt->execute();
+}
 
-if ($result) {
+$stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
+$stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
+$stmt->execute();
+
     $output = `cd ../; php7.2 artisan yandex:export $p_photo`;
     $output = `cd ../; php7.2 artisan yandex:export $p_photo1`;
     $output = `cd ../; php7.2 artisan yandex:export $m_photo`;
 
 //echo $output;
     echo "Ok";
-}
-else {
-    echo "error";
-}
+
 $stmt->close();
 $conn->close();
 
 
-function UpdateOrCreate($conn, $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng) {
-
-    $result = false;
-//    try {
-        $stmt = $conn->prepare('select id from protokols where protokol_num=? and pin=?');
-        $stmt->bind_param("ii", $p_id, $pin);
-        $stmt->execute();
-        if ($stmt->fetch()) {
-            $stmt = $conn->prepare("delete from protokols  where  protokol_num=? and pin=?");
-            $stmt->bind_param("ii", $p_id, $pin);
-            $stmt->execute();
-        }
-
-    $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
-    $stmt->bind_param("iisssisdd", $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng);
-    $stmt->execute();
-
-//        else {
-//            echo "update protokols  set protokol_photo='$p_photo', protokol_photo1='$p_photo1', meter_photo='$m_photo', protokol_dt='$dt', lat=$lat, lng=$lng where protokol_num=$p_id and pin=$pin";
-//            die("update protokols  set protokol_photo='$p_photo', protokol_photo1='$p_photo1', meter_photo='$m_photo', protokol_dt='$dt', lat=$lat, lng=$lng where protokol_num=$p_id and pin=$pin");
-//            $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=? where protokol_num=? and pin=?");
-//            $stmt1 = $conn->prepare("update protokols  set protokol_photo='$p_photo' where protokol_num=$p_id and pin=$pin");
-//            $stmt1->bind_param("ssssddii", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng, $p_id, $pin);
-//            $stmt1->bind_param("sii", $p_photo, $p_id, $pin);
-//            $stmt1->execute();
-//        }
-        $result = true;
-//    }
-//    catch (Exception $e) {
-//        error_log("Ошибка сохранения данных поверки. ".$e->getMessage(), 0);
-//        die("Ошибка сохранения данных поверки. ".$e->getMessage());
-//    }
-    return $result;
-}
 
 ?>
