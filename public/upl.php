@@ -82,11 +82,13 @@ $exists = false;
 if ($stmt->fetch()) {
     $exists = true;
 }
+$stmt->close();
 
 if ($exists) {
-    $stmt = $conn->prepare('delete from protokols  where  protokol_num=? and pin=?');
-    $stmt->bind_param("ii", $_POST['id'], $_POST['pin']);
-    $stmt->execute();
+    $conn->query('delete from protokols  where  protokol_num='.$_POST['id'].' and pin='.$_POST['pin']);
+//    $stmt->bind_param("ii", $_POST['id'], $_POST['pin']);
+//    $stmt->execute();
+//    $stmt->close();
 }
 
 $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
