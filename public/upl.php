@@ -78,7 +78,7 @@ if (!move_uploaded_file($_FILES['meter_photo']['tmp_name'], $uploaddir.$m_photo)
 //$stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
 //$stmt->execute();
 
-$result = UpdateOrCreate($conn, $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
+$result = UpdateOrCreate($_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
 
 if ($result) {
     $output = `cd ../; php7.2 artisan yandex:export $p_photo`;
@@ -95,7 +95,7 @@ $stmt->close();
 $conn->close();
 
 
-function UpdateOrCreate($conn, $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng) {
+function UpdateOrCreate($p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng) {
 
     $result = false;
     try {
@@ -107,6 +107,8 @@ function UpdateOrCreate($conn, $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust
             $stmt->bind_param("iisssisdd", $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng);
             $stmt->execute();
         } else {
+            echo "update protokols  set protokol_photo='$p_photo', protokol_photo1='$p_photo1', meter_photo='$m_photo', protokol_dt='$dt', lat=$lat, lng=$lng where protokol_num=$p_id and pin=$pin";
+            exit;
             $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=? where protokol_num=? and pin=?");
             $stmt1->bind_param("ssssddii", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng, $p_id, $pin);
             $stmt1->execute();

@@ -179,7 +179,7 @@
       <workItem from="1568299160610" duration="7748000" />
       <workItem from="1568311257063" duration="3786000" />
       <workItem from="1568399946921" duration="11511000" />
-      <workItem from="1568567367650" duration="7640000" />
+      <workItem from="1568567367650" duration="8927000" />
     </task>
     <task id="LOCAL-00001" summary="show protokols for customers">
       <created>1567820560267</created>
@@ -300,7 +300,28 @@
       <option name="project" value="LOCAL" />
       <updated>1568651958106</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="сохранение повторных фото2">
+      <created>1568652131378</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1568652131378</updated>
+    </task>
+    <task id="LOCAL-00019" summary="сохранение повторных фото3">
+      <created>1568652607312</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1568652607312</updated>
+    </task>
+    <task id="LOCAL-00020" summary="сохранение повторных фото4">
+      <created>1568653063129</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1568653063129</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
@@ -346,6 +367,9 @@
     <MESSAGE value="добавлена динамика поверки счетчиков клиента" />
     <MESSAGE value="сохранение повторных фото" />
     <MESSAGE value="сохранение повторных фото1" />
-    <option name="LAST_COMMIT_MESSAGE" value="сохранение повторных фото1" />
+    <MESSAGE value="сохранение повторных фото2" />
+    <MESSAGE value="сохранение повторных фото3" />
+    <MESSAGE value="сохранение повторных фото4" />
+    <option name="LAST_COMMIT_MESSAGE" value="сохранение повторных фото4" />
   </component>
 </project>
