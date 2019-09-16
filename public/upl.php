@@ -78,7 +78,7 @@ if (!move_uploaded_file($_FILES['meter_photo']['tmp_name'], $uploaddir.$m_photo)
 //$stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
 //$stmt->execute();
 
-$result = UpdateOrCreate($_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
+$result = UpdateOrCreate($conn, $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
 
 if ($result) {
     $output = `cd ../; php7.2 artisan yandex:export $p_photo`;
