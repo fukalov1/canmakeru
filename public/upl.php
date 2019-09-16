@@ -108,8 +108,8 @@ function UpdateOrCreate($conn, $id, $pin, $p_photo, $p_photo1, $m_photo, $cust_i
             $stmt->bind_param("iisssisdd", $id, $pin, $p_photo, $p_photo1, $m_photo, $cust_id, $dt, $lat, $lng);
             $stmt->execute();
         } else {
-            $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=?) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt1->bind_param("ssssdd", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng);
+            $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=? where id=?)");
+            $stmt1->bind_param("ssssddi", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng, $id);
             $stmt1->execute();
         }
         $result = true;
