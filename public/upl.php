@@ -109,8 +109,10 @@ function UpdateOrCreate($conn, $p_id, $pin, $p_photo, $p_photo1, $m_photo, $cust
         } else {
 //            echo "update protokols  set protokol_photo='$p_photo', protokol_photo1='$p_photo1', meter_photo='$m_photo', protokol_dt='$dt', lat=$lat, lng=$lng where protokol_num=$p_id and pin=$pin";
 //            die("update protokols  set protokol_photo='$p_photo', protokol_photo1='$p_photo1', meter_photo='$m_photo', protokol_dt='$dt', lat=$lat, lng=$lng where protokol_num=$p_id and pin=$pin");
-            $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=? where protokol_num=? and pin=?");
-            $stmt1->bind_param("ssssddii", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng, $p_id, $pin);
+//            $stmt1 = $conn->prepare("update protokols  set protokol_photo=?, protokol_photo1=?, meter_photo=?, protokol_dt=?, lat=?, lng=? where protokol_num=? and pin=?");
+            $stmt1 = $conn->prepare("update protokols  set protokol_photo=? where protokol_num=? and pin=?");
+//            $stmt1->bind_param("ssssddii", $p_photo, $p_photo1, $m_photo, $dt, $lat, $lng, $p_id, $pin);
+            $stmt1->bind_param("sii", $p_photo, $p_id, $pin);
             $stmt1->execute();
         }
         $result = true;
