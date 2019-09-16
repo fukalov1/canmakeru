@@ -78,8 +78,13 @@ if (!move_uploaded_file($_FILES['meter_photo']['tmp_name'], $uploaddir.$m_photo)
 $stmt = $conn->prepare('select id from protokols where protokol_num=? and pin=?');
 $stmt->bind_param("ii", $_POST['id'], $_POST['pin']);
 $stmt->execute();
+$exists = false;
 if ($stmt->fetch()) {
-    $stmt = $conn->prepare("delete from protokols  where  protokol_num=? and pin=?");
+    $exists = true;
+}
+
+if ($exists) {
+    $stmt = $conn->prepare('delete from protokols  where  protokol_num=? and pin=?');
     $stmt->bind_param("ii", $_POST['id'], $_POST['pin']);
     $stmt->execute();
 }
