@@ -298,15 +298,16 @@ class MainController extends Controller
     public function showResult()
     {
         $data['error'] = 'empty';
-        $nmbr1 = request()->post('nmbr1');
-        $nmbr2 = request()->post('nmbr2');
-        $nmbr3 = request()->post('nmbr3');
+        $nmbr = preg_replace('/\-/', '', request()->post('nmbr'));
+        //dd((int)$nmbr);
+//        $nmbr2 = request()->post('nmbr2');
+//        $nmbr3 = request()->post('nmbr3');
         $pin = request()->post('pin');
 
 //        dd($pin, (int)($nmbr1.$nmbr2.$nmbr3));
 
         $protokol = Protokol::where('pin', $pin)
-            ->where('protokol_num', (int)($nmbr1.$nmbr2.$nmbr3))
+            ->where('protokol_num', (int)($nmbr))
             ->get();
         foreach ($protokol as $item) {
             preg_match('/(\d\d\d\d)\-(\d\d)/', $item->protokol_dt,$matches);
@@ -317,7 +318,7 @@ class MainController extends Controller
             $file = preg_replace('/photos\//','',$item->meter_photo);
             $data['meter_photo'] = $matches[1].'/'.$matches[2].'/'.$file;
             $data['error'] = '';
-            $data['number'] = (int)($nmbr1.$nmbr2.$nmbr3);
+            $data['number'] = request()->post('nmbr');
         }
 //        dd($data);
 

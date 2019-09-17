@@ -14,31 +14,33 @@
 
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-12 text-center form-check">
-                <div class="h3">
+                <div class="h2">
                     Информационная база <br/>выполненных поверок
                 </div>
-                <div class="h3">
-                    Введите № свидетельства и PIN-код
-                </div>
+{{--                <div class="h3">--}}
+{{--                    Введите № свидетельства и PIN-код--}}
+{{--                </div>--}}
                 <section class="container">
                     <form method="post" action="/show_result">
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-lg-12">
                                 <label>
-                                    Номер протокола
+                                    Номер свидетельства
                                 </label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <input type="text" name="nmbr1" class="form-control" maxlength=3 value="" placeholder="№">
+{{--                                <input type="text" name="nmbr1" class="form-control" maxlength=3 value="" placeholder="№">--}}
                             </div>
                             <div class="col-lg-4">
-                                <input type="text" name="nmbr2" class="form-control"  maxlength=2 value="" placeholder="">
+                                <input type="text" class="form-control" name="nmbr" id="nmbr" value="" placeholder="000-00-00000">
+
+                                {{--                                <input type="text" name="nmbr2" class="form-control"  maxlength=2 value="" placeholder="">--}}
                             </div>
                             <div class="col-lg-4">
-                                <input type="text" name="nmbr3" class="form-control"  maxlength=5 value="" placeholder="">
+{{--                                <input type="text" name="nmbr3" class="form-control"  maxlength=5 value="" placeholder="">--}}
                             </div>
                         </div>
                         <div class="row">
@@ -52,7 +54,7 @@
                             <div class="col-lg-4">
                             </div>
                             <div class="col-lg-4">
-                                  <input type="text" class="form-control" name="pin" value="" placeholder="PIN-код">
+                                  <input type="text" class="form-control" name="pin" id="pin" value="" placeholder="0000">
                             </div>
                             <div class="col-lg-4">
                             </div>

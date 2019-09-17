@@ -9,13 +9,8 @@
 <script src="{{ asset('js/slick.min.js') }}"></script>
 <script src="{{asset('js/jquery.plugin.js')}}"></script>
 
-<script>
-    var number1_value = '{{ config('employer') }}';
-    var number2_value = '{{ config('school') }}';
-    var number3_value = '{{ config('students') }}';
-    var number4_value = '{{ config('master') }}';
-</script>
 
+<script src="{{ asset('/js/jquery.maskedinput.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 
 <!--[if lt IE 9]>

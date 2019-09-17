@@ -6,6 +6,9 @@
 
 
 <style>
+    #nmbr, #pin {
+        text-align: center;
+    }
     .myimg {
         width: 100%;
     }
