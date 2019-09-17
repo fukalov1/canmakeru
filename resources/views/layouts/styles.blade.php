@@ -6,9 +6,9 @@
 
 
 <style>
-    .margin-10 {
-        margin-left: 10px;
-        margin-right: 10px;
+    .row {
+        margin-left: 0px;
+        margin-right: 0px;
     }
     #nmbr, #pin {
         text-align: center;

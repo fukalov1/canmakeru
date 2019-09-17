@@ -23,11 +23,7 @@
 @yield('content')
 
 
-@include('layouts.footer')
-
-<div class="go-top">
-    <a href="#top-header"></a>
-</div>
+{{--@include('layouts.footer')--}}
 
 @include('layouts.scripts')
 </body>

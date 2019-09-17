@@ -2,13 +2,10 @@
 
 
 @section('content')
-    <div class="content">
-
-        <div class="row page-check">
+    <div class="content page-check">
             <div class="col-lg-12 col-12 text-center">
                 <img src="/images/logo.png"/>
             </div>
-        </div>
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-md-12 col-12 text-center">
                 <div class="row">
@@ -32,15 +29,11 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-{{--                                <input type="text" name="nmbr1" class="form-control" maxlength=3 value="" placeholder="№">--}}
                             </div>
                             <div class="col-lg-4">
                                 <input type="text" class="form-control" name="nmbr" id="nmbr" value="" placeholder="000-00-00000">
-
-                                {{--                                <input type="text" name="nmbr2" class="form-control"  maxlength=2 value="" placeholder="">--}}
                             </div>
                             <div class="col-lg-4">
-{{--                                <input type="text" name="nmbr3" class="form-control"  maxlength=5 value="" placeholder="">--}}
                             </div>
                         </div>
                         <div class="row">
@@ -86,17 +79,6 @@
                 </div>
             </div>
         </div>
-
-
-        {{--<form action="/upl.php" method="post" enctype="multipart/form-data">--}}
-        {{--<input type="hidden" name="appUUID" value="437447dcb8b8"/>--}}
-        {{--<input type="text" name="partnerKey" value="0911f8H1n2"/>--}}
-        {{--<input type="file" name="protokol_photo">--}}
-        {{--<input type="file" name="protokol_photo1">--}}
-        {{--<input type="file" name="meter_photo">--}}
-        {{--{{ csrf_field() }}--}}
-        {{--<input type="submit" value="upload">--}}
-        {{--</form>--}}
     </div>
 
 @stop
