@@ -10,17 +10,17 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-lg-12 col-sm-12 col-md-12 col-12 text-center">
+                <div class="row">
             <div class="col-lg-4 col-sm-4 col-md-4 col-12">
 
             </div>
-            <div class="col-lg-4 col-sm-4 col-md-4 col-12 text-center form-check">
-                <div class="h2">
+            <div class="col-lg-4 col-sm-4 col-md-4 col-12">
+                <div class="form-check-number">
+                    <div class="h2">
                     Информационная база <br/>выполненных поверок
                 </div>
-{{--                <div class="h3">--}}
-{{--                    Введите № свидетельства и PIN-код--}}
-{{--                </div>--}}
-                <section class="container">
+                    <section class="container">
                     <form method="post" action="/show_result">
                         {{csrf_field()}}
                         <div class="row">
@@ -78,9 +78,12 @@
 
                     </form>
                 </section>
+                </div>
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-12">
 
+            </div>
+                </div>
             </div>
         </div>
 

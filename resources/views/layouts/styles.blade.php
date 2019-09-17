@@ -6,6 +6,10 @@
 
 
 <style>
+    .margin-10 {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
     #nmbr, #pin {
         text-align: center;
     }
@@ -15,9 +19,10 @@
     .page-check {
         padding-top: 3%;
     }
-    .form-check {
+    .form-check-number {
         padding: 10px;
-        margin: 20px;
+        margin: 0 2%;
+        width: 96%;
         background-color: #00acd6;
         border: 2px #0d6aad solid;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
