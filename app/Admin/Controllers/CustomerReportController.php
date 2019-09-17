@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 namespace App\Admin\Controllers;
 
@@ -26,36 +26,41 @@ class CustomerReportController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Customer);
-        $grid->filter(function($filter){
 
+        $grid->filter(function($filter){
             // Remove the default id filter
             $filter->disableIdFilter();
 
             // Add a column filter
             $filter->like('name', 'ФИО');
             $filter->like('code', 'Код клиента');
-            
-  	    $filter->scope('new', 'Период поверок')
-	      ->whereDate('protokols.protokol_dt', '>' date('Y-m-d'))
-	      ->Where('protokols.protokol_dt', '<', date('Y-m-d'));
-            });
+            $filter->between('protokols.protokol_dt', 'Период')->date();
 
-        if (Admin::user()->roles[0]->slug!='administrator') {
-            $grid->actions(function ($actions) {
-                $actions->disableDelete();
-                $actions->disableEdit();
-                $actions->disableView();
-            });
-        }
+        });
+
+        $grid->disableActions();
+
+
 
         $grid->column('code', __('Код'));
         $grid->column('ФИО')->display(function () {
             return '<a href="/admin/protokols?set='.$this->id.'" title="Поверки клиента '.$this->name.'">'.$this->name.'</a>';
         });
-        $grid->dinamic('Динамика поверок')->display(function () {
-            return '<a href="/admin/customer_chart?set='.$this->id.'" title="Динамика поверок "><span class="fa fa-bar-chart"/></a>';
+        $grid->protokols('Поверок')->display(function ($protokols) {
+            if (!!request('protokols')) {
+                $start = (request('protokols')['protokol_dt']['start']);
+                $end = (request('protokols')['protokol_dt']['end']);
+//                dd($start, $end);
+                $protokols = collect($protokols);
+                $protokols = $protokols->filter(function ($item) use ($start,$end) {
+                    return $item['protokol_dt']>=$start and $item['protokol_dt']<=$end ;
+                });
+//                dd(count($protokols));
+//                    ->where('protokol_dt', '>=', $start)
+//                    ->where('protokol_dt', '<=', $end)->get();
+            }
+            return count($protokols);
         });
-        $grid->column('enabled', __('Активен'));
 
         return $grid;
     }
@@ -71,9 +76,12 @@ class CustomerReportController extends AdminController
         $show = new Show(Customer::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('code', __('Код'));
-        $show->field('name', __('ФИО'));
-        $show->field('enabled', __('Активен'));
+        $show->field('code', __('Code'));
+        $show->field('name', __('Name'));
+        $show->field('enabled', __('Enabled'));
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
+        $show->field('deleted_at', __('Deleted at'));
 
         return $show;
     }
@@ -87,9 +95,9 @@ class CustomerReportController extends AdminController
     {
         $form = new Form(new Customer);
 
-        $form->text('code', __('Код'));
-        $form->text('name', __('ФИО'));
-        $form->switch('enabled', __('Активен'))->default(1);
+        $form->text('code', __('Code'));
+        $form->text('name', __('Name'));
+        $form->number('enabled', __('Enabled'))->default(1);
 
         return $form;
     }
