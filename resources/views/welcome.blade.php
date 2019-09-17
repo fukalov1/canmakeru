@@ -28,12 +28,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <input type="text" class="form-control" name="nmbr" id="nmbr" value="" placeholder="000-00-00000">
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                             </div>
                         </div>
                         <div class="row">
@@ -44,12 +44,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                   <input type="text" class="form-control" name="pin" id="pin" value="" placeholder="0000">
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                             </div>
 
                         </div>
