@@ -16,8 +16,9 @@ Route::group([
 
     $router->post('/refresh_token', 'HomeController@refreshToken');
     $router->resource('customers', CustomerController::class);
-    $router->resource('protokols', ProtokolController::class)->middleware('set_customer');;
-    $router->get('customer_chart', 'CustomerChartController@index')->middleware('set_customer');;
+    $router->resource('protokols', ProtokolController::class)->middleware('set_customer');
+    $router->get('customer_chart', 'CustomerChartController@index')->middleware('set_customer');
+    $router->get('customer_report', 'CustomerReportController@index');
 
 
 });
