@@ -60,8 +60,8 @@ class ProtokolController extends AdminController
 
         $grid->model()->where('customer_id',session('customer_id'));
 
-        $grid->column('protokol_num', __('№ свидетельства'));
-        $grid->column('protokol_dt', __('Дата свидетельства'));
+        $grid->column('protokol_num', __('№ свидетельства'))->sortable();
+        $grid->column('protokol_dt', __('Дата свидетельства'))->sortable();
         $grid->column('pin', __('Pin'));
         $grid->photos('Фото')->modal('Фото поверки', function ($model) {
             $matches = [];

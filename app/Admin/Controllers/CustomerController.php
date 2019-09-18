@@ -34,7 +34,7 @@ class CustomerController extends AdminController
             // Add a column filter
             $filter->like('name', 'ФИО');
             $filter->like('code', 'Код клиента');
-            $filter->like('protokols.protokol_num', 'номер свидетельства');
+            $filter->like('protokols.protokol_num', 'Номер свидетельства');
             $filter->equal('enabled')->radio([
                 ''   => 'Все',
                 0    => 'Не активны',
@@ -54,7 +54,7 @@ class CustomerController extends AdminController
         $grid->column('code', __('Код'));
         $grid->column('ФИО')->display(function () {
             return '<a href="/admin/protokols?set='.$this->id.'" title="Поверки клиента '.$this->name.'">'.$this->name.'</a>';
-        });
+        })->sortable();
         $grid->dinamic('Динамика поверок')->display(function () {
             return '<a href="/admin/customer_chart?set='.$this->id.'" title="Динамика поверок "><span class="fa fa-bar-chart"/></a>';
         });
