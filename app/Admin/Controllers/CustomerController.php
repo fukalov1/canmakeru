@@ -34,6 +34,7 @@ class CustomerController extends AdminController
             // Add a column filter
             $filter->like('name', 'ФИО');
             $filter->like('code', 'Код клиента');
+            $filter->like('protokols.protokol_num', 'номер свидетельства');
             $filter->equal('enabled')->radio([
                 ''   => 'Все',
                 0    => 'Не активны',
