@@ -45,8 +45,8 @@ class ProtokolController extends AdminController
             // Remove the default id filter
             $filter->disableIdFilter();
 
-            $filter->like('protokol_num', 'Номер протокола');
-            $filter->between('protokol_dt', 'Дата протокола')->date();
+            $filter->like('protokol_num', 'Номер свидетельства');
+            $filter->between('protokol_dt', 'Дата свидетельства')->date();
 
         });
 
@@ -60,8 +60,8 @@ class ProtokolController extends AdminController
 
         $grid->model()->where('customer_id',session('customer_id'));
 
-        $grid->column('protokol_num', __('№ протокола'));
-        $grid->column('protokol_dt', __('Дата протокола'));
+        $grid->column('protokol_num', __('№ свидетельства'));
+        $grid->column('protokol_dt', __('Дата свидетельства'));
         $grid->column('pin', __('Pin'));
         $grid->photos('Фото')->modal('Фото поверки', function ($model) {
             $matches = [];
