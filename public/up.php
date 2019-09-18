@@ -56,9 +56,9 @@ $protokol_formated_num = intval(substr($protokol_num, 0,-7)).'-'.intval(substr($
         <td>Счетчик</td>
     </tr>
     <tr>
-        <td><img class="image" src="/preview/<?$matches[1]?>/<?$matches[2]?>/<?=$protokol_photo?>"></img></td>
-        <td><img class="image" src="/preview/<?$matches[1]?>/<?$matches[2]?>/<?=$protokol_photo1?>"></img></td>
-        <td><img class="image"  src="/preview/<?$matches[1]?>/<?$matches[2]?>/<?=$meter_photo?>"></td>
+        <td><img class="image" src="/preview/<?=$matches[1]?>/<?=$matches[2]?>/<?=$protokol_photo?>"></img></td>
+        <td><img class="image" src="/preview/<?=$matches[1]?>/<?=$matches[2]?>/<?=$protokol_photo1?>"></img></td>
+        <td><img class="image"  src="/preview/<?=$matches[1]?>/<?=$matches[2]?>/<?=$meter_photo?>"></td>
     </tr>
 </table>
 
