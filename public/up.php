@@ -72,7 +72,7 @@ if (isset($_REQUEST['id'])) {
     $prot_id= floatval(str_pad($_REQUEST['id_1'], 3, "0", STR_PAD_LEFT).str_pad($_REQUEST['id_2'], 2, "0", STR_PAD_LEFT).str_pad($_REQUEST['id_3'], 5, "0", STR_PAD_LEFT));
 
 }
-echo $prot_id;
+// echo $prot_id;
 
 $stmt = $conn->prepare("SELECT protokol_num, pin, protokol_photo, meter_photo, protokol_photo1, protokol_dt FROM protokols where protokol_num=? and pin=? order by updated_dt desc");
 $stmt->bind_param("ii", $prot_id, $_REQUEST['pin']);
@@ -114,7 +114,7 @@ $meter_photo = preg_replace('/photos\//','',$meter_photo);
             <div class="col-lg-4 col-sm-4 col-md-4 col-12 text-center">
                 <label>Свидетельство</label><br/>
                 <a href="/photo/<?=$matches[1]?>/<?=$matches[2]?>/<?=$protokol_photo?>" target="_blank" title="открыть в оригинальном размере">
-                    <img class="myimg" src="<?=$matches[1]?>/<?=$matches[2]?>/<?=$protokol_photo?>">
+                    <img class="myimg" src="/photo/<?=$matches[1]?>/<?=$matches[2]?>/<?=$protokol_photo?>">
                 </a>
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-12 text-center">
