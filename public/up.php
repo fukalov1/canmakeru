@@ -43,6 +43,9 @@ $conn->close();
 $matches = [];
 preg_match('/(\d\d\d\d)\-(\d\d)/', $protokol_dt,$matches);
 $protokol_formated_num = intval(substr($protokol_num, 0,-7)).'-'.intval(substr($protokol_num, -7,2)).'-'.intval(substr($protokol_num, -5));
+$protokol_photo = preg_replace('/photos\//','',$protokol_photo);
+$protokol_photo1 = preg_replace('/photos\//','',$protokol_photo1);
+$meter_photo = preg_replace('/photos\//','',$meter_photo);
 
 ?>
 
