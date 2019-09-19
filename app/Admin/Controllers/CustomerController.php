@@ -52,7 +52,7 @@ class CustomerController extends AdminController
         }
 
         $grid->column('code', __('Код'));
-        $grid->column('ФИО')->display(function () {
+        $grid->name('ФИО')->display(function () {
             return '<a href="/admin/protokols?set='.$this->id.'" title="Поверки клиента '.$this->name.'">'.$this->name.'</a>';
         })->sortable();
         $grid->dinamic('Динамика поверок')->display(function () {
