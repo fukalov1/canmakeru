@@ -300,20 +300,20 @@ class MainController extends Controller
         $data['error'] = 'empty';
         // $nmbr = preg_replace('/\-/', '', request()->post('nmbr'));
         //dd((int)$nmbr);
-        $id_1 = request()->post('id_2');
+        $id_1 = request()->post('id_1');
         $id_2 = request()->post('id_2');
         $id_3 = request()->post('id_3');
-        dd($post, $id_1,$id_2,$id_3);
+        // dd($post, $id_1,$id_2,$id_3);
 
         $prot_id= floatval(str_pad($id_1, 3, "0", STR_PAD_LEFT).str_pad($id_2, 2, "0", STR_PAD_LEFT).str_pad($id_3, 5, "0", STR_PAD_LEFT)); 
 
         $pin = request()->post('pin');
 
-        dd($prot_id);
+        // dd((int)$prot_id);
 //        dd($pin, (int)($nmbr1.$nmbr2.$nmbr3));
 
         $protokol = Protokol::where('pin', $pin)
-            ->where('protokol_num', $prot_id)
+            ->where('protokol_num', (int)$prot_id)
             ->get();
         foreach ($protokol as $item) {
             preg_match('/(\d\d\d\d)\-(\d\d)/', $item->protokol_dt,$matches);
