@@ -29,13 +29,13 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <input type="text" class="form-control" name="nmbr1" id="nmbr1" value="" placeholder="000-00-00000">
+                                <input type="text" class="form-control" name="id_1" id="id_1" value="" placeholder="000">
                             </div>
                             <div class="col-lg-4">
-                                <input type="text" class="form-control" name="nmbr2" id="nmbr2" value="" placeholder="000-00-00000">
+                                <input type="text" class="form-control" name="id_2" id="id_2" value="" placeholder="00">
                             </div>
                             <div class="col-lg-4">
-                                <input type="text" class="form-control" name="nmbr3" id="nmbr3" value="" placeholder="000-00-00000">
+                                <input type="text" class="form-control" name="id_3" id="id_3" value="" placeholder="00000">
                             </div>
                         </div>
                         <div class="row">
