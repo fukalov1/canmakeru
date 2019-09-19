@@ -303,11 +303,13 @@ class MainController extends Controller
         $id_1 = request()->post('id_2');
         $id_2 = request()->post('id_2');
         $id_3 = request()->post('id_3');
+        dd($post, $id_1,$id_2,$id_3);
 
         $prot_id= floatval(str_pad($id_1, 3, "0", STR_PAD_LEFT).str_pad($id_2, 2, "0", STR_PAD_LEFT).str_pad($id_3, 5, "0", STR_PAD_LEFT)); 
 
         $pin = request()->post('pin');
 
+        dd($prot_id);
 //        dd($pin, (int)($nmbr1.$nmbr2.$nmbr3));
 
         $protokol = Protokol::where('pin', $pin)
