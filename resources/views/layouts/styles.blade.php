@@ -10,7 +10,7 @@
         margin-left: 0px;
         margin-right: 0px;
     }
-    #nmbr, #pin {
+    #nmbr, #pin, #id_1, #id_2, #id_3 {
         text-align: center;
     }
     .myimg {
