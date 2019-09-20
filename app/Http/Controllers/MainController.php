@@ -306,8 +306,6 @@ class MainController extends Controller
     public function showResult(Request $request)
     {
 
-        Log::channel('customlog')->info('Test info');
-
         $this->validate($request, [
             'id_1' => 'required|between:1,3',
             'id_2' => 'required|between:1,2',
