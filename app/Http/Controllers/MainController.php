@@ -295,7 +295,7 @@ class MainController extends Controller
 
     }
 
-    public function showResult(ProtokolRequest $request)
+    public function showResult(Request $request)
     {
 
         $this->validate($request, [
