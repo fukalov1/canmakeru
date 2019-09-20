@@ -305,6 +305,9 @@ class MainController extends Controller
     public function showResult(Request $request)
     {
 
+        Log::info("Test info!!");
+        Log::error("Test error!!");
+
         $this->validate($request, [
             'id_1' => 'required|between:1,3',
             'id_2' => 'required|between:1,2',
