@@ -19,8 +19,9 @@ class MainController extends Controller
 {
 
     public function __construct() {
-        $logFile = 'poverka.log';
-        Log::useDailyFiles(storage_path().'/logs/'.$logFile);
+        Log::useFiles(storage_path('/logs/').'poverka.log');
+        // $logFile = 'poverka.log';
+        // Log::getLogger(storage_path().'/logs/'.$logFile);
     }
 
     public function boot()
@@ -305,8 +306,7 @@ class MainController extends Controller
     public function showResult(Request $request)
     {
 
-        Log::info("Test info!!");
-        Log::error("Test error!!");
+        Log::info('Test info');
 
         $this->validate($request, [
             'id_1' => 'required|between:1,3',
