@@ -6,6 +6,7 @@ use App\Protokol;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\Passport;
 use GuzzleHttp;
+use Illuminate\Support\Facades\Log;
 use Yandex\Disk\DiskClient;
 use Illuminate\Http\Request;
 use Yandex\OAuth\OAuthClient;
@@ -17,6 +18,11 @@ use Yandex\OAuth\Exception\AuthRequestException;
 
 class MainController extends Controller
 {
+
+    public function __construct() {
+        $logFile = 'poverka.log';
+        Log::useDailyFiles(storage_path().'/logs/'.$logFile);
+    }
 
     public function boot()
     {
