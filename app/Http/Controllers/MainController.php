@@ -303,6 +303,12 @@ class MainController extends Controller
             'id_2' => 'required|max:2',
             'id_3' => 'required|max:5',
             'pin' => 'required|min:4|max:4',
+        ],
+        [
+            'id_1.required' => 'Первое поле (код клиента) должно быть заполнено',
+            'id_2.required' => 'Второе поле (год) должно быть заполнено',
+            'id_3.required' => 'Третье поле номер свидетельсва должно быть заполнено',
+            'pin.required'  => 'ПИН-код должен быть заполнен',
         ]);
 
         $data['error'] = 'empty';
