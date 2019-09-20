@@ -6,6 +6,18 @@
             <div class="col-lg-12 col-12 text-center">
                 <img src="/images/logo.png"/>
             </div>
+            
+            <div class="col-lg-12 col-12 text-center">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-md-12 col-12 text-center">
                 <div class="row">
