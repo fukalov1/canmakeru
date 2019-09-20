@@ -19,7 +19,7 @@ class MainController extends Controller
 {
 
     public function __construct() {
-        Log::useFiles(storage_path('/logs/').'poverka.log');
+        // Log::useFiles(storage_path('/logs/').'poverka.log');
         // $logFile = 'poverka.log';
         // Log::getLogger(storage_path().'/logs/'.$logFile);
     }
@@ -195,7 +195,7 @@ class MainController extends Controller
                     $protokol->uploadFile($_FILES, $photo, $photo1, $meter);
                 }
             } else {
-                Log::info("Клиент с $code не найден.");
+                Log::channel('customlog')->info("Клиент с $code не найден.");
             }
         }
     }
@@ -243,13 +243,13 @@ class MainController extends Controller
             );
 
             $success = true;
-            Log::info('Success export file '.$_FILES['file']['name']);
+            Log::channel('customlog')->info('Success export file '.$_FILES['file']['name']);
 
         }
         catch (Exception $ex) {
             //Выводим сообщение об исключении.
             $error =  $ex->getMessage();
-            Log::error('Error export file '.$_FILES['file']['name'].' : '.$error);
+            Log::channel('customlog')->error('Error export file '.$_FILES['file']['name'].' : '.$error);
         }
         return json_encode(['success' => $success, 'message' => $error]);
 
@@ -306,7 +306,7 @@ class MainController extends Controller
     public function showResult(Request $request)
     {
 
-        Log::info('Test info');
+        Log::channel('customlog')->info('Test info');
 
         $this->validate($request, [
             'id_1' => 'required|between:1,3',

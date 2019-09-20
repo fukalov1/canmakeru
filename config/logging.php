@@ -45,6 +45,11 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
         ],
+        'customlog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/poverka.log'),
+            'level' => 'info',
+        ],
 
         'daily' => [
             'driver' => 'daily',
