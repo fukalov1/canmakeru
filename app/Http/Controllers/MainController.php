@@ -295,8 +295,16 @@ class MainController extends Controller
 
     }
 
-    public function showResult()
+    public function showResult(ProtokolRequest $request)
     {
+
+        $this->validate($request, [
+            'id_1' => 'required|max:3',
+            'id_2' => 'required|max:2',
+            'id_3' => 'required|max:5',
+            'pin' => 'required|min:4|max:4',
+        ]);
+
         $data['error'] = 'empty';
         // $nmbr = preg_replace('/\-/', '', request()->post('nmbr'));
         //dd((int)$nmbr);
