@@ -196,6 +196,7 @@ class MainController extends Controller
 
     public function uploadFile()
     {
+
         //$file = $request->file('file');
         $error = '';
         $success = false;
@@ -236,12 +237,13 @@ class MainController extends Controller
             );
 
             $success = true;
+            Log::info('Success export file '.$_FILES['file']['name']);
 
         }
         catch (Exception $ex) {
             //Выводим сообщение об исключении.
             $error =  $ex->getMessage();
-
+            Log::error('Error export file '.$_FILES['file']['name'].' : '.$error);
         }
         return json_encode(['success' => $success, 'message' => $error]);
 
@@ -299,10 +301,10 @@ class MainController extends Controller
     {
 
         $this->validate($request, [
-            'id_1' => 'required|max:3',
-            'id_2' => 'required|max:2',
-            'id_3' => 'required|max:5',
-            'pin' => 'required|min:4|max:4',
+            'id_1' => 'required|between:1,3',
+            'id_2' => 'required|between:1,2',
+            'id_3' => 'required|between:1,5',
+            'pin' => 'required|digits:4',
         ],
         [
             'id_1.required' => 'Первое поле (код клиента) должно быть заполнено',
