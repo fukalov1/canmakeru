@@ -6,7 +6,7 @@
             <div class="col-lg-12 col-12 text-center">
                 <img src="/images/logo.png"/>
             </div>
-            
+
             <div class="col-lg-12 col-12 text-center">
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -61,7 +61,7 @@
                             <div class="col-lg-3">
                             </div>
                             <div class="col-lg-6">
-                                  <input type="text" class="form-control" name="pin" id="pin" value="" placeholder="0000">
+                                  <input type="text" class="form-control" name="pin" id="pin" value="" placeholder="">
                             </div>
                             <div class="col-lg-3">
                             </div>
