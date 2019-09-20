@@ -6,7 +6,6 @@ use App\Protokol;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\Passport;
 use GuzzleHttp;
-use Illuminate\Support\Facades\Log;
 use Yandex\Disk\DiskClient;
 use Illuminate\Http\Request;
 use Yandex\OAuth\OAuthClient;
