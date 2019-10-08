@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use Carbon\Carbon;
 use Yandex\Disk\DiskClient;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
@@ -128,6 +129,86 @@ class Protokol extends Model
 
     private function getFileSize($filename) {
         return filesize($filename);
+    }
+
+    public function refreshPhotos()
+    {
+        $protokols = $this->skip(200)->take(100)->get();
+        try {
+            $disk = new DiskClient();
+            //Устанавливаем полученный токен
+            $disk->setAccessToken(config('YANDEX_TOKEN'));
+
+            $nmbr = 1;
+            $i = 0;
+            $offer =  1;
+
+            foreach ($protokols as $protokol) {
+                $photo = preg_replace('/photos\//', '', $protokol->protokol_photo);
+                $photo1 = preg_replace('/photos\//', '', $protokol->protokol_photo1);
+                $meter = preg_replace('/photos\//', '', $protokol->meter_photo);
+
+                $folder =  (new Carbon($protokol->updated_dt))->formatLocalized('%Y-%m');
+//                echo " - $folder - $photo - $photo1 - $meter\n";
+                $files = $disk->directoryContents($folder);
+                $obj = collect($files);
+
+                echo "$nmbr. Checking files $photo, $photo1, $meter in folder $folder\n";
+                $data = $this->checkFileYaDisk($obj,$folder,$photo,$photo1,$meter);
+                if ($data->photo == '') {
+                    $this->reloadPhoto($disk, $folder, $photo);
+                }
+                if ($data->photo1 == '') {
+                    $this->reloadPhoto($disk, $folder, $photo1);
+                }
+                if ($data->meter == '') {
+                    $this->reloadPhoto($disk, $folder, $meter);
+                }
+
+                if ($i==$offer) {
+                    sleep(1);
+                    $i=0;
+                }
+                $i++;
+                $nmbr++;
+            }
+        }
+        catch (Exception $ex) {
+            echo "Error: ".$ex->getMessage();
+        }
+    }
+
+    private function checkFileYaDisk($obj, $folder, $photo, $photo1, $meter)
+    {
+        $data = collect([]);
+
+        $data->photo = $this->findFile($obj, $photo);
+        $data->photo1 = $this->findFile($obj, $photo1);
+        $data->meter = $this->findFile($obj, $meter);
+
+        return $data;
+    }
+
+    private function findFile($obj,$filename)
+    {
+        $result = $obj->search(function ($item) use ($filename) {
+            return $item['displayName'] == $filename;
+        });
+        if($result==false) {
+            $result = "";
+//           echo "File $filename not found!\n";
+        }
+        else {
+            $result = $filename;
+//            echo "File $filename exist!\n";
+        }
+        return $result;
+
+    }
+
+    private function reloadPhoto($disk,$folder,$filename)
+    {
+        echo "Reload lost file $folder - $filename\n";
     }
 
 }
