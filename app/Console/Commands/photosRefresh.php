@@ -12,14 +12,14 @@ class photosRefresh extends Command
      *
      * @var string
      */
-    protected $signature = 'photos:refresh';
+    protected $signature = 'photos:refresh {start=1 : Start process record} {offset=100 : Limit records}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Обновление местоположения фото в соотвесьтвии с записями в бд';
+    protected $description = 'Обновление местоположения фото в соотвествии с записями в бд';
 
     protected $protokol;
 
@@ -41,6 +41,8 @@ class photosRefresh extends Command
      */
     public function handle()
     {
-        $this->protokol->refreshPhotos();
+        $start = $this->argument('start');
+        $offset = $this->argument('offset');
+        $this->protokol->refreshPhotos($start,$offset);
     }
 }

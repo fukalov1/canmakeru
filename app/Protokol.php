@@ -131,9 +131,11 @@ class Protokol extends Model
         return filesize($filename);
     }
 
-    public function refreshPhotos()
+    public function refreshPhotos($start,$offset)
     {
-        $protokols = $this->skip(200)->take(100)->get();
+        echo "Start process record in $start to $offset\n";
+
+        $protokols = $this->skip($start)->take($offset)->get();
         try {
             $disk = new DiskClient();
             //Устанавливаем полученный токен
