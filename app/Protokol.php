@@ -136,42 +136,58 @@ class Protokol extends Model
         echo "Start process record in $start to $offset\n";
 
         $protokols = $this->skip($start)->take($offset)->get();
+//        $protokols = $this->where('protokol_photo', 'photos/protokol_5ca4a8d858d16.jpg')->get();
+
         try {
             $disk = new DiskClient();
             //Устанавливаем полученный токен
             $disk->setAccessToken(config('YANDEX_TOKEN'));
 
+            $diskClient = new DiskClient($disk->getAccessToken());
+            $diskClient->setServiceScheme(DiskClient::HTTPS_SCHEME);
+
             $nmbr = 1;
             $i = 0;
             $offer =  1;
 
+            $folder_current='';
             foreach ($protokols as $protokol) {
                 $photo = preg_replace('/photos\//', '', $protokol->protokol_photo);
                 $photo1 = preg_replace('/photos\//', '', $protokol->protokol_photo1);
                 $meter = preg_replace('/photos\//', '', $protokol->meter_photo);
 
-                $folder =  (new Carbon($protokol->updated_dt))->formatLocalized('%Y-%m');
-//                echo " - $folder - $photo - $photo1 - $meter\n";
-                $files = $disk->directoryContents($folder);
-                $obj = collect($files);
+                $old_folder =  (new Carbon($protokol->updated_dt))->formatLocalized('%Y-%m');
+                $folder =  (new Carbon($protokol->protokol_dt))->formatLocalized('%Y-%m');
 
-                echo "$nmbr. Checking files $photo, $photo1, $meter in folder $folder\n";
-                $data = $this->checkFileYaDisk($obj,$folder,$photo,$photo1,$meter);
-                if ($data->photo == '') {
-                    $this->reloadPhoto($disk, $folder, $photo);
-                }
-                if ($data->photo1 == '') {
-                    $this->reloadPhoto($disk, $folder, $photo1);
-                }
-                if ($data->meter == '') {
-                    $this->reloadPhoto($disk, $folder, $meter);
+                if ($folder != $folder_current) {
+                    $folder_current = $folder;
+                    $files = $disk->directoryContents($folder);
+                    $obj = collect($files);
                 }
 
-                if ($i==$offer) {
-                    sleep(1);
-                    $i=0;
+
+                if($old_folder != $folder) {
+                    echo "$nmbr. Repair files $photo, $photo1, $meter in folder $folder\n";
+                    $data = $this->checkFileYaDisk($obj, $photo, $photo1, $meter);
+                    if ($data->photo == '') {
+                        $this->removePhoto($diskClient, $old_folder, $folder, $photo);
+                    }
+                    if ($data->photo1 == '') {
+                        $this->removePhoto($diskClient, $old_folder, $folder, $photo1);
+                    }
+                    if ($data->meter == '') {
+                        $this->removePhoto($diskClient, $old_folder, $folder, $meter);
+                    }
+
+                    if ($i == $offer) {
+                        sleep(1);
+                        $i = 0;
+                    }
+                    $i++;
                 }
-                $i++;
+                else {
+                    echo "$nmbr. Skip files $photo, $photo1, $meter in folder $folder\n";
+                }
                 $nmbr++;
             }
         }
@@ -180,7 +196,7 @@ class Protokol extends Model
         }
     }
 
-    private function checkFileYaDisk($obj, $folder, $photo, $photo1, $meter)
+    private function checkFileYaDisk($obj, $photo, $photo1, $meter)
     {
         $data = collect([]);
 
@@ -208,9 +224,20 @@ class Protokol extends Model
 
     }
 
-    private function reloadPhoto($disk,$folder,$filename)
+    private function removePhoto($disk, $old_folder, $folder,$filename)
     {
-        echo "Reload lost file $folder - $filename\n";
+        try {
+            if ($disk->move('/'.$old_folder . '/' . $filename, '/'.$folder . '/' . $filename)) {
+                echo "Remove lost file /$old_folder/$filename from  to /$folder/$filename\n";
+            } else {
+                echo "Error remove file  $filename from $old_folder to $folder\n";
+            }
+        }
+        catch (\Exception $ex)
+        {
+            echo "Error remove file  $filename from $old_folder to $folder: ".$ex->getMessage()."\n";
+        }
+
     }
 
 }
