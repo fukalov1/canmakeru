@@ -3,7 +3,7 @@
 @section('content')
 <div class="col-md-12">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-12" id="app">
             <h4>
                 Личный кабинет партнера
             </h4>
@@ -24,7 +24,12 @@
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <example-component>
+
+                    </example-component>
+
+                </div>
                 <div class="tab-pane fade" id="statistic" role="tabpanel" aria-labelledby="statistic-tab">2.</div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">3.</div>
                 <div class="tab-pane fade" id="report" role="tabpanel" aria-labelledby="report-tab">4.</div>
