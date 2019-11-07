@@ -35,3 +35,16 @@ Route::get('/redirect', function () {
 
     return redirect('http://127.0.0.1:8000/oauth/authorize?'.$query);
 });
+
+Auth::routes();
+
+Route::get('/login/customer', 'Auth\LoginController@showCustomerLoginForm');
+//Route::get('/register/customer', 'Auth\RegisterController@showCustomerRegisterForm');
+
+Route::post('/login/customer', 'Auth\LoginController@customerLogin');
+//Route::post('/register/customer', 'Auth\RegisterController@createCustomer');
+
+Route::view('/home', 'home')->middleware('auth');
+Route::view('/customer', 'customer');
+
+Route::get('/home', 'HomeController@index')->name('home');
