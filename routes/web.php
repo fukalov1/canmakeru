@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -39,12 +41,14 @@ Route::get('/redirect', function () {
 Auth::routes();
 
 Route::get('/login/customer', 'Auth\LoginController@showCustomerLoginForm');
+Route::get('/logout', 'Auth\LoginController@logout');
 //Route::get('/register/customer', 'Auth\RegisterController@showCustomerRegisterForm');
 
 Route::post('/login/customer', 'Auth\LoginController@customerLogin');
 //Route::post('/register/customer', 'Auth\RegisterController@createCustomer');
 
 Route::view('/home', 'home')->middleware('auth');
-Route::view('/customer', 'customer');
+Route::middleware('auth:customer')
+    ->get('/customer', 'CustomerController@index')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
