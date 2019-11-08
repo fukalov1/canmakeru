@@ -14,7 +14,7 @@ class Customer extends Authenticatable
 {
     use Notifiable, SoftDeletes;
 
-    protected $guard = 'admin';
+    protected $guard = 'customer';
 
     protected $fillable = [
         'name', 'email', 'password',
@@ -26,8 +26,28 @@ class Customer extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
+    public function getProtokols()
+    {
+        $data = [];
+        if ($this->find(auth()->guard('customer')->user())) {
+            $data =  $this->find(auth()->guard('customer')->user()->id)->protokols;
+        }
+        return json_encode(['data' => $data]);
+    }
+
     public function protokols() {
 	    return $this->hasMany(Protokol::class);
+    }
+
+    public function getDataChart() {
+        $id = auth()->guard('customer')->user()->id;
+        $quest  = Customer::join('protokols','customers.id','protokols.customer_id')
+            ->select(\DB::raw('date_format(protokols.protokol_dt, "%Y-%m") as date, count(protokols.protokol_num) count'))
+            ->whereRaw('date_format(protokol_dt, "%Y-%m") <> "0000-00"')
+            ->where('customer_id', $id)
+            ->groupBy(\DB::raw('date_format(protokol_dt, "%Y-%m")'))
+            ->get()->toArray();
+        return json_encode($quest);
     }
 
     /**

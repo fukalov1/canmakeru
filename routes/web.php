@@ -12,6 +12,7 @@
 */
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,7 +49,15 @@ Route::post('/login/customer', 'Auth\LoginController@customerLogin');
 //Route::post('/register/customer', 'Auth\RegisterController@createCustomer');
 
 Route::view('/home', 'home')->middleware('auth');
-Route::middleware('auth:customer')
-    ->get('/customer', 'CustomerController@index')->middleware('auth');
+
+Route::group(['middleware' => ['auth:customer']], function () {
+    Route::get('/customer', 'CustomerController@index');
+    Route::group(['prefix' => 'data'], function() {
+        Route::get('/protokols', 'CustomerController@getDataProtokols');
+        Route::get('/profile', 'CustomerController@getProfile');
+        Route::get('/statistic', 'CustomerController@getDataStatistic');
+    });
+});
+
 
 Route::get('/home', 'HomeController@index')->name('home');

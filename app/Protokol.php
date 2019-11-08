@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Protokol extends Model
 {
 
+
     public function uploadExistFile($filename, $path)
     {
 
