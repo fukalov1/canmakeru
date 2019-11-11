@@ -1,71 +1,30 @@
-<!--<template>-->
-<!--    <div>-->
-<!--        <line-chart :height="300" :width="300"/>-->
-<!--        <button @click="increase()">Increase height</button>-->
-<!--    </div>-->
-<!--</template>-->
-
-<!--<script>-->
-
-<!--    import LineChart from './ChartContainer';-->
-
-<!--    export default {-->
-<!--        components: { LineChart },-->
-<!--        data () {-->
-<!--            return {-->
-<!--                height: 300-->
-<!--            }-->
-<!--        },-->
-<!--        methods: {-->
-<!--            increase () {-->
-<!--                this.height += 10-->
-<!--            }-->
-<!--        },-->
-<!--        computed: {-->
-<!--            myStyles () {-->
-<!--                return {-->
-<!--                    height: `${this.height}px`,-->
-<!--                    position: 'relative'-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
-
-
-
-
-
-
-
+<template>
+    <div class="container">
+        <div class="row">
+            <div class="col-sd-12">
+                <line-chart :chart-data="dataChart" :height="300" :options="{responsible: true, maintainAspectRatio: true}"/>
+            </div>
+        </div>
+    </div>
+</template>
 
 <script>
-    import VueCharts from 'vue-chartjs'
-    import { Bar, Line } from 'vue-chartjs'
-
+    import LineChart from "./LineChart.js";
 
     export default {
-        extends: Line,
-        data() {
+       components: { LineChart},
+       data() {
             return {
                 data: [],
                 labels: [],
-                // height: 300,
+                dataChart: {'labels':[], 'datasets': []}
             }
         },
         mounted () {
-            // Overwriting base render method with actual data.
-        },
-        created() {
             this.getData();
         },
         computed: {
-            myStyles () {
-                return {
-                    height: `${this.height}px`,
-                    position: 'relative'
-                }
-            }
+
         },
         methods: {
             getData() {
@@ -79,24 +38,13 @@
                             this.labels.push(item.date);
                             this.data.push(item.count);
                         });
-                        this.showChart();
+                        this.dataChart.labels = this.labels;
+                        this.dataChart.datasets = this.data;
                     })
                     .catch(error => {
 
                     });
             },
-            showChart() {
-                this.renderChart({
-                    labels: this.labels,
-                    datasets: [
-                        {
-                            label: 'Динамика поверок партнера',
-                            backgroundColor: '#f87979',
-                            data: this.data
-                        }
-                    ]
-                });
-            }
         }
     }
 
