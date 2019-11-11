@@ -46,8 +46,26 @@ class Customer extends Authenticatable
             ->whereRaw('date_format(protokol_dt, "%Y-%m") <> "0000-00"')
             ->where('customer_id', $id)
             ->groupBy(\DB::raw('date_format(protokol_dt, "%Y-%m")'))
-            ->get()->toArray();
-        return json_encode($quest);
+            ->get();
+
+        $labels = [];
+        $data = [];
+        foreach ($quest as $item) {
+            $labels[] = $item->date;
+            $data[] = $item->count;
+        }
+//
+//        return json_encode($quest);
+
+        return [
+            'labels' => $labels,
+            'datasets' => array([
+                'label' => 'Поверки',
+                'backgroundColor' => '#971188',
+                'data' => $data,
+            ])
+        ];
+
     }
 
     /**

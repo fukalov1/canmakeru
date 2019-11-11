@@ -29,7 +29,7 @@
                 </div>
                 <div class="tab-pane fade" id="statistic" role="tabpanel" aria-labelledby="statistic-tab">
                     <div class="statistic">
-                        <statistic width="300" height="300"/>
+                        <statistic/>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
