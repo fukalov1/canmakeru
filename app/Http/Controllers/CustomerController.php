@@ -18,6 +18,11 @@ class CustomerController extends Controller
         return view('customer');
     }
 
+    public function getListWorkers()
+    {
+        return $this->customer->getWorkers();
+    }
+
     public function getDataProtokols()
     {
         return $this->customer->getProtokols();

@@ -31,6 +31,10 @@ class Customer extends Authenticatable
         return $this->hasMany(SlaveCustomer::class);
     }
 
+    public function getWorkers() {
+        return $this->whereIn('id', $this->find(auth()->guard('customer')->user()->id)->slave_customers->pluck('slave_id'))->get();
+    }
+
     public function getProtokols()
     {
         $data = [];

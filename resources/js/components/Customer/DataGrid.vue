@@ -42,10 +42,12 @@
 
         <div class="row table-panel">
             <div class="col-md-1 text-left">
-                Показывать по
+                <span  v-show="filtered==false">
+                    Показывать по
+                </span>
             </div>
             <div class="col-md-1 text-left">
-                    <select v-model="perPage" class="form-control">
+                    <select v-model="perPage" class="form-control" v-show="filtered==false">
                         <option value="10" selected>10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
@@ -53,7 +55,9 @@
                     </select>
             </div>
             <div class="col-md-2 text-left">
-                записей
+                <span  v-show="filtered==false">
+                    записей
+                </span>
             </div>
             <div class="col-md-4 text-left">
                 <VueHotelDatepicker
@@ -63,10 +67,12 @@
                     confirmText="Подтвердить"
                     resetText="Сбросить"
                     format="YYYY-MM-DD"
+                    startDate="2018-10-01"
                     separator="-"
                     fromText="с"
                     toText="по"
                     v-on:confirm="setRange"
+                    v-on:reset="setReset"
                     @check-in-changed="setRange"
                 />
             </div>
@@ -114,13 +120,14 @@
 
         <div class="row">
             <div class="col-md-12 text-center">
-                <paginator
+                <paginator  v-show="filtered==false"
                     :page="page"
                     :countPage="countPage"
                     :perPage="perPage"
                     v-on:set-page="setPage"
                     v-on:set-next="setNext"
-                    v-on:set-prev="setPrev"/>
+                    v-on:set-prev="setPrev"
+                />
             </div>
         </div>
 
@@ -174,10 +181,21 @@
             }
         },
         computed: {
-            countPage(){
-                let l = this.data.length,
-                s = this.perPage;
+            countPage() {
+                let l = 0;
+                let s = this.perPage;
+                if (this.filtered)
+                    l= this.protokols.length;
+                else
+                    l = this.data.length;
+
                 return Math.ceil(l/s);
+            },
+            filtered() {
+                if (this.word || this.startDate || this.endDate)
+                    return true;
+                else
+                    return false;
             }
         },
         created() {
@@ -206,20 +224,20 @@
                 this.protokols = this.data.filter((item, index) =>  {
                     let result = false;
                     let word = item.protokol_num+'';
-                    if (word.includes(this.word))
+                    if (word.includes(this.word) && this.word!='') {
                         result = true;
+                    }
                     word = item.protokol_dt+'';
-                    if (word.includes(this.word))
+                    if (word.includes(this.word) && this.word!='') {
                         result = true;
+                    }
                     if (this.startDate && this.endDate) {
                         word = item.protokol_dt+'';
                         word = word.slice(0,10);
                         // word = word.replace('-','');
-                        debugger
                         if (word>=this.startDate && word<=this.endDate) {
                             result = true;
                         }
-                        debugger
                     }
 
                     return result;
@@ -273,6 +291,11 @@
                 // str = str.replace('-','');
                 this.endDate = str;
                 this.getFilterProtokols();
+            },
+            setReset() {
+                this.startDate = null;
+                this.endDate = null;
+                this.getProtokols();
             }
         }
     }
@@ -280,11 +303,17 @@
 
 <style scoped>
     .table-panel div {
-        font-size: 12px;
-        line-height: 35px;
+        line-height: 50px;
     }
     .table-panel select, .table-panel input {
-        font-size: 12px;
+        padding: 8px;
+        border: 1px solid #eee;
+        color: #505050;
+        font-size: 16px;
+        line-height: 32px;
+        outline: none;
+        height: 100%;
+        border-radius: 0;
     }
     .photo {
         height: 80vh;

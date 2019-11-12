@@ -6014,7 +6014,7 @@ module.exports = function(module) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(global) {/**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.16.0
+ * @version 1.15.0
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -6036,17 +6036,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined' && typeof navigator !== 'undefined';
+var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
 
-var timeoutDuration = function () {
-  var longerTimeoutBrowsers = ['Edge', 'Trident', 'Firefox'];
-  for (var i = 0; i < longerTimeoutBrowsers.length; i += 1) {
-    if (isBrowser && navigator.userAgent.indexOf(longerTimeoutBrowsers[i]) >= 0) {
-      return 1;
-    }
+var longerTimeoutBrowsers = ['Edge', 'Trident', 'Firefox'];
+var timeoutDuration = 0;
+for (var i = 0; i < longerTimeoutBrowsers.length; i += 1) {
+  if (isBrowser && navigator.userAgent.indexOf(longerTimeoutBrowsers[i]) >= 0) {
+    timeoutDuration = 1;
+    break;
   }
-  return 0;
-}();
+}
 
 function microtaskDebounce(fn) {
   var called = false;
@@ -6164,17 +6163,6 @@ function getScrollParent(element) {
   }
 
   return getScrollParent(getParentNode(element));
-}
-
-/**
- * Returns the reference node of the reference object, or the reference object itself.
- * @method
- * @memberof Popper.Utils
- * @param {Element|Object} reference - the reference element (the popper will be relative to this)
- * @returns {Element} parent
- */
-function getReferenceNode(reference) {
-  return reference && reference.referenceNode ? reference.referenceNode : reference;
 }
 
 var isIE11 = isBrowser && !!(window.MSInputMethodContext && document.documentMode);
@@ -6485,8 +6473,8 @@ function getBoundingClientRect(element) {
 
   // subtract scrollbar size from sizes
   var sizes = element.nodeName === 'HTML' ? getWindowSizes(element.ownerDocument) : {};
-  var width = sizes.width || element.clientWidth || result.width;
-  var height = sizes.height || element.clientHeight || result.height;
+  var width = sizes.width || element.clientWidth || result.right - result.left;
+  var height = sizes.height || element.clientHeight || result.bottom - result.top;
 
   var horizScrollbar = element.offsetWidth - width;
   var vertScrollbar = element.offsetHeight - height;
@@ -6638,7 +6626,7 @@ function getBoundaries(popper, reference, padding, boundariesElement) {
   // NOTE: 1 DOM access here
 
   var boundaries = { top: 0, left: 0 };
-  var offsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, getReferenceNode(reference));
+  var offsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, reference);
 
   // Handle viewport case
   if (boundariesElement === 'viewport') {
@@ -6766,7 +6754,7 @@ function computeAutoPlacement(placement, refRect, popper, reference, boundariesE
 function getReferenceOffsets(state, popper, reference) {
   var fixedPosition = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
-  var commonOffsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, getReferenceNode(reference));
+  var commonOffsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, reference);
   return getOffsetRectRelativeToArbitraryNode(reference, commonOffsetParent, fixedPosition);
 }
 
@@ -7028,7 +7016,7 @@ function destroy() {
 
   this.disableEventListeners();
 
-  // remove the popper if user explicitly asked for the deletion on destroy
+  // remove the popper if user explicity asked for the deletion on destroy
   // do not use `remove` because IE11 doesn't support it
   if (this.options.removeOnDestroy) {
     this.popper.parentNode.removeChild(this.popper);
@@ -31457,7 +31445,7 @@ __webpack_require__(163);
 window.Vue = __webpack_require__(166);
 window.axios = __webpack_require__(4);
 
-Vue.component('example-component', __webpack_require__(170));
+Vue.component('customer-room', __webpack_require__(170));
 Vue.component('data-grid', __webpack_require__(173));
 Vue.component('profile-user', __webpack_require__(185));
 Vue.component('statistic', __webpack_require__(188));
@@ -66199,7 +66187,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/ExampleComponent.vue"
+Component.options.__file = "resources/js/components/Customer/CustomerRoom.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -66208,9 +66196,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-299e239e", Component.options)
+    hotAPI.createRecord("data-v-f34403a2", Component.options)
   } else {
-    hotAPI.reload("data-v-299e239e", Component.options)
+    hotAPI.reload("data-v-f34403a2", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -66242,10 +66230,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            customer_id: 0,
+            data: []
+        };
+    },
     mounted: function mounted() {
-        console.log('Component mounted.');
+        this.loadData();
+    },
+
+    methods: {
+        loadData: function loadData() {
+            var _this = this;
+
+            axios({
+                url: '/data/workers',
+                method: 'GET'
+            }).then(function (response) {
+                _this.data = response.data;
+            }).catch(function (error) {});
+        }
     }
 });
 
@@ -66257,30 +66299,196 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h4", [_vm._v("\n        Личный кабинет партнера\n    ")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-9" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-1 text-right" }, [
+        _vm._v("\n            Работник\n        ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-2 text-right" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.customer_id,
+                expression: "customer_id"
+              }
+            ],
+            staticClass: "form-control",
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.customer_id = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          _vm._l(_vm.data, function(item, index) {
+            return _c(
+              "option",
+              { attrs: { selected: "" }, domProps: { value: item.id } },
+              [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(item.name) +
+                    "\n                "
+                )
+              ]
+            )
+          }),
+          0
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "tab-content", attrs: { id: "myTabContent" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "tab-pane fade show active",
+          attrs: { id: "home", role: "tabpanel", "aria-labelledby": "home-tab" }
+        },
+        [_c("data-grid")],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "tab-pane fade",
+          attrs: {
+            id: "statistic",
+            role: "tabpanel",
+            "aria-labelledby": "statistic-tab"
+          }
+        },
+        [_c("div", { staticClass: "statistic" }, [_c("statistic")], 1)]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "tab-pane fade",
+          attrs: {
+            id: "profile",
+            role: "tabpanel",
+            "aria-labelledby": "profile-tab"
+          }
+        },
+        [_c("profile-user")],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "tab-pane fade",
+        attrs: {
+          id: "report",
+          role: "tabpanel",
+          "aria-labelledby": "report-tab"
+        }
+      })
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
+    return _c(
+      "ul",
+      { staticClass: "nav nav-tabs", attrs: { id: "myTab", role: "tablist" } },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active",
+              attrs: {
+                id: "home-tab",
+                "data-toggle": "tab",
+                href: "#home",
+                role: "tab",
+                "aria-controls": "home",
+                "aria-selected": "true"
+              }
+            },
+            [_vm._v("Список поверок")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "profile-tab",
+                "data-toggle": "tab",
+                href: "#profile",
+                role: "tab",
+                "aria-controls": "profile",
+                "aria-selected": "false"
+              }
+            },
+            [_vm._v("Профиль")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "stat-tab",
+                "data-toggle": "tab",
+                href: "#statistic",
+                role: "tab",
+                "aria-controls": "statisttic",
+                "aria-selected": "false"
+              }
+            },
+            [_vm._v("Статистика")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "report-tab",
+                "data-toggle": "tab",
+                href: "#report",
+                role: "tab",
+                "aria-controls": "report",
+                "aria-selected": "false"
+              }
+            },
+            [_vm._v("Динамика поверок за период")]
+          )
         ])
-      ])
-    ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -66288,7 +66496,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-299e239e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-f34403a2", module.exports)
   }
 }
 
@@ -66378,7 +66586,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n.table-panel div[data-v-58498de6] {\n    font-size: 12px;\n    line-height: 35px;\n}\n.table-panel select[data-v-58498de6], .table-panel input[data-v-58498de6] {\n    font-size: 12px;\n}\n.photo[data-v-58498de6] {\n    height: 80vh;\n}\n", ""]);
+exports.push([module.i, "\n.table-panel div[data-v-58498de6] {\n    line-height: 50px;\n}\n.table-panel select[data-v-58498de6], .table-panel input[data-v-58498de6] {\n    padding: 8px;\n    border: 1px solid #eee;\n    color: #505050;\n    font-size: 16px;\n    line-height: 32px;\n    outline: none;\n    height: 100%;\n    border-radius: 0;\n}\n.photo[data-v-58498de6] {\n    height: 80vh;\n}\n", ""]);
 
 // exports
 
@@ -66557,6 +66765,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -66603,9 +66818,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         countPage: function countPage() {
-            var l = this.data.length,
-                s = this.perPage;
+            var l = 0;
+            var s = this.perPage;
+            if (this.filtered) l = this.protokols.length;else l = this.data.length;
+
             return Math.ceil(l / s);
+        },
+        filtered: function filtered() {
+            if (this.word || this.startDate || this.endDate) return true;else return false;
         }
     },
     created: function created() {
@@ -66637,18 +66857,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.protokols = this.data.filter(function (item, index) {
                 var result = false;
                 var word = item.protokol_num + '';
-                if (word.includes(_this3.word)) result = true;
+                if (word.includes(_this3.word) && _this3.word != '') {
+                    result = true;
+                }
                 word = item.protokol_dt + '';
-                if (word.includes(_this3.word)) result = true;
+                if (word.includes(_this3.word) && _this3.word != '') {
+                    result = true;
+                }
                 if (_this3.startDate && _this3.endDate) {
                     word = item.protokol_dt + '';
                     word = word.slice(0, 10);
                     // word = word.replace('-','');
-                    debugger;
                     if (word >= _this3.startDate && word <= _this3.endDate) {
                         result = true;
                     }
-                    debugger;
                 }
 
                 return result;
@@ -66702,6 +66924,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // str = str.replace('-','');
             this.endDate = str;
             this.getFilterProtokols();
+        },
+        setReset: function setReset() {
+            this.startDate = null;
+            this.endDate = null;
+            this.getProtokols();
         }
     }
 });
@@ -69606,7 +69833,20 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row table-panel" }, [
         _c("div", { staticClass: "col-md-1 text-left" }, [
-          _vm._v("\n                Показывать по\n            ")
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.filtered == false,
+                  expression: "filtered==false"
+                }
+              ]
+            },
+            [_vm._v("\n                    Показывать по\n                ")]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-1 text-left" }, [
@@ -69619,6 +69859,12 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.perPage,
                   expression: "perPage"
+                },
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.filtered == false,
+                  expression: "filtered==false"
                 }
               ],
               staticClass: "form-control",
@@ -69653,7 +69899,20 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-2 text-left" }, [
-          _vm._v("\n                записей\n            ")
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.filtered == false,
+                  expression: "filtered==false"
+                }
+              ]
+            },
+            [_vm._v("\n                    записей\n                ")]
+          )
         ]),
         _vm._v(" "),
         _c(
@@ -69668,11 +69927,16 @@ var render = function() {
                 confirmText: "Подтвердить",
                 resetText: "Сбросить",
                 format: "YYYY-MM-DD",
+                startDate: "2018-10-01",
                 separator: "-",
                 fromText: "с",
                 toText: "по"
               },
-              on: { confirm: _vm.setRange, "check-in-changed": _vm.setRange }
+              on: {
+                confirm: _vm.setRange,
+                reset: _vm.setReset,
+                "check-in-changed": _vm.setRange
+              }
             })
           ],
           1
@@ -69808,6 +70072,14 @@ var render = function() {
           { staticClass: "col-md-12 text-center" },
           [
             _c("paginator", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.filtered == false,
+                  expression: "filtered==false"
+                }
+              ],
               attrs: {
                 page: _vm.page,
                 countPage: _vm.countPage,
@@ -69984,9 +70256,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n                            " +
+                  "\n                                " +
                     _vm._s(this.data.code) +
-                    "\n                        "
+                    "\n                            "
                 )
               ])
             ]),
@@ -69996,9 +70268,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n                            " +
+                  "\n                                " +
                     _vm._s(this.data.name) +
-                    "\n                        "
+                    "\n                            "
                 )
               ])
             ]),
@@ -70008,14 +70280,12 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n                            " +
+                  "\n                                " +
                     _vm._s(this.data.email) +
-                    "\n                        "
+                    "\n                            "
                 )
               ])
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
+            ])
           ])
         ])
       ]),
@@ -70024,30 +70294,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [
-        _c("button", { staticClass: "button" }, [
-          _vm._v(
-            "\n                                сохранить\n                            "
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("th", [
-        _c("button", { staticClass: "button" }, [
-          _vm._v(
-            "\n                                отменить\n                            "
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth:customer']], function () {
         Route::get('/protokols', 'CustomerController@getDataProtokols');
         Route::get('/profile', 'CustomerController@getProfile');
         Route::get('/statistic', 'CustomerController@getDataStatistic');
+        Route::get('/workers', 'CustomerController@getListWorkers');
     });
 });
 
