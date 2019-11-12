@@ -67,8 +67,6 @@
                     fromText="с"
                     toText="по"
                     v-on:confirm="setRange"
-                    :startDate="startDate"
-                    :endtDate="endDate"
                     @check-in-changed="setRange"
                 />
             </div>
@@ -213,10 +211,15 @@
                     word = item.protokol_dt+'';
                     if (word.includes(this.word))
                         result = true;
-                    if (this.startDate && this.endtDate) {
+                    if (this.startDate && this.endDate) {
                         word = item.protokol_dt+'';
-                        if (word>this.startDate && word<this.endtDate)
-                            result = true
+                        word = word.slice(0,10);
+                        // word = word.replace('-','');
+                        debugger
+                        if (word>=this.startDate && word<=this.endDate) {
+                            result = true;
+                        }
+                        debugger
                     }
 
                     return result;
@@ -262,8 +265,13 @@
                 this.page = this.page + 1;
             },
             setRange(val) {
-                this.startDate = val.start;
-                this.endtDate = val.end;
+                console.log(val.start, val.end);
+                let str = val.start+'';
+                // str = str.replace('-','');
+                this.startDate = str;
+                str = val.end+'';
+                // str = str.replace('-','');
+                this.endDate = str;
                 this.getFilterProtokols();
             }
         }

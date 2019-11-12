@@ -66557,8 +66557,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -66642,9 +66640,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (word.includes(_this3.word)) result = true;
                 word = item.protokol_dt + '';
                 if (word.includes(_this3.word)) result = true;
-                if (_this3.startDate && _this3.endtDate) {
+                if (_this3.startDate && _this3.endDate) {
                     word = item.protokol_dt + '';
-                    if (word > _this3.startDate && word < _this3.endtDate) result = true;
+                    word = word.slice(0, 10);
+                    // word = word.replace('-','');
+                    debugger;
+                    if (word >= _this3.startDate && word <= _this3.endDate) {
+                        result = true;
+                    }
+                    debugger;
                 }
 
                 return result;
@@ -66690,8 +66694,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.page = this.page + 1;
         },
         setRange: function setRange(val) {
-            this.startDate = val.start;
-            this.endtDate = val.end;
+            console.log(val.start, val.end);
+            var str = val.start + '';
+            // str = str.replace('-','');
+            this.startDate = str;
+            str = val.end + '';
+            // str = str.replace('-','');
+            this.endDate = str;
             this.getFilterProtokols();
         }
     }
@@ -69661,9 +69670,7 @@ var render = function() {
                 format: "YYYY-MM-DD",
                 separator: "-",
                 fromText: "с",
-                toText: "по",
-                startDate: _vm.startDate,
-                endtDate: _vm.endDate
+                toText: "по"
               },
               on: { confirm: _vm.setRange, "check-in-changed": _vm.setRange }
             })
