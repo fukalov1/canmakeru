@@ -56,12 +56,27 @@
                 записей
             </div>
             <div class="col-md-4 text-left">
+                <VueHotelDatepicker
+                    placeholder="укажите период"
+                    :monthList="monthList"
+                    :weekList="weekList"
+                    confirmText="Подтвердить"
+                    resetText="Сбросить"
+                    format="YYYY-MM-DD"
+                    separator="-"
+                    fromText="с"
+                    toText="по"
+                    v-on:confirm="setRange"
+                    :startDate="startDate"
+                    :endtDate="endDate"
+                    @check-in-changed="setRange"
+                />
             </div>
             <div class="col-md-2 text-right">
-                Поиск:
+
             </div>
             <div class="col-md-2 text-left">
-            <input type="text" v-model="word" placeholder="поиск" class="form-control">
+            <input type="text" v-model="word" placeholder="поиск по номеру" class="form-control">
             </div>
         </div>
 
@@ -118,11 +133,12 @@
 
 <script>
 
+    import VueHotelDatepicker from '@northwalker/vue-hotel-datepicker'
     import Paginator from './Paginator.vue';
 
     export default {
         name: 'data-grid',
-        components: {Paginator},
+        components: {Paginator, VueHotelDatepicker},
         data() {
             return {
                 columns: ['protokol_num','protokol_dt','pin','protokol_photo','protokol_photo1','meter_photo'],
@@ -137,6 +153,10 @@
                 photo: '',
                 photo1: '',
                 meter: '',
+                monthList: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                weekList: ['Вс', 'Пн', 'Вт.', 'Ср.', 'Чт', 'Пт', 'Сб'],
+                startDate: null,
+                endDate: null
             }
         },
         watch: {
@@ -193,6 +213,12 @@
                     word = item.protokol_dt+'';
                     if (word.includes(this.word))
                         result = true;
+                    if (this.startDate && this.endtDate) {
+                        word = item.protokol_dt+'';
+                        if (word>this.startDate && word<this.endtDate)
+                            result = true
+                    }
+
                     return result;
                 });
             },
@@ -235,6 +261,11 @@
             setNext() {
                 this.page = this.page + 1;
             },
+            setRange(val) {
+                this.startDate = val.start;
+                this.endtDate = val.end;
+                this.getFilterProtokols();
+            }
         }
     }
 </script>
