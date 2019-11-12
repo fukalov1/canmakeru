@@ -4,7 +4,9 @@
 @section('content')
     <div class="content page-check">
             <div class="col-lg-12 col-12 text-center">
-                <img src="/images/logo.png"/>
+                <div class="h2">
+                    Информационная база выполненных поверок
+                </div>
             </div>
 
             <div class="col-lg-12 col-12 text-center">
@@ -26,9 +28,7 @@
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-12">
                 <div class="form-check-number">
-                    <div class="h2">
-                    Информационная база <br/>выполненных поверок
-                </div>
+
                     <section class="container">
                     <form method="post" action="/show_result">
                         {{csrf_field()}}
@@ -77,7 +77,7 @@
                             <div class="col-lg-4">
                             </div>
                             <div class="col-lg-4 text-center">
-                                    <input type="submit" class="btn btn-danger" name="commit" value="Проверить">
+                                    <input type="submit" class="btn btn-primary" name="commit" value="Проверить">
                             </div>
                             <div class="col-lg-4">
                             </div>

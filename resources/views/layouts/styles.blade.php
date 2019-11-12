@@ -21,14 +21,14 @@
     }
     .form-check-number {
         padding: 10px;
-        margin: 0 2%;
+        margin: 10% 2%;
         width: 96%;
-        background-color: #00acd6;
-        border: 2px #0d6aad solid;
+        background-color: #eaeaea;
+        border: 2px #44b1ff solid;
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
     .h2 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         padding: 10px 0;
     }
     .h3 {

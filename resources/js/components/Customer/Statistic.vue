@@ -21,17 +21,6 @@
         },
         methods: {
             fillData () {
-                this.data = {
-                    labels: ['март','апрель','май'],
-                    datasets: [
-                        {
-                            label: 'Data One',
-                            backgroundColor: '#f87979',
-                            data: [1500,230,3400]
-                        }
-                    ]
-                }
-
                 axios({
                     url: `/data/statistic`,
                     method: 'GET'
@@ -51,6 +40,5 @@
 <style>
     .small {
         max-width: 1000px;
-        margin:  150px auto;
     }
 </style>

@@ -3,6 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Customer;
+use App\SlaveCustomer;
+use DemeterChain\C;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -81,6 +83,20 @@ class CustomerController extends AdminController
         $show->field('enabled', __('Активен'));
         $show->field('email', __('E-mail'));
 
+        $show->slave_customers('Работники', function ($slave_customers) {
+
+            $slave_customers->resource('/admin/slave_customers');
+
+            $slave_customers->id();
+            $slave_customers->slave_id('ФИО')->display(function ($slave_id) {
+                return Customer::find($slave_id)->name;
+            });
+
+            $slave_customers->filter(function ($filter) {
+                $filter->like('slave_id');
+            });
+        });
+
         return $show;
     }
 
@@ -97,6 +113,13 @@ class CustomerController extends AdminController
         $form->text('name', __('ФИО'));
         $form->switch('enabled', __('Активен'))->default(1);
         $form->email('email', __('E-mail'))->required(true);
+
+        $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
+            $form->select('slave_id', 'ФИО')->options(function ($id) {
+                $customers = Customer::select('id','name')->get()->sortBy('name');
+                return $customers->pluck('name', 'id');
+            });
+        });
 
         return $form;
     }

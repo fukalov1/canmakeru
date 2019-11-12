@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
-
+//use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
+use App\SlaveCustomer;
 
 class Customer extends Authenticatable
 {
@@ -25,6 +26,10 @@ class Customer extends Authenticatable
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function slave_customers() {
+        return $this->hasMany(SlaveCustomer::class);
+    }
 
     public function getProtokols()
     {
@@ -60,8 +65,8 @@ class Customer extends Authenticatable
         return [
             'labels' => $labels,
             'datasets' => array([
-                'label' => 'Поверки',
-                'backgroundColor' => '#971188',
+                'label' => 'Поверки за период (кол-во по месяцам)',
+                'backgroundColor' => '#3490dc',
                 'data' => $data,
             ])
         ];

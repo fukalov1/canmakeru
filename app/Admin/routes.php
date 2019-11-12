@@ -20,5 +20,6 @@ Route::group([
     $router->get('customer_chart', 'CustomerChartController@index')->middleware('set_customer');
     $router->get('customer_report', 'CustomerReportController@index');
 
+    $router->resource('slave_customers', SlaveCustomerController::class);
 
 });
