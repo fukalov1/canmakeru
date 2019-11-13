@@ -70117,7 +70117,7 @@ var render = function() {
                 confirmText: "Подтвердить",
                 resetText: "Сбросить",
                 format: "YYYY-MM-DD",
-                selectForward: false,
+                selectForward: true,
                 startDate: _vm.date(Date.now()),
                 minDate: "2018-10-01",
                 separator: "-",

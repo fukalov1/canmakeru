@@ -78,7 +78,7 @@
                     confirmText="Подтвердить"
                     resetText="Сбросить"
                     format="YYYY-MM-DD"
-                    :selectForward="false"
+                    :selectForward="true"
                     :startDate="date(Date.now())"
                     minDate="2018-10-01"
                     separator="-"
