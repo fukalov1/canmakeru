@@ -69059,7 +69059,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.table-panel div[data-v-58498de6] {\n    line-height: 50px;\n}\n.table-panel select[data-v-58498de6], .table-panel input[data-v-58498de6] {\n    padding: 8px;\n    border: 1px solid #eee;\n    color: #505050;\n    font-size: 16px;\n    line-height: 32px;\n    outline: none;\n    height: 100%;\n    border-radius: 0;\n}\n.photo[data-v-58498de6] {\n    height: 80vh;\n}\n", ""]);
+exports.push([module.i, "\n.table-panel div span[data-v-58498de6] {\n    line-height: 50px;\n}\n.table-panel select[data-v-58498de6], .table-panel input[data-v-58498de6] {\n    padding: 8px;\n    border: 1px solid #eee;\n    color: #505050;\n    font-size: 16px;\n    line-height: 32px;\n    outline: none;\n    height: 100%;\n    border-radius: 0;\n}\n.photo[data-v-58498de6] {\n    height: 80vh;\n}\n", ""]);
 
 // exports
 

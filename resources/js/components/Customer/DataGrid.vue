@@ -331,7 +331,7 @@
 </script>
 
 <style scoped>
-    .table-panel div {
+    .table-panel div span {
         line-height: 50px;
     }
     .table-panel select, .table-panel input {
