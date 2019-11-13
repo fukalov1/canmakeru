@@ -53,10 +53,11 @@ Route::view('/home', 'home')->middleware('auth');
 Route::group(['middleware' => ['auth:customer']], function () {
     Route::get('/customer', 'CustomerController@index');
     Route::group(['prefix' => 'data'], function() {
-        Route::get('/protokols', 'CustomerController@getDataProtokols');
+        Route::post('/protokols', 'CustomerController@getDataProtokols');
         Route::get('/profile', 'CustomerController@getProfile');
         Route::get('/statistic', 'CustomerController@getDataStatistic');
         Route::get('/workers', 'CustomerController@getListWorkers');
+        Route::get('/auth_user', 'CustomerController@getCustomerId');
     });
 });
 

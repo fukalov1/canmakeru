@@ -18,6 +18,11 @@ class CustomerController extends Controller
         return view('customer');
     }
 
+    public function getCustomerId()
+    {
+        return json_encode(['customer_id' => auth()->guard('customer')->user()->id]);
+    }
+
     public function getListWorkers()
     {
         return $this->customer->getWorkers();
@@ -25,7 +30,10 @@ class CustomerController extends Controller
 
     public function getDataProtokols()
     {
-        return $this->customer->getProtokols();
+        $customer_id = 0;
+        if (request()->customer_id)
+            $customer_id = request()->customer_id;
+        return $this->customer->getProtokols($customer_id);
     }
 
     public function getDataStatistic()

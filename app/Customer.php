@@ -35,13 +35,13 @@ class Customer extends Authenticatable
         return $this->whereIn('id', $this->find(auth()->guard('customer')->user()->id)->slave_customers->pluck('slave_id'))->get();
     }
 
-    public function getProtokols()
+    public function getProtokols($customer_id=0)
     {
         $data = [];
-        if ($this->find(auth()->guard('customer')->user())) {
-            $data =  $this->find(auth()->guard('customer')->user()->id)->protokols;
+        if ($customer_id!=0) {
+            $data =  $this->find($customer_id)->protokols;
         }
-        return json_encode(['data' => $data]);
+        return json_encode(['data' => $data, 'customer_id' => $customer_id]);
     }
 
     public function protokols() {

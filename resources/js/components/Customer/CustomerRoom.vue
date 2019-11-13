@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-2 text-right">
                 <select class="form-control" v-model="customer_id">
-                    <option v-for="(item,index) in data" :value="item.id" selected>
+                    <option v-for="(item,index) in data" :value="item.id">
                         {{ item.name }}
                     </option>
                 </select>
@@ -34,11 +34,11 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <data-grid/>
+                <data-grid :customer_id="customer_id" :protokols="this.protokols" v-if="protokols.length>0"/>
             </div>
             <div class="tab-pane fade" id="statistic" role="tabpanel" aria-labelledby="statistic-tab">
                 <div class="statistic">
-                    <statistic/>
+                    <statistic :customer_id="customer_id"/>
                 </div>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -50,17 +50,50 @@
 </template>
 
 <script>
+
+    import DataGrid from "./DataGrid";
+    import Statistic from "./Statistic";
+    import {eventBus} from '../../app.js'
+
     export default {
+        components: {
+            DataGrid, Statistic
+        },
         data() {
             return {
                 customer_id: 0,
-                data: []
+                data: [],
+                protokols: []
             }
         },
         mounted() {
-            this.loadData();
+            this.getAuth();
+        },
+        created() {
+            eventBus.$on('update-protokols', () => {
+                console.log('call update-protokols', this.protokols.length);
+            })
+        },
+        watch: {
+            customer_id: function (val) {
+                this.getProtokols();
+            }
         },
         methods: {
+            getAuth() {
+                axios({
+                    url: `/data/auth_user`,
+                    method: 'GET'
+                })
+                    .then(response => {
+                        this.customer_id = response.data.customer_id;
+                        this.loadData();
+                        this.getProtokols();
+                    })
+                    .catch(error => {
+
+                    });
+            },
             loadData() {
                 axios({
                     url: `/data/workers`,
@@ -72,7 +105,20 @@
                     .catch(error => {
 
                     });
-            }
+            },
+            getProtokols() {
+                axios({
+                    url: `/data/protokols`,
+                    method: 'POST',
+                    data: {customer_id: this.customer_id}
+                })
+                    .then(response => {
+                        this.protokols = response.data.data;
+                    })
+                    .catch(error => {
+
+                    });
+            },
         }
     }
 </script>

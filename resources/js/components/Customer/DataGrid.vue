@@ -41,6 +41,11 @@
         </transition>
 
         <div class="row table-panel">
+            <div class="col-md-12 text-right">
+                найдено {{ protokols.length }} записей
+            </div>
+        </div>
+        <div class="row table-panel">
             <div class="col-md-1 text-left">
                 <span  v-show="filtered==false">
                     Показывать по
@@ -93,7 +98,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in protokols">
+                <tr v-for="item in protokols_">
                     <td v-for="field in columns">
                         <a href="#"
                            @click="showPhoto(item)"
@@ -138,12 +143,23 @@
 
 <script>
 
+    import {eventBus} from '../../app.js'
     import VueHotelDatepicker from '@northwalker/vue-hotel-datepicker'
     import Paginator from './Paginator.vue';
 
     export default {
         name: 'data-grid',
         components: {Paginator, VueHotelDatepicker},
+        props: {
+            customer_id: {
+                type: Number,
+                default: 0
+            },
+            protokols: {
+                type: Array,
+                default: []
+            }
+        },
         data() {
             return {
                 columns: ['protokol_num','protokol_dt','pin','protokol_photo','protokol_photo1','meter_photo'],
@@ -151,7 +167,7 @@
                 data: [],
                 page: 1,
                 perPage: 10,
-                protokols: [],
+                protokols_: this.protokols,
                 word: '',
                 showModal: false,
                 photo_title: '',
@@ -164,7 +180,17 @@
                 endDate: null
             }
         },
+        updated() {
+            // if (this.filtered()===false)
+            //     this.protokols_ = this.protokols;
+        },
         watch: {
+            protokols: {
+                handler: function (val) {
+                   this.getProtokols();
+                },
+                deep: true
+            },
             page: function (val) {
                 this.getProtokols();
             },
@@ -185,9 +211,9 @@
                 let l = 0;
                 let s = this.perPage;
                 if (this.filtered)
-                    l= this.protokols.length;
+                    l= this.protokols_.length;
                 else
-                    l = this.data.length;
+                    l = this.protokols.length;
 
                 return Math.ceil(l/s);
             },
@@ -198,30 +224,14 @@
                     return false;
             }
         },
-        created() {
-            this.loadData();
-        },
         methods: {
-            loadData() {
-                axios({
-                    url: `/data/protokols`,
-                    method: 'GET'
-                })
-                    .then(response => {
-                        this.data = response.data.data;
-                        this.getProtokols();
-                    })
-                    .catch(error => {
-
-                    });
-            },
             getProtokols() {
-                this.protokols = this.data.filter((item, index) =>  {
-                    return index>=(this.page*this.perPage-this.perPage+1) && index <=this.page*this.perPage;
+                this.protokols_ = this.protokols.filter((item, index) =>  {
+                    return index>=(this.page*this.perPage-this.perPage) && index <=this.page*this.perPage;
                 });
             },
             getFilterProtokols() {
-                this.protokols = this.data.filter((item, index) =>  {
+                this.protokols_ = this.protokols.filter((item, index) =>  {
                     let result = false;
                     let word = item.protokol_num+'';
                     if (word.includes(this.word) && this.word!='') {
@@ -296,7 +306,7 @@
                 this.startDate = null;
                 this.endDate = null;
                 this.getProtokols();
-            }
+            },
         }
     }
 </script>
