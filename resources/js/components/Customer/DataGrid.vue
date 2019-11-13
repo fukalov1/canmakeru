@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <transition name="modal" v-if="showModal">
             <div class="modal-mask">
                 <div class="modal-wrapper">
@@ -79,7 +78,9 @@
                     confirmText="Подтвердить"
                     resetText="Сбросить"
                     format="YYYY-MM-DD"
-                    startDate="2018-10-01"
+                    :selectForward="false"
+                    :startDate="date(Date.now())"
+                    minDate="2018-10-01"
                     separator="-"
                     fromText="с"
                     toText="по"
@@ -154,6 +155,10 @@
     import VueHotelDatepicker from '@northwalker/vue-hotel-datepicker'
     import Paginator from './Paginator.vue';
 
+    // Vue.use(require('vue-moment'));
+    import moment from 'moment'
+    Vue.prototype.moment = moment
+
     export default {
         name: 'data-grid',
         components: {Paginator, VueHotelDatepicker},
@@ -187,9 +192,7 @@
                 endDate: null
             }
         },
-        updated() {
-            // if (this.filtered()===false)
-            //     this.protokols_ = this.protokols;
+        mounted() {
         },
         watch: {
             protokols: {
@@ -317,6 +320,12 @@
                 this.endDate = null;
                 this.getProtokols();
             },
+            date: function (date) {
+                return moment(date).format('YYYY-MM-DD');
+            },
+            moment: function (date) {
+                return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+            }
         }
     }
 </script>

@@ -5,7 +5,6 @@ require('./bootstrap');
 window.Vue = require('vue');
 window.axios = require('axios');
 
-
 Vue.component('customer-room', require('./components/Customer/CustomerRoom.vue'));
 Vue.component('profile-user', require('./components/Customer/ProfileUser.vue'));
 

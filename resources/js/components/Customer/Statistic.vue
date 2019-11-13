@@ -1,6 +1,6 @@
 <template>
     <div class="small">
-        <line-chart :chart-data="data" :height="300" :options="{responsive: true, maintainAspectRatio: true}"></line-chart>
+        <line-chart :chart-data="data" :height="100" :options="{responsive: true, maintainAspectRatio: true}"></line-chart>
     </div>
 </template>
 

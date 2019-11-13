@@ -12,7 +12,8 @@
                     confirmText="Подтвердить"
                     resetText="Сбросить"
                     format="YYYY-MM-DD"
-                    startDate="2018-10-01"
+                    :startDate="date(Date.now())"
+                    minDate="2018-10-01"
                     separator="-"
                     fromText="с"
                     toText="по"
@@ -32,6 +33,8 @@
 
     import LineChart from '../Customer/LineChart.js'
     import VueHotelDatepicker from '@northwalker/vue-hotel-datepicker'
+    import moment from 'moment'
+    Vue.prototype.moment = moment
 
     export default {
         name: 'statistic-day',
@@ -90,6 +93,9 @@
             },
             setReset() {
                 this.data = null;
+            },
+            date: function (date) {
+                return moment(date).format('YYYY-MM-DD');
             },
         }
     }

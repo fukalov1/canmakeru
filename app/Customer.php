@@ -77,20 +77,25 @@ class Customer extends Authenticatable
 
     }
 
-    public function getDataReportDays($id,$start,$end) {
-        $quest  = Customer::join('protokols','customers.id','protokols.customer_id')
-            ->select(\DB::raw('date_format(protokols.protokol_dt, "%Y-%m-%d") as date, count(protokols.protokol_num) count'))
-            ->where('protokol_dt',  '>=', $start )
-            ->where('protokol_dt',  '<=', $end )
-            ->where('customer_id', $id)
-            ->groupBy(\DB::raw('date_format(protokol_dt, "%Y-%m-%d")'))
-            ->get();
-
+    public function getDataReportDays($id,$start,$end)
+    {
         $labels = [];
         $data = [];
-        foreach ($quest as $item) {
-            $labels[] = $item->date;
-            $data[] = $item->count;
+
+        if ($start and $end) {
+
+            $quest = Customer::join('protokols', 'customers.id', 'protokols.customer_id')
+                ->select(\DB::raw('date_format(protokols.protokol_dt, "%Y-%m-%d") as date, count(protokols.protokol_num) count'))
+                ->where('protokol_dt', '>=', $start)
+                ->where('protokol_dt', '<=', $end)
+                ->where('customer_id', $id)
+                ->groupBy(\DB::raw('date_format(protokol_dt, "%Y-%m-%d")'))
+                ->get();
+
+            foreach ($quest as $item) {
+                $labels[] = $item->date;
+                $data[] = $item->count;
+            }
         }
 
         return [
