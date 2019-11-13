@@ -69378,7 +69378,7 @@ Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_2_moment___default.a;
             var date = item.protokol_dt;
             date = date.slice(0, 7);
             date = date.replace('-', '/');
-            str = str.replace('photos', '/photo/');
+            str = str.replace('photos/', '');
             str = '/photo/' + date + '/' + str;
             this.photo = str;
         },
@@ -69389,7 +69389,7 @@ Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_2_moment___default.a;
             var date = item.protokol_dt;
             date = date.slice(0, 7);
             date = date.replace('-', '/');
-            str = str.replace('photos', '/photo/');
+            str = str.replace('photos/', '');
             str = '/photo/' + date + '/' + str;
             this.photo = str;
         },
@@ -69400,7 +69400,7 @@ Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_2_moment___default.a;
             var date = item.protokol_dt;
             date = date.slice(0, 7);
             date = date.replace('-', '/');
-            str = str.replace('photos', '/photo/');
+            str = str.replace('photos/', '');
             str = '/photo/' + date + '/' + str;
             this.photo = str;
         },
@@ -69948,7 +69948,7 @@ var render = function() {
                     [
                       _vm._t("header", [
                         _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-6" }, [
+                          _c("div", { staticClass: "col-md-10" }, [
                             _vm._v(
                               "\n                                        " +
                                 _vm._s(_vm.photo_title) +
@@ -69956,11 +69956,11 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-md-6 text-right" }, [
+                          _c("div", { staticClass: "col-md-2 text-right" }, [
                             _c(
                               "button",
                               {
-                                staticClass: "modal-default-button",
+                                staticClass: "btn btn-primary",
                                 on: {
                                   click: function($event) {
                                     _vm.showModal = false

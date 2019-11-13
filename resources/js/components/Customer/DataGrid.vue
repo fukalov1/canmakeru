@@ -8,11 +8,11 @@
                         <div class="modal-header">
                             <slot name="header">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-10">
                                         {{ photo_title }}
                                     </div>
-                                    <div class="col-md-6 text-right">
-                                        <button class="modal-default-button" @click="showModal=false">
+                                    <div class="col-md-2 text-right">
+                                        <button class="btn btn-primary" @click="showModal=false">
                                             закрыть
                                         </button>
                                     </div>
@@ -270,7 +270,7 @@
                 let date = item.protokol_dt;
                 date = date.slice(0,7);
                 date = date.replace('-', '/');
-                str = str.replace('photos','/photo/');
+                str = str.replace('photos/','');
                 str = '/photo/'+ date + '/'+ str;
                 this.photo = str;
             },
@@ -281,7 +281,7 @@
                 let date = item.protokol_dt;
                 date = date.slice(0,7);
                 date = date.replace('-', '/');
-                str = str.replace('photos','/photo/');
+                str = str.replace('photos/','');
                 str = '/photo/'+ date+ '/' + str;
                 this.photo = str;
             },
@@ -292,7 +292,7 @@
                 let date = item.protokol_dt;
                 date = date.slice(0,7);
                 date = date.replace('-', '/');
-                str = str.replace('photos','/photo/');
+                str = str.replace('photos/','');
                 str = '/photo/'+ date+ '/' + str;
                 this.photo = str;
             },
