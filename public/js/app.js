@@ -69375,7 +69375,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             date = date.slice(0, 7);
             date = date.replace('-', '/');
             str = str.replace('photos', '/photo/');
-            str = str + date;
+            str = '/photo/' + date + str;
             this.photo = str;
         },
         showPhoto1: function showPhoto1(item) {
@@ -69386,7 +69386,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             date = date.slice(0, 7);
             date = date.replace('-', '/');
             str = str.replace('photos', '/photo/');
-            str = str + date;
+            str = '/photo/' + date + str;
             this.photo = str;
         },
         showMeter: function showMeter(item) {
@@ -69397,7 +69397,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             date = date.slice(0, 7);
             date = date.replace('-', '/');
             str = str.replace('photos', '/photo/');
-            str = str + date;
+            str = '/photo/' + date + str;
             this.photo = str;
         },
         setPage: function setPage(page) {
