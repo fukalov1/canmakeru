@@ -25,11 +25,18 @@
         mounted () {
             this.fillData()
         },
+        watch: {
+            customer_id: function (val) {
+                this.fillData();
+            }
+        },
         methods: {
             fillData () {
+                console.log('refresh data for statistic', this.customer_id);
                 axios({
                     url: `/data/statistic`,
-                    method: 'GET'
+                    method: 'POST',
+                    data: {customer_id: this.customer_id}
                 })
                     .then(response => {
                         this.data = response.data;

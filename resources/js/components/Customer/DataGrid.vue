@@ -42,7 +42,14 @@
 
         <div class="row table-panel">
             <div class="col-md-12 text-right">
-                найдено {{ protokols.length }} записей
+                найдено
+                <span v-if="filtered">
+                    {{ protokols_.length }}
+                </span>
+                <span v-else>
+                    {{ protokols.length }}
+                </span>
+                записей
             </div>
         </div>
         <div class="row table-panel">

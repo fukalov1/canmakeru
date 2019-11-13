@@ -66634,6 +66634,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -69701,11 +69708,23 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row table-panel" }, [
         _c("div", { staticClass: "col-md-12 text-right" }, [
-          _vm._v(
-            "\n                найдено " +
-              _vm._s(_vm.protokols.length) +
-              " записей\n            "
-          )
+          _vm._v("\n                найдено\n                "),
+          _vm.filtered
+            ? _c("span", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.protokols_.length) +
+                    "\n                "
+                )
+              ])
+            : _c("span", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.protokols.length) +
+                    "\n                "
+                )
+              ]),
+          _vm._v("\n                записей\n            ")
         ])
       ]),
       _vm._v(" "),
@@ -70113,13 +70132,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.fillData();
     },
 
+    watch: {
+        customer_id: function customer_id(val) {
+            this.fillData();
+        }
+    },
     methods: {
         fillData: function fillData() {
             var _this = this;
 
+            console.log('refresh data for statistic', this.customer_id);
             axios({
                 url: '/data/statistic',
-                method: 'GET'
+                method: 'POST',
+                data: { customer_id: this.customer_id }
             }).then(function (response) {
                 _this.data = response.data;
             }).catch(function (error) {});

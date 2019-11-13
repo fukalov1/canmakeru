@@ -48,8 +48,8 @@ class Customer extends Authenticatable
 	    return $this->hasMany(Protokol::class);
     }
 
-    public function getDataChart() {
-        $id = auth()->guard('customer')->user()->id;
+    public function getDataChart($id) {
+//        $id = auth()->guard('customer')->user()->id;
         $quest  = Customer::join('protokols','customers.id','protokols.customer_id')
             ->select(\DB::raw('date_format(protokols.protokol_dt, "%Y-%m") as date, count(protokols.protokol_num) count'))
             ->whereRaw('date_format(protokol_dt, "%Y-%m") <> "0000-00"')

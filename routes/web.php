@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth:customer']], function () {
     Route::group(['prefix' => 'data'], function() {
         Route::post('/protokols', 'CustomerController@getDataProtokols');
         Route::get('/profile', 'CustomerController@getProfile');
-        Route::get('/statistic', 'CustomerController@getDataStatistic');
+        Route::post('/statistic', 'CustomerController@getDataStatistic');
         Route::get('/workers', 'CustomerController@getListWorkers');
         Route::get('/auth_user', 'CustomerController@getCustomerId');
     });

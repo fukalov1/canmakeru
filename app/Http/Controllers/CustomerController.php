@@ -38,7 +38,10 @@ class CustomerController extends Controller
 
     public function getDataStatistic()
     {
-        return $this->customer->getDataChart();
+        $customer_id = 0;
+        if (request()->customer_id)
+            $customer_id = request()->customer_id;
+        return $this->customer->getDataChart($customer_id);
     }
 
     public function getProfile()
