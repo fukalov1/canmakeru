@@ -150,7 +150,7 @@
 
 <script>
 
-    import {eventBus} from '../../app.js'
+    // import {eventBus} from '../../app.js'
     import VueHotelDatepicker from '@northwalker/vue-hotel-datepicker'
     import Paginator from './Paginator.vue';
 

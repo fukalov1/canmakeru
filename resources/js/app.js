@@ -7,9 +7,7 @@ window.axios = require('axios');
 
 
 Vue.component('customer-room', require('./components/Customer/CustomerRoom.vue'));
-// Vue.component('data-grid', require('./components/Customer/DataGrid.vue'));
 Vue.component('profile-user', require('./components/Customer/ProfileUser.vue'));
-// Vue.component('statistic', require('./components/Customer/Statistic.vue'));
 
 export const eventBus = new Vue();
 export default eventBus;

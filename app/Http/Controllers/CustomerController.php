@@ -44,6 +44,16 @@ class CustomerController extends Controller
         return $this->customer->getDataChart($customer_id);
     }
 
+    public function getReportDays()
+    {
+        $customer_id = 0;
+        $start = request()->start;
+        $end = request()->end;
+        if (request()->customer_id)
+            $customer_id = request()->customer_id;
+        return $this->customer->getDataReportDays($customer_id, $start, $end);
+    }
+
     public function getProfile()
     {
         return json_encode($this->customer->find(auth()->guard('customer')->user()->id));

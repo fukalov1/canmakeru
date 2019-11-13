@@ -44,7 +44,9 @@
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <profile-user/>
             </div>
-            <div class="tab-pane fade" id="report" role="tabpanel" aria-labelledby="report-tab"></div>
+            <div class="tab-pane fade" id="report" role="tabpanel" aria-labelledby="report-tab">
+                <statistic-day :customer_id="customer_id"/>
+            </div>
         </div>
     </div>
 </template>
@@ -53,11 +55,11 @@
 
     import DataGrid from "./DataGrid";
     import Statistic from "./Statistic";
-    import {eventBus} from '../../app.js'
+    import StatisticDay from "../Report/StatisticDay";
 
     export default {
         components: {
-            DataGrid, Statistic
+            DataGrid, Statistic, StatisticDay
         },
         data() {
             return {
@@ -70,9 +72,6 @@
             this.getAuth();
         },
         created() {
-            eventBus.$on('update-protokols', () => {
-                console.log('call update-protokols', this.protokols.length);
-            })
         },
         watch: {
             customer_id: function (val) {

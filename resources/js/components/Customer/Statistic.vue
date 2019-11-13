@@ -32,7 +32,6 @@
         },
         methods: {
             fillData () {
-                console.log('refresh data for statistic', this.customer_id);
                 axios({
                     url: `/data/statistic`,
                     method: 'POST',
