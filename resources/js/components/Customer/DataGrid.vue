@@ -268,7 +268,7 @@
                 date = date.slice(0,7);
                 date = date.replace('-', '/');
                 str = str.replace('photos','/photo/');
-                str = '/photo/'+ date + str;
+                str = '/photo/'+ date + '/'+ str;
                 this.photo = str;
             },
             showPhoto1(item) {
@@ -279,7 +279,7 @@
                 date = date.slice(0,7);
                 date = date.replace('-', '/');
                 str = str.replace('photos','/photo/');
-                str = '/photo/'+ date + str;
+                str = '/photo/'+ date+ '/' + str;
                 this.photo = str;
             },
             showMeter(item) {
@@ -290,7 +290,7 @@
                 date = date.slice(0,7);
                 date = date.replace('-', '/');
                 str = str.replace('photos','/photo/');
-                str = '/photo/'+ date + str;
+                str = '/photo/'+ date+ '/' + str;
                 this.photo = str;
             },
             setPage(page) {
