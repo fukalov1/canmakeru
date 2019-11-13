@@ -35,6 +35,7 @@ class CustomerController extends AdminController
 
             // Add a column filter
             $filter->like('name', 'ФИО');
+            $filter->like('comment', 'Комментарий');
             $filter->like('code', 'Код клиента');
             $filter->like('email', 'E-mail');
             $filter->like('protokols.protokol_num', 'Номер свидетельства');
@@ -61,6 +62,7 @@ class CustomerController extends AdminController
         $grid->dinamic('Динамика поверок')->display(function () {
             return '<a href="/admin/customer_chart?set='.$this->id.'" title="Динамика поверок "><span class="fa fa-bar-chart"/></a>';
         });
+        $grid->column('comment', __('Комментарий'));
         $grid->column('enabled', __('Активен'));
         $grid->column('email', __('E-mail'));
 
@@ -80,6 +82,7 @@ class CustomerController extends AdminController
         $show->field('id', __('Id'));
         $show->field('code', __('Код'));
         $show->field('name', __('ФИО'));
+        $show->field('comment', __('Комментарий'));
         $show->field('enabled', __('Активен'));
         $show->field('email', __('E-mail'));
 
@@ -111,6 +114,7 @@ class CustomerController extends AdminController
 
         $form->text('code', __('Код'))->required(true);;
         $form->text('name', __('ФИО'));
+        $form->text('comment', __('Комментарий'));
         $form->switch('enabled', __('Активен'))->default(1);
         $form->email('email', __('E-mail'))->required(true);
 
