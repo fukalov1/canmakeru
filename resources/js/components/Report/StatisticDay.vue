@@ -25,7 +25,7 @@
             <div class="col-md-4">
             </div>
         </div>
-        <line-chart :chart-data="data" :height="200" :options="{responsive: true, maintainAspectRatio: true}"></line-chart>
+        <line-chart :chart-data="data" :height="100" :options="{responsive: true, maintainAspectRatio: true}"></line-chart>
     </div>
 </template>
 

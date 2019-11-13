@@ -87146,7 +87146,7 @@ var render = function() {
       _c("line-chart", {
         attrs: {
           "chart-data": _vm.data,
-          height: 200,
+          height: 100,
           options: { responsive: true, maintainAspectRatio: true }
         }
       })
