@@ -6,9 +6,20 @@
                     пред.
                 </a>
             </li>
-            <li v-for="p in countPage"  :class="{active: page===p}">
-                <span @click="setPage(p)" class="pointer">
-                    {{ p }}
+<!--            <li v-for="p in countPage"  :class="{active: page===p}">-->
+<!--                <span @click="setPage(p)" class="pointer">-->
+<!--                    {{ p }}-->
+<!--                </span>-->
+<!--            </li>-->
+            <li>
+                <span class="active">
+                    {{ page }}
+                </span>
+            </li>
+            <li>
+                из
+                <span class="active">
+                    {{ countPage }}
                 </span>
             </li>
             <li class="no-border">
@@ -57,7 +68,6 @@
 <style scoped>
     .paginator li {
         padding: 3px;
-        border: 1px solid #989898;
         display: inline-block;
         margin: 0 1px;
         min-width: 20px;
@@ -74,5 +84,8 @@
     }
     .pointer {
         cursor: pointer;
+    }
+    .active {
+        font-weight: bold;
     }
 </style>
