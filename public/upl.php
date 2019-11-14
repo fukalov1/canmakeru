@@ -38,8 +38,8 @@ $uid2 = uniqid();
 
 $uploaddir = 'photos/temp/';
 $p_photo = 'protokol_'.$uid.'.jpg';
-$p_photo1 = 'protokol1_'.$uid1.'.jpg';
-$m_photo = 'meter_'.$uid2.'.jpg';
+$p_photo1 = 'protokol1_'.$uid.'.jpg';
+$m_photo = 'meter_'.$uid.'.jpg';
 
 if (empty($p_photo)||empty($p_photo1)||empty($m_photo)) {
     die("Не все фото загружены");
@@ -85,15 +85,20 @@ if ($stmt->fetch()) {
 $stmt->close();
 
 if ($exists) {
+    $message = "Delete customer protokols :".$_POST['id']."\t".$_POST['pin']."\n";
+    wrileLog($cust_id, $message);
+
     $conn->query('delete from protokols  where  protokol_num='.$_POST['id'].' and pin='.$_POST['pin']);
-//    $stmt->bind_param("ii", $_POST['id'], $_POST['pin']);
-//    $stmt->execute();
-//    $stmt->close();
 }
+
+$message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo\n";
+wrileLog($cust_id, $message);
 
 $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
 $stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
 $stmt->execute();
+
+
 
     $output = `cd ../; php7.2 artisan yandex:export $p_photo`;
     $output = `cd ../; php7.2 artisan yandex:export $p_photo1`;
@@ -106,5 +111,11 @@ $stmt->close();
 $conn->close();
 
 
+function wrileLog($cust_id, $message) {
+    $message = time()."\t$cust_id\t$message\n";
+    $fh = fopen('../storage/logs/protokols.log', 'w+');
+    fwrite($fh, $message);
+    fclose($fh);
+}
 
 ?>
