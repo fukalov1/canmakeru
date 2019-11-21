@@ -5,6 +5,14 @@ require('./bootstrap');
 window.Vue = require('vue');
 window.axios = require('axios');
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faSort, faSortUp, faSortDown)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 Vue.component('customer-room', require('./components/Customer/CustomerRoom.vue'));
 Vue.component('profile-user', require('./components/Customer/ProfileUser.vue'));
 

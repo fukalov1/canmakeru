@@ -100,9 +100,11 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th v-for="item in column_names">
-                        {{ item }}
-                        <span class="sort" :class="{isAsc: isAsc(item), desc: isDesc(item)}"></span>
+                    <th v-for="(item, index) in column_names">
+                        {{ item }} - {{ isNone(index-1) }}
+                        <font-awesome-icon icon="sort-up" v-if="isDesc(index-1)" @click="setSort(index,'asc')"/>
+                        <font-awesome-icon icon="sort-down"  v-else-if="isAsc(index-1)" @click="setSort(index,'desc')"/>
+                        <font-awesome-icon icon="sort" v-if="isNone(index-1)" @click="setSort(index,'asc')"/>
                     </th>
                 </tr>
             </thead>
@@ -177,7 +179,7 @@
             return {
                 columns: ['protokol_num','protokol_dt','pin','protokol_photo','protokol_photo1','meter_photo'],
                 column_names: ['Номер св-ва','Дата поверки','Пин-код','Св-во лиц.','Св-во обр.','Счетчик'],
-                sort_columns: {'protokol_num':'','protokol_dt':'','pin':'','protokol_photo':'','protokol_photo1':'','meter_photo':''},
+                sort_columns: [null, null, null, null, null, null],
                 data: [],
                 page: 1,
                 perPage: 10,
@@ -327,6 +329,14 @@
             },
             moment: function (date) {
                 return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+            },
+            setSort(name,type) {
+                this.sort_columns[name] = type;
+            },
+            isNone(name) {
+                let result = false;
+                if(!this.sort_columns[name])
+                    result = true;
             },
             isAsc(name) {
                 let result = false;
