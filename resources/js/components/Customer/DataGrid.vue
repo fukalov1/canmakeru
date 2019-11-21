@@ -102,27 +102,28 @@
                 <tr>
                     <th v-for="item in column_names">
                         {{ item }}
+                        <span class="sort" :class="{isAsc: isAsc(item), desc: isDesc(item)}"></span>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in protokols_">
                     <td v-for="field in columns">
-                        <a href="#"
+                        <span class="pointer"
                            @click="showPhoto(item)"
                            v-if="field==='protokol_photo'">
                             {{ item[field] }}
-                        </a>
-                        <a href="#"
+                        </span>
+                        <span class="pointer"
                            @click="showPhoto1(item)"
                            v-else-if="field==='protokol_photo1'">
                             {{ item[field] }}
-                        </a>
-                        <a href="#"
+                        </span>
+                        <span class="pointer"
                            @click="showMeter(item)"
                            v-else-if="field==='meter_photo'">
                             {{ item[field] }}
-                        </a>
+                        </span>
                         <span v-else>
                             {{ item[field] }}
                         </span>
@@ -176,6 +177,7 @@
             return {
                 columns: ['protokol_num','protokol_dt','pin','protokol_photo','protokol_photo1','meter_photo'],
                 column_names: ['Номер св-ва','Дата поверки','Пин-код','Св-во лиц.','Св-во обр.','Счетчик'],
+                sort_columns: {'protokol_num':'','protokol_dt':'','pin':'','protokol_photo':'','protokol_photo1':'','meter_photo':''},
                 data: [],
                 page: 1,
                 perPage: 10,
@@ -325,6 +327,16 @@
             },
             moment: function (date) {
                 return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+            },
+            isAsc(name) {
+                let result = false;
+                if(this.sort_columns[name]==='asc')
+                    result = true;
+            },
+            isDesc(name) {
+                let result = false;
+                if(this.sort_columns[name]==='desc')
+                    result = true;
             }
         }
     }
@@ -346,5 +358,12 @@
     }
     .photo {
         height: 80vh;
+    }
+    .pointer {
+        cursor: pointer;
+    }
+    .pointer:hover {
+        color: #0d6aad;
+        text-decoration: underline;
     }
 </style>
