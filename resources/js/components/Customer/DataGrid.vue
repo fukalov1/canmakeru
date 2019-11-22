@@ -101,10 +101,10 @@
             <thead>
                 <tr>
                     <th v-for="(item, index) in column_names">
-                        {{ item }} - {{ isNone(index-1) }}
-                        <font-awesome-icon icon="sort-up" v-if="isDesc(index-1)" @click="setSort(index,'asc')"/>
-                        <font-awesome-icon icon="sort-down"  v-else-if="isAsc(index-1)" @click="setSort(index,'desc')"/>
-                        <font-awesome-icon icon="sort" v-if="isNone(index-1)" @click="setSort(index,'asc')"/>
+                        {{ item }}
+                        <font-awesome-icon icon="sort-up" v-if="getType(index)==='desc'" @click="setSort(index,'asc')"/>
+                        <font-awesome-icon icon="sort-down"  v-if="getType(index)==='asc'" @click="setSort(index,'desc')"/>
+                        <font-awesome-icon icon="sort" v-if="getType(index)===''" @click="setSort(index,'asc')"/>
                     </th>
                 </tr>
             </thead>
@@ -179,7 +179,7 @@
             return {
                 columns: ['protokol_num','protokol_dt','pin','protokol_photo','protokol_photo1','meter_photo'],
                 column_names: ['Номер св-ва','Дата поверки','Пин-код','Св-во лиц.','Св-во обр.','Счетчик'],
-                sort_columns: [null, null, null, null, null, null],
+                sort_columns: {fld: null, type: ''},
                 data: [],
                 page: 1,
                 perPage: 10,
@@ -197,11 +197,18 @@
             }
         },
         mounted() {
+
         },
         watch: {
             protokols: {
                 handler: function (val) {
                    this.getProtokols();
+                },
+                deep: true
+            },
+            sort_columns: {
+                handler: function (val) {
+                    this.setSortProtokols();
                 },
                 deep: true
             },
@@ -243,6 +250,22 @@
                 this.protokols_ = this.protokols.filter((item, index) =>  {
                     return index>=(this.page*this.perPage-this.perPage) && index <=this.page*this.perPage;
                 });
+            },
+            setSortProtokols() {
+                    if(this.sort_columns.fld !== null && this.sort_columns.type === 'asc') {
+                        // console.log('sort data grid for',this.sort_columns[key], item);
+                        let obj = this.protokols_;
+                        let item = this.columns[this.sort_columns.fld];
+                        obj.sort((a, b) => (b[item] < a[item]) ? 1 : ((a[item] < b[item]) ? -1 : 0));
+                        this.protokols_ = obj;
+                    }
+                    else if(this.sort_columns.fld !== null && this.sort_columns.type === 'desc') {
+                        // console.log('sort data grid for',this.sort_columns[key], item);
+                        let obj = this.protokols_;
+                        let item = this.columns[this.sort_columns.fld];
+                        obj.sort((a, b) => (a[item] < b[item]) ? 1 : ((b[item] < a[item]) ? -1 : 0));
+                        this.protokols_ = obj;
+                    }
             },
             getFilterProtokols() {
                 this.protokols_ = this.protokols.filter((item, index) =>  {
@@ -330,24 +353,17 @@
             moment: function (date) {
                 return moment(date).format('MMMM Do YYYY, h:mm:ss a');
             },
-            setSort(name,type) {
-                this.sort_columns[name] = type;
+            setSort(fld,type) {
+                this.$set(this.sort_columns, 'fld', fld);
+                this.$set(this.sort_columns, 'type', type);
             },
-            isNone(name) {
-                let result = false;
-                if(!this.sort_columns[name])
-                    result = true;
-            },
-            isAsc(name) {
-                let result = false;
-                if(this.sort_columns[name]==='asc')
-                    result = true;
-            },
-            isDesc(name) {
-                let result = false;
-                if(this.sort_columns[name]==='desc')
-                    result = true;
+            getType(id) {
+                if (this.sort_columns.fld===id)
+                    return this.sort_columns.type;
+                else
+                    return '';
             }
+
         }
     }
 </script>

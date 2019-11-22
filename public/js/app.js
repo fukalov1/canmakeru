@@ -6014,7 +6014,7 @@ module.exports = function(module) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(global) {/**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.15.0
+ * @version 1.16.0
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -6036,16 +6036,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined' && typeof navigator !== 'undefined';
 
-var longerTimeoutBrowsers = ['Edge', 'Trident', 'Firefox'];
-var timeoutDuration = 0;
-for (var i = 0; i < longerTimeoutBrowsers.length; i += 1) {
-  if (isBrowser && navigator.userAgent.indexOf(longerTimeoutBrowsers[i]) >= 0) {
-    timeoutDuration = 1;
-    break;
+var timeoutDuration = function () {
+  var longerTimeoutBrowsers = ['Edge', 'Trident', 'Firefox'];
+  for (var i = 0; i < longerTimeoutBrowsers.length; i += 1) {
+    if (isBrowser && navigator.userAgent.indexOf(longerTimeoutBrowsers[i]) >= 0) {
+      return 1;
+    }
   }
-}
+  return 0;
+}();
 
 function microtaskDebounce(fn) {
   var called = false;
@@ -6163,6 +6164,17 @@ function getScrollParent(element) {
   }
 
   return getScrollParent(getParentNode(element));
+}
+
+/**
+ * Returns the reference node of the reference object, or the reference object itself.
+ * @method
+ * @memberof Popper.Utils
+ * @param {Element|Object} reference - the reference element (the popper will be relative to this)
+ * @returns {Element} parent
+ */
+function getReferenceNode(reference) {
+  return reference && reference.referenceNode ? reference.referenceNode : reference;
 }
 
 var isIE11 = isBrowser && !!(window.MSInputMethodContext && document.documentMode);
@@ -6473,8 +6485,8 @@ function getBoundingClientRect(element) {
 
   // subtract scrollbar size from sizes
   var sizes = element.nodeName === 'HTML' ? getWindowSizes(element.ownerDocument) : {};
-  var width = sizes.width || element.clientWidth || result.right - result.left;
-  var height = sizes.height || element.clientHeight || result.bottom - result.top;
+  var width = sizes.width || element.clientWidth || result.width;
+  var height = sizes.height || element.clientHeight || result.height;
 
   var horizScrollbar = element.offsetWidth - width;
   var vertScrollbar = element.offsetHeight - height;
@@ -6626,7 +6638,7 @@ function getBoundaries(popper, reference, padding, boundariesElement) {
   // NOTE: 1 DOM access here
 
   var boundaries = { top: 0, left: 0 };
-  var offsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, reference);
+  var offsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, getReferenceNode(reference));
 
   // Handle viewport case
   if (boundariesElement === 'viewport') {
@@ -6754,7 +6766,7 @@ function computeAutoPlacement(placement, refRect, popper, reference, boundariesE
 function getReferenceOffsets(state, popper, reference) {
   var fixedPosition = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
-  var commonOffsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, reference);
+  var commonOffsetParent = fixedPosition ? getFixedPositionOffsetParent(popper) : findCommonOffsetParent(popper, getReferenceNode(reference));
   return getOffsetRectRelativeToArbitraryNode(reference, commonOffsetParent, fixedPosition);
 }
 
@@ -7016,7 +7028,7 @@ function destroy() {
 
   this.disableEventListeners();
 
-  // remove the popper if user explicity asked for the deletion on destroy
+  // remove the popper if user explicitly asked for the deletion on destroy
   // do not use `remove` because IE11 doesn't support it
   if (this.options.removeOnDestroy) {
     this.popper.parentNode.removeChild(this.popper);
@@ -78990,7 +79002,7 @@ Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_2_moment___default.a;
         return {
             columns: ['protokol_num', 'protokol_dt', 'pin', 'protokol_photo', 'protokol_photo1', 'meter_photo'],
             column_names: ['Номер св-ва', 'Дата поверки', 'Пин-код', 'Св-во лиц.', 'Св-во обр.', 'Счетчик'],
-            sort_columns: [null, null, null, null, null, null],
+            sort_columns: { fld: null, type: '' },
             data: [],
             page: 1,
             perPage: 10,
@@ -79013,6 +79025,12 @@ Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_2_moment___default.a;
         protokols: {
             handler: function handler(val) {
                 this.getProtokols();
+            },
+            deep: true
+        },
+        sort_columns: {
+            handler: function handler(val) {
+                this.setSortProtokols();
             },
             deep: true
         },
@@ -79049,6 +79067,25 @@ Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_2_moment___default.a;
             this.protokols_ = this.protokols.filter(function (item, index) {
                 return index >= _this.page * _this.perPage - _this.perPage && index <= _this.page * _this.perPage;
             });
+        },
+        setSortProtokols: function setSortProtokols() {
+            if (this.sort_columns.fld !== null && this.sort_columns.type === 'asc') {
+                // console.log('sort data grid for',this.sort_columns[key], item);
+                var obj = this.protokols_;
+                var item = this.columns[this.sort_columns.fld];
+                obj.sort(function (a, b) {
+                    return b[item] < a[item] ? 1 : a[item] < b[item] ? -1 : 0;
+                });
+                this.protokols_ = obj;
+            } else if (this.sort_columns.fld !== null && this.sort_columns.type === 'desc') {
+                // console.log('sort data grid for',this.sort_columns[key], item);
+                var _obj = this.protokols_;
+                var _item = this.columns[this.sort_columns.fld];
+                _obj.sort(function (a, b) {
+                    return a[_item] < b[_item] ? 1 : b[_item] < a[_item] ? -1 : 0;
+                });
+                this.protokols_ = _obj;
+            }
         },
         getFilterProtokols: function getFilterProtokols() {
             var _this2 = this;
@@ -79139,20 +79176,12 @@ Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_2_moment___default.a;
         moment: function moment(date) {
             return __WEBPACK_IMPORTED_MODULE_2_moment___default()(date).format('MMMM Do YYYY, h:mm:ss a');
         },
-        setSort: function setSort(name, type) {
-            this.sort_columns[name] = type;
+        setSort: function setSort(fld, type) {
+            this.$set(this.sort_columns, 'fld', fld);
+            this.$set(this.sort_columns, 'type', type);
         },
-        isNone: function isNone(name) {
-            var result = false;
-            if (!this.sort_columns[name]) result = true;
-        },
-        isAsc: function isAsc(name) {
-            var result = false;
-            if (this.sort_columns[name] === 'asc') result = true;
-        },
-        isDesc: function isDesc(name) {
-            var result = false;
-            if (this.sort_columns[name] === 'desc') result = true;
+        getType: function getType(id) {
+            if (this.sort_columns.fld === id) return this.sort_columns.type;else return '';
         }
     }
 });
@@ -79899,11 +79928,9 @@ var render = function() {
                   _vm._v(
                     "\n                        " +
                       _vm._s(item) +
-                      " - " +
-                      _vm._s(_vm.isNone(index - 1)) +
                       "\n                        "
                   ),
-                  _vm.isDesc(index - 1)
+                  _vm.getType(index) === "desc"
                     ? _c("font-awesome-icon", {
                         attrs: { icon: "sort-up" },
                         on: {
@@ -79912,7 +79939,9 @@ var render = function() {
                           }
                         }
                       })
-                    : _vm.isAsc(index - 1)
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.getType(index) === "asc"
                     ? _c("font-awesome-icon", {
                         attrs: { icon: "sort-down" },
                         on: {
@@ -79923,7 +79952,7 @@ var render = function() {
                       })
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.isNone(index - 1)
+                  _vm.getType(index) === ""
                     ? _c("font-awesome-icon", {
                         attrs: { icon: "sort" },
                         on: {
