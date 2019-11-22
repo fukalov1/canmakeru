@@ -252,20 +252,19 @@
                 });
             },
             setSortProtokols() {
-                    if(this.sort_columns.fld !== null && this.sort_columns.type === 'asc') {
-                        // console.log('sort data grid for',this.sort_columns[key], item);
-                        let obj = this.protokols_;
-                        let item = this.columns[this.sort_columns.fld];
-                        obj.sort((a, b) => (b[item] < a[item]) ? 1 : ((a[item] < b[item]) ? -1 : 0));
-                        this.protokols_ = obj;
-                    }
-                    else if(this.sort_columns.fld !== null && this.sort_columns.type === 'desc') {
-                        // console.log('sort data grid for',this.sort_columns[key], item);
-                        let obj = this.protokols_;
-                        let item = this.columns[this.sort_columns.fld];
-                        obj.sort((a, b) => (a[item] < b[item]) ? 1 : ((b[item] < a[item]) ? -1 : 0));
-                        this.protokols_ = obj;
-                    }
+                if (this.sort_columns.fld !== null && this.sort_columns.type === 'asc') {
+                    // console.log('sort data grid for',this.sort_columns[key], item);
+                    let obj = this.protokols_;
+                    let item = this.columns[this.sort_columns.fld];
+                    obj.sort((a, b) => (b[item] < a[item]) ? 1 : ((a[item] < b[item]) ? -1 : 0));
+                    this.protokols_ = obj;
+                } else if (this.sort_columns.fld !== null && this.sort_columns.type === 'desc') {
+                    // console.log('sort data grid for',this.sort_columns[key], item);
+                    let obj = this.protokols_;
+                    let item = this.columns[this.sort_columns.fld];
+                    obj.sort((a, b) => (a[item] < b[item]) ? 1 : ((b[item] < a[item]) ? -1 : 0));
+                    this.protokols_ = obj;
+                }
             },
             getFilterProtokols() {
                 this.protokols_ = this.protokols.filter((item, index) =>  {

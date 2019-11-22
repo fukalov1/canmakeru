@@ -82,6 +82,10 @@ class Customer extends Authenticatable
         $labels = [];
         $data = [];
 
+//        $all = collect([]);
+//        $days = \DB::select('call month_days(now())');
+//        $days = collect($days);
+
         if ($start and $end) {
 
             $quest = Customer::join('protokols', 'customers.id', 'protokols.customer_id')
@@ -92,9 +96,24 @@ class Customer extends Authenticatable
                 ->groupBy(\DB::raw('date_format(protokol_dt, "%Y-%m-%d")'))
                 ->get();
 
+
+            $curr_date = $start;
             foreach ($quest as $item) {
+                while ($curr_date < $item->date) {
+                    if($curr_date != $item->date) {
+                        $labels[] = $curr_date;
+                        $data[] = 0;
+                    }
+                    $curr_date = date_create($curr_date);
+                    date_add($curr_date, date_interval_create_from_date_string('1 days'));
+                    $curr_date = date_format($curr_date, 'Y-m-d');
+                }
                 $labels[] = $item->date;
                 $data[] = $item->count;
+                $curr_date = $item->date;
+                $curr_date = date_create($curr_date);
+                date_add($curr_date, date_interval_create_from_date_string('1 days'));
+                $curr_date = date_format($curr_date, 'Y-m-d');
             }
         }
 
