@@ -241,4 +241,41 @@ class Protokol extends Model
 
     }
 
+    public function deleteDublicates()
+    {
+//        $data = \DB::select('SELECT DISTINCT(protokol_num) protokol_num protokol_photo FROM `protokols`');
+
+        $protokols = $this->orderBy('protokol_num')->orderBy('id', 'desc')->get();
+        $protokols1 = new Protokols1();
+
+        $nmbr = '';
+        $i=0;
+        $skip=0;
+        foreach ($protokols as $protokol) {
+            if ($nmbr != $protokol->protokol_num) {
+                try {
+                    $data = $protokol->toArray();
+                    array_shift($data);
+//                    print_r($data);
+//                    exit;
+                    Protokols1::insert($data);
+//                    $protokols1->save();
+                    $i++;
+                    $nmbr = $protokol->protokol_num;
+                    echo "Insert Number: " . $protokol->protokol_num . " record: $i of " . $protokols->count() . "\n";
+//                    exit;
+                }
+                catch (\Exception $ex) {
+                    echo "Error insert record ".$protokol->protokol_num." ".$ex->getMessage()."\n";
+                    $skip++;
+                }
+            }
+            else {
+                $skip++;
+            }
+        }
+        echo "Final process records! Insert: $i Skip: $skip\n";
+
+    }
+
 }
