@@ -295,7 +295,7 @@ class MainController extends Controller
         $disk->setAccessToken(config('YANDEX_TOKEN'));
 
         //Вывод превьюшки
-        $size = 'XXL';
+        $size = 'x1024';
         $img = $disk->getImagePreview('/'.$year.'-'.$month.'/'.$file, $size);
         header("Content-type: image/jpeg");
 
@@ -327,7 +327,7 @@ class MainController extends Controller
         $id_3 = request()->post('id_3');
         // dd($post, $id_1,$id_2,$id_3);
 
-        $prot_id= floatval(str_pad($id_1, 3, "0", STR_PAD_LEFT).str_pad($id_2, 2, "0", STR_PAD_LEFT).str_pad($id_3, 5, "0", STR_PAD_LEFT)); 
+        $prot_id= floatval(str_pad($id_1, 3, "0", STR_PAD_LEFT).str_pad($id_2, 2, "0", STR_PAD_LEFT).str_pad($id_3, 5, "0", STR_PAD_LEFT));
 
         $pin = request()->post('pin');
 
