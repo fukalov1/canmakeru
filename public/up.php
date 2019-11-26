@@ -108,7 +108,7 @@ $meter_photo = preg_replace('/photos\//','',$meter_photo);
         <div class="row">
                         <div class="col-lg-12 col-sm-12 col-md-12 col-12 text-center">
                 <div class="h2">
-                    Фотоматериалы поверки № 082-19-01469
+                    Фотоматериалы поверки № <? echo $protokol_formated_num; ?>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-4 col-md-4 col-12 text-center">
