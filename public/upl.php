@@ -1,19 +1,28 @@
 <?php
 
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
+
 include 'config.php';
 header('Content-Type: text/plain; charset=utf-8');
 
-if($_SERVER['REQUEST_METHOD'] != 'POST'){
-    die("Загрузка невозможна");
-}
+//if($_SERVER['REQUEST_METHOD'] != 'POST'){
+//    die("Загрузка невозможна");
+//}
+//
+//if ($_POST["appUUID"] != '437447dcb8b8') {
+//    die ("Загрузка невозможна");
+//}
 
-if ($_POST["appUUID"] != '437447dcb8b8') {
-    die ("Загрузка невозможна");
-}
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+//try {
+    $conn = new mysqli($servername, $username, $password, $dbname);
+//}
+//catch (Exception $e) {
+//    die('Error : ('. $conn->connect_errno .') ');
+//}
 //Output any connection error
 if ($conn->connect_error) {
     throw new RuntimeException('Error : ('. $conn->connect_errno .') ');
@@ -30,7 +39,6 @@ if (!$stmt->fetch()) {
 }
 
 $stmt->close();
-
 
 $uid = uniqid();
 $uid1 = uniqid();
@@ -86,13 +94,13 @@ $stmt->close();
 
 if ($exists) {
     $message = "Delete customer protokols :".$_POST['id']."\t".$_POST['pin']."\n";
-    wrileLog($cust_id, $message);
+    error_log($message." ID: ".$cust_id, 0);
 
     $conn->query('delete from protokols  where  protokol_num='.$_POST['id'].' and pin='.$_POST['pin']);
 }
 
 $message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo\n";
-wrileLog($cust_id, $message);
+error_log($message." ID: ".$cust_id, 0);
 
 $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
 $stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
@@ -111,11 +119,11 @@ $stmt->close();
 $conn->close();
 
 
-function wrileLog($cust_id, $message) {
-    $message = time()."\t$cust_id\t$message\n";
-    $fh = fopen('../storage/logs/protokols.log', 'w+');
-    fwrite($fh, $message);
-    fclose($fh);
-}
+//function wrileLog($cust_id, $message) {
+//    $message = time()."\t$cust_id\t$message\n";
+//    $fh = fopen('../storage/logs/protokols.log', 'w+');
+//    fwrite($fh, $message);
+//    fclose($fh);
+//}
 
 ?>

@@ -95,4 +95,16 @@
         </div>
     </div>
 
+    <form method="post" action="/upl.php" enctype="multipart/form-data">
+        <input type="hidden" name="appUUID" value="437447dcb8b8"/>
+        <input type="text" name="partnerKey" value="0911f8H1n2"/>
+        <input type="text" name="id" value="11800409"/>
+        <input type="text" name="pin" value="6409"/>
+        <input type="text" name="dt" value="2019-11-26 20:13:02"/>
+        <input type="file" name="protokol_photo"/>
+        <input type="file" name="protokol_photo1"/>
+        <input type="file" name="meter_photo"/>
+        <input type="submit" value="send"/>
+    </form>
+
 @stop
