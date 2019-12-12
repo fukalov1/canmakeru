@@ -97,14 +97,14 @@ if ($stmt->fetch()) {
 $stmt->close();
 
 if ($exists) {
-    $message = "Delete customer protokols :".$_POST['id']."\t".$_POST['pin']."\n";
+    $message = "Delete customer protokols :".$_POST['id']."\t".$_POST['pin'];
     wrileLog($cust_id, $message);
     error_log($message." ID: ".$cust_id, 0);
 
     $conn->query('delete from protokols  where  protokol_num='.$_POST['id'].' and pin='.$_POST['pin']);
 }
 
-$message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo\n";
+$message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo";
 error_log($message." ID: ".$cust_id, 0);
 wrileLog($cust_id, $message);
 
