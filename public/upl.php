@@ -126,8 +126,8 @@ $conn->close();
 
 
 function wrileLog($cust_id, $message) {
-    $message = time()."\t$cust_id\t$message\n";
-    $fh = fopen( storage_path('logs').'/protokols.log', 'w+');
+    $message = date("y.m.d H:i:s")."\t$cust_id\t$message\n";
+    $fh = fopen( '/home/c/canmakeru/pin/public_html/storage/logs/protokols.log', 'a');
     fwrite($fh, $message);
     fclose($fh);
 }
