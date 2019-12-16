@@ -35,6 +35,7 @@ $stmt->bind_result($cust_id);
 
 if (!$stmt->fetch()) {
     error_log("customer '".$_POST['partnerKey']."' not found", 0);
+    wrileLog('0',"customer '".$_POST['partnerKey']."' not found");
     die("Партнер ".$_POST['partnerKey']." не найден");
 }
 
@@ -60,6 +61,7 @@ if (file_exists($p_photo)) {
 
 if (!move_uploaded_file($_FILES['protokol_photo']['tmp_name'], $uploaddir.$p_photo)) {
     error_log("Can not upload protokol photo", 0);
+    wrileLog($_POST['partnerKey'],"Can not upload protokol photo ".$_FILES['protokol_photo']['tmp_name']);
     die("Ошибка загрузки фото 1 свидетельства");
 }
 
@@ -69,6 +71,7 @@ if (file_exists($p_photo1)) {
 
 if (!move_uploaded_file($_FILES['protokol_photo1']['tmp_name'], $uploaddir.$p_photo1)) {
     error_log("Can not upload protokol photo 1", 0);
+    wrileLog($_POST['partnerKey'],"Can not upload protokol photo 1 ".$_FILES['protokol_photo']['tmp_name']);
     die("Ошибка загрузки фото 2 свидетельства");
 }
 
@@ -78,6 +81,7 @@ if (file_exists($m_photo)) {
 }
 if (!move_uploaded_file($_FILES['meter_photo']['tmp_name'], $uploaddir.$m_photo)) {
     error_log("Can not upload meter photo", 0);
+    wrileLog($_POST['partnerKey'],"Can not upload meter photo ".$_FILES['meter_photo']['tmp_name']);
     die("Ошибка загрузки фото счетчика");
 }
 
@@ -93,14 +97,16 @@ if ($stmt->fetch()) {
 $stmt->close();
 
 if ($exists) {
-    $message = "Delete customer protokols :".$_POST['id']."\t".$_POST['pin']."\n";
+    $message = "Delete customer protokols :".$_POST['id']."\t".$_POST['pin'];
+    wrileLog($cust_id, $message);
     error_log($message." ID: ".$cust_id, 0);
 
     $conn->query('delete from protokols  where  protokol_num='.$_POST['id'].' and pin='.$_POST['pin']);
 }
 
-$message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo\n";
+$message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo";
 error_log($message." ID: ".$cust_id, 0);
+wrileLog($cust_id, $message);
 
 $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
 $stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
@@ -119,11 +125,11 @@ $stmt->close();
 $conn->close();
 
 
-//function wrileLog($cust_id, $message) {
-//    $message = time()."\t$cust_id\t$message\n";
-//    $fh = fopen('../storage/logs/protokols.log', 'w+');
-//    fwrite($fh, $message);
-//    fclose($fh);
-//}
+function wrileLog($cust_id, $message) {
+    $message = date("y.m.d H:i:s")."\t$cust_id\t$message\n";
+    $fh = fopen( '/home/c/canmakeru/pin/public_html/storage/logs/protokols.log', 'a');
+    fwrite($fh, $message);
+    fclose($fh);
+}
 
 ?>
