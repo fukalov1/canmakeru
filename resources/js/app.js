@@ -6,10 +6,10 @@ window.Vue = require('vue');
 window.axios = require('axios');
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faSort, faSortUp, faSortDown, faFilePdf, faFile, faFileAlt, faFileImage } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faSort, faSortUp, faSortDown)
+library.add(faSort, faSortUp, faSortDown, faFilePdf, faFile, faFileAlt, faFileImage)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

@@ -36583,7 +36583,7 @@ window.axios = __webpack_require__(6);
 
 
 
-__WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_svg_core__["c" /* library */].add(__WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["a" /* faSort */], __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["c" /* faSortUp */], __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["b" /* faSortDown */]);
+__WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_svg_core__["c" /* library */].add(__WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["e" /* faSort */], __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["g" /* faSortUp */], __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["f" /* faSortDown */], __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["d" /* faFilePdf */], __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["a" /* faFile */], __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["b" /* faFileAlt */], __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__["c" /* faFileImage */]);
 
 Vue.component('font-awesome-icon', __WEBPACK_IMPORTED_MODULE_3__fortawesome_vue_fontawesome__["a" /* FontAwesomeIcon */]);
 
@@ -71552,8 +71552,8 @@ module.exports = Vue;
 /* unused harmony export faFeatherAlt */
 /* unused harmony export faFemale */
 /* unused harmony export faFighterJet */
-/* unused harmony export faFile */
-/* unused harmony export faFileAlt */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return faFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faFileAlt; });
 /* unused harmony export faFileArchive */
 /* unused harmony export faFileAudio */
 /* unused harmony export faFileCode */
@@ -71562,13 +71562,13 @@ module.exports = Vue;
 /* unused harmony export faFileDownload */
 /* unused harmony export faFileExcel */
 /* unused harmony export faFileExport */
-/* unused harmony export faFileImage */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faFileImage; });
 /* unused harmony export faFileImport */
 /* unused harmony export faFileInvoice */
 /* unused harmony export faFileInvoiceDollar */
 /* unused harmony export faFileMedical */
 /* unused harmony export faFileMedicalAlt */
-/* unused harmony export faFilePdf */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return faFilePdf; });
 /* unused harmony export faFilePowerpoint */
 /* unused harmony export faFilePrescription */
 /* unused harmony export faFileSignature */
@@ -71997,7 +71997,7 @@ module.exports = Vue;
 /* unused harmony export faSnowplow */
 /* unused harmony export faSocks */
 /* unused harmony export faSolarPanel */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return faSort; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return faSort; });
 /* unused harmony export faSortAlphaDown */
 /* unused harmony export faSortAlphaDownAlt */
 /* unused harmony export faSortAlphaUp */
@@ -72006,12 +72006,12 @@ module.exports = Vue;
 /* unused harmony export faSortAmountDownAlt */
 /* unused harmony export faSortAmountUp */
 /* unused harmony export faSortAmountUpAlt */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faSortDown; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return faSortDown; });
 /* unused harmony export faSortNumericDown */
 /* unused harmony export faSortNumericDownAlt */
 /* unused harmony export faSortNumericUp */
 /* unused harmony export faSortNumericUpAlt */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faSortUp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return faSortUp; });
 /* unused harmony export faSpa */
 /* unused harmony export faSpaceShuttle */
 /* unused harmony export faSpellCheck */
@@ -78759,7 +78759,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.table-panel div span[data-v-58498de6] {\n    line-height: 50px;\n}\n.table-panel select[data-v-58498de6], .table-panel input[data-v-58498de6] {\n    padding: 8px;\n    border: 1px solid #eee;\n    color: #505050;\n    font-size: 16px;\n    line-height: 32px;\n    outline: none;\n    height: 100%;\n    border-radius: 0;\n}\n.photo[data-v-58498de6] {\n    height: 80vh;\n}\n.pointer[data-v-58498de6] {\n    cursor: pointer;\n}\n.pointer[data-v-58498de6]:hover {\n    color: #0d6aad;\n    text-decoration: underline;\n}\n", ""]);
+exports.push([module.i, "\n.table-panel div span[data-v-58498de6] {\n    line-height: 50px;\n}\n.table-panel select[data-v-58498de6], .table-panel input[data-v-58498de6] {\n    padding: 8px;\n    border: 1px solid #eee;\n    color: #505050;\n    font-size: 16px;\n    line-height: 32px;\n    outline: none;\n    height: 100%;\n    border-radius: 0;\n}\n.photo[data-v-58498de6] {\n    height: 80vh;\n}\n.pointer[data-v-58498de6] {\n    cursor: pointer;\n    font-size: 25px;\n    color: #3490dc;\n}\n.pointer[data-v-58498de6]:hover {\n    color: #0d6aad;\n    text-decoration: underline;\n}\n", ""]);
 
 // exports
 
@@ -78963,6 +78963,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 // import {eventBus} from '../../app.js'
@@ -78988,8 +79016,8 @@ Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_2_moment___default.a;
     },
     data: function data() {
         return {
-            columns: ['protokol_num', 'protokol_dt', 'pin', 'protokol_photo', 'protokol_photo1', 'meter_photo'],
-            column_names: ['Номер св-ва', 'Дата поверки', 'Пин-код', 'Св-во лиц.', 'Св-во обр.', 'Счетчик'],
+            columns: ['protokol_num', 'protokol_dt', 'pin', 'protokol_photo'],
+            column_names: ['Номер св-ва', 'Дата поверки', 'Пин-код', 'Фото поверки'],
             sort_columns: { fld: null, type: '' },
             data: [],
             page: 1,
@@ -79909,52 +79937,56 @@ var render = function() {
         _c("thead", [
           _c(
             "tr",
-            _vm._l(_vm.column_names, function(item, index) {
-              return _c(
-                "th",
-                [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(item) +
-                      "\n                        "
-                  ),
-                  _vm.getType(index) === "desc"
-                    ? _c("font-awesome-icon", {
-                        attrs: { icon: "sort-up" },
-                        on: {
-                          click: function($event) {
-                            return _vm.setSort(index, "asc")
+            [
+              _vm._l(_vm.column_names, function(item, index) {
+                return _c(
+                  "th",
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(item) +
+                        "\n                        "
+                    ),
+                    _vm.getType(index) === "desc"
+                      ? _c("font-awesome-icon", {
+                          attrs: { icon: "sort-up" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setSort(index, "asc")
+                            }
                           }
-                        }
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.getType(index) === "asc"
-                    ? _c("font-awesome-icon", {
-                        attrs: { icon: "sort-down" },
-                        on: {
-                          click: function($event) {
-                            return _vm.setSort(index, "desc")
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.getType(index) === "asc"
+                      ? _c("font-awesome-icon", {
+                          attrs: { icon: "sort-down" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setSort(index, "desc")
+                            }
                           }
-                        }
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.getType(index) === ""
-                    ? _c("font-awesome-icon", {
-                        attrs: { icon: "sort" },
-                        on: {
-                          click: function($event) {
-                            return _vm.setSort(index, "asc")
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.getType(index) === ""
+                      ? _c("font-awesome-icon", {
+                          attrs: { icon: "sort" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setSort(index, "asc")
+                            }
                           }
-                        }
-                      })
-                    : _vm._e()
-                ],
-                1
-              )
-            }),
-            0
+                        })
+                      : _vm._e()
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _c("th")
+            ],
+            2
           )
         ]),
         _vm._v(" "),
@@ -79963,75 +79995,84 @@ var render = function() {
           _vm._l(_vm.protokols_, function(item) {
             return _c(
               "tr",
-              _vm._l(_vm.columns, function(field) {
-                return _c("td", [
-                  field === "protokol_photo"
-                    ? _c(
-                        "span",
-                        {
-                          staticClass: "pointer",
-                          on: {
-                            click: function($event) {
-                              return _vm.showPhoto(item)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(item[field]) +
-                              "\n                        "
-                          )
-                        ]
-                      )
-                    : field === "protokol_photo1"
-                    ? _c(
-                        "span",
-                        {
-                          staticClass: "pointer",
-                          on: {
-                            click: function($event) {
-                              return _vm.showPhoto1(item)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(item[field]) +
-                              "\n                        "
-                          )
-                        ]
-                      )
-                    : field === "meter_photo"
-                    ? _c(
-                        "span",
-                        {
-                          staticClass: "pointer",
-                          on: {
-                            click: function($event) {
-                              return _vm.showMeter(item)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(item[field]) +
-                              "\n                        "
-                          )
-                        ]
-                      )
-                    : _c("span", [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item[field]) +
-                            "\n                        "
+              [
+                _vm._l(_vm.columns, function(field) {
+                  return _c("td", [
+                    field === "protokol_photo"
+                      ? _c(
+                          "span",
+                          [
+                            _c("font-awesome-icon", {
+                              staticClass: "pointer",
+                              attrs: {
+                                icon: "file",
+                                title: "свидетельство лицевая сторона "
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showPhoto(item)
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("font-awesome-icon", {
+                              staticClass: "pointer",
+                              attrs: {
+                                icon: "file-alt",
+                                title: "свидетельство обратная сторона "
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showPhoto1(item)
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("font-awesome-icon", {
+                              staticClass: "pointer",
+                              attrs: {
+                                icon: "file-image",
+                                title: "фото счетчика"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showMeter(item)
+                                }
+                              }
+                            })
+                          ],
+                          1
                         )
-                      ])
-                ])
-              }),
-              0
+                      : _c("span", [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(item[field]) +
+                              "\n                        "
+                          )
+                        ])
+                  ])
+                }),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c("font-awesome-icon", {
+                      staticClass: "pointer",
+                      attrs: {
+                        icon: "file-pdf",
+                        title: "выгрузить свидетельство в PDF"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.showMeter(item)
+                        }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ],
+              2
             )
           }),
           0

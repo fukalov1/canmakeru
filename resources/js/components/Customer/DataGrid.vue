@@ -106,29 +106,57 @@
                         <font-awesome-icon icon="sort-down"  v-if="getType(index)==='asc'" @click="setSort(index,'desc')"/>
                         <font-awesome-icon icon="sort" v-if="getType(index)===''" @click="setSort(index,'asc')"/>
                     </th>
+                    <th>
+
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in protokols_">
                     <td v-for="field in columns">
-                        <span class="pointer"
-                           @click="showPhoto(item)"
+                        <span
                            v-if="field==='protokol_photo'">
-                            {{ item[field] }}
+
+                        <font-awesome-icon
+                            class="pointer"
+                            icon="file"
+                            @click="showPhoto(item)"
+                            title="свидетельство лицевая сторона "
+                        />
+                        <font-awesome-icon
+                            class="pointer"
+                            icon="file-alt"
+                            @click="showPhoto1(item)"
+                            title="свидетельство обратная сторона "
+                        />
+                        <font-awesome-icon
+                            class="pointer"
+                            icon="file-image"
+                            @click="showMeter(item)"
+                            title="фото счетчика"
+                        />
                         </span>
-                        <span class="pointer"
-                           @click="showPhoto1(item)"
-                           v-else-if="field==='protokol_photo1'">
-                            {{ item[field] }}
-                        </span>
-                        <span class="pointer"
-                           @click="showMeter(item)"
-                           v-else-if="field==='meter_photo'">
-                            {{ item[field] }}
-                        </span>
+<!--                        <span class="pointer"-->
+<!--                           @click="showPhoto1(item)"-->
+<!--                           v-else-if="field==='protokol_photo1'">-->
+<!--                            {{ item[field] }}-->
+<!--                        </span>-->
+<!--                        <span class="pointer"-->
+<!--                           @click="showMeter(item)"-->
+<!--                           v-else-if="field==='meter_photo'">-->
+<!--                            {{ item[field] }}-->
+<!--                        </span>-->
                         <span v-else>
                             {{ item[field] }}
                         </span>
+                    </td>
+                    <td>
+                        <font-awesome-icon
+                            class="pointer"
+                            icon="file-pdf"
+                            @click="showMeter(item)"
+                            title="выгрузить свидетельство в PDF"
+                        />
                     </td>
                 </tr>
             </tbody>
@@ -177,8 +205,8 @@
         },
         data() {
             return {
-                columns: ['protokol_num','protokol_dt','pin','protokol_photo','protokol_photo1','meter_photo'],
-                column_names: ['Номер св-ва','Дата поверки','Пин-код','Св-во лиц.','Св-во обр.','Счетчик'],
+                columns: ['protokol_num','protokol_dt','pin','protokol_photo'],
+                column_names: ['Номер св-ва','Дата поверки','Пин-код','Фото поверки'],
                 sort_columns: {fld: null, type: ''},
                 data: [],
                 page: 1,
@@ -386,6 +414,8 @@
     }
     .pointer {
         cursor: pointer;
+        font-size: 25px;
+        color: #3490dc;
     }
     .pointer:hover {
         color: #0d6aad;
