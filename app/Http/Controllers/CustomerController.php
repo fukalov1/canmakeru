@@ -51,7 +51,7 @@ class CustomerController extends Controller
         $end = request()->end;
         if (request()->customer_id)
             $customer_id = request()->customer_id;
-        return $this->customer->getDataReportDays($customer_id, $start, $end);
+        return $this->customer->getDataRegetDataStatisticportDays($customer_id, $start, $end);
     }
 
     public function getProfile()

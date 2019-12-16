@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a243e355-4b01-481f-94e3-1400a702b076" name="Default Changelist" comment="report">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MainController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Customer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -188,6 +190,7 @@
       <workItem from="1573551584361" duration="6000" />
       <workItem from="1573551598496" duration="29613000" />
       <workItem from="1574399172326" duration="13951000" />
+      <workItem from="1576513109854" duration="1056000" />
     </task>
     <task id="LOCAL-00001" summary="show protokols for customers">
       <created>1567820560267</created>

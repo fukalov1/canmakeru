@@ -59,6 +59,8 @@ class Customer extends Authenticatable
 
         $labels = [];
         $data = [];
+        $labels[] = '2018-06';
+        $data[] = 0;
         foreach ($quest as $item) {
             $labels[] = $item->date;
             $data[] = $item->count;
