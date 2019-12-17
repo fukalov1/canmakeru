@@ -83,7 +83,8 @@ class Customer extends Authenticatable
     {
         $labels = [];
         $data = [];
-
+//        $labels[] = '2018-06';
+//        $data[] = 0;
 //        $all = collect([]);
 //        $days = \DB::select('call month_days(now())');
 //        $days = collect($days);

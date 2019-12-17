@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Protokol;
 use Illuminate\Http\Request;
+use PDF;
 
 class CustomerController extends Controller
 {
@@ -51,12 +53,23 @@ class CustomerController extends Controller
         $end = request()->end;
         if (request()->customer_id)
             $customer_id = request()->customer_id;
-        return $this->customer->getDataRegetDataStatisticportDays($customer_id, $start, $end);
+        return $this->customer->getDataReportDays($customer_id, $start, $end);
     }
 
     public function getProfile()
     {
         return json_encode($this->customer->find(auth()->guard('customer')->user()->id));
+    }
+
+    public function getPDF($id)
+    {
+
+        $data = Protokol::find($id)->toArray();
+//dd($data);
+        $data[] = ['title' => 'Poverkadoma.ru'];
+        $pdf = PDF::loadView('protokolPDF', $data);
+
+        return $pdf->download("protokol$id.pdf");
     }
 
 }

@@ -79161,6 +79161,9 @@ Vue.prototype.moment = __WEBPACK_IMPORTED_MODULE_2_moment___default.a;
             str = '/photo/' + date + '/' + str;
             this.photo = str;
         },
+        exportPDF: function exportPDF(item) {
+            document.location = '/data/pdf/' + item.id;
+        },
         setPage: function setPage(page) {
             this.page = page;
         },
@@ -80064,7 +80067,7 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.showMeter(item)
+                          return _vm.exportPDF(item)
                         }
                       }
                     })

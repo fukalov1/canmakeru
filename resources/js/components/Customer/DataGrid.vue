@@ -151,11 +151,11 @@
                         </span>
                     </td>
                     <td>
+                        <!--                            @click="exportPDF(item)"-->
                         <font-awesome-icon
                             class="pointer"
                             icon="file-pdf"
-                            @click="showMeter(item)"
-                            title="выгрузить свидетельство в PDF"
+                            title="выгрузить результат поверки в PDF"
                         />
                     </td>
                 </tr>
@@ -349,6 +349,9 @@
                 str = str.replace('photos/','');
                 str = '/photo/'+ date+ '/' + str;
                 this.photo = str;
+            },
+            exportPDF(item) {
+                document.location = `/data/pdf/${item.id}`
             },
             setPage(page) {
                 this.page = page;

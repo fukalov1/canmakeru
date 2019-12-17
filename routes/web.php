@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth:customer']], function () {
     Route::get('/customer', 'CustomerController@index');
     Route::group(['prefix' => 'data'], function() {
         Route::post('/protokols', 'CustomerController@getDataProtokols');
+        Route::get('/pdf/{id}', 'CustomerController@getPDF');
         Route::get('/profile', 'CustomerController@getProfile');
         Route::post('/statistic', 'CustomerController@getDataStatistic');
         Route::post('/report_days', 'CustomerController@getReportDays');
