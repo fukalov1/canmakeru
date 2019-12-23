@@ -10,6 +10,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\Admin\Actions\Post\Slave;
+
 
 class CustomerController extends AdminController
 {
@@ -54,9 +56,15 @@ class CustomerController extends AdminController
                 $actions->disableView();
             });
         }
+        else {
+            $grid->actions(function ($actions) {
+                $actions->add(new Slave());
+            });
+        }
 
         $grid->column('code', __('Код'));
-        $grid->name('ФИО')->display(function () {
+        $grid->name('ФИО!
+        ')->display(function () {
             return '<a href="/admin/protokols?set='.$this->id.'" title="Поверки клиента '.$this->name.'">'.$this->name.'</a>';
         })->sortable();
         $grid->dinamic('Динамика поверок')->display(function () {
@@ -118,12 +126,12 @@ class CustomerController extends AdminController
         $form->switch('enabled', __('Активен'))->default(1);
         $form->email('email', __('E-mail'))->required(true);
 
-        $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
-            $form->select('slave_id', 'ФИО')->options(function ($id) {
-                $customers = Customer::select('id','name')->get()->sortBy('name');
-                return $customers->pluck('name', 'id');
-            });
-        });
+//        $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
+//            $form->select('slave_id', 'ФИО')->options(function ($id) {
+//                $customers = Customer::select('id','name')->get()->sortBy('name');
+//                return $customers->pluck('name', 'id');
+//            });
+//        });
 
         return $form;
     }

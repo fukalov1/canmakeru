@@ -10,6 +10,11 @@ class SlaveCustomer extends Model
     protected $fillable = ['id', 'customer_id', 'slave_id'];
 
     public function customer() {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
+
+    public function slave() {
+        return $this->belongsTo(Customer::class, 'slave_id');
+    }
+
 }
