@@ -198,7 +198,7 @@ class MainController extends Controller
 
     }
 
-   public function getPhoto4PDdf($year='2019',$month='01',$file='')
+   public function getPhoto4Pdf($year='2019',$month='01',$file='')
     {
         $disk = new DiskClient();
         //Устанавливаем полученный токен
