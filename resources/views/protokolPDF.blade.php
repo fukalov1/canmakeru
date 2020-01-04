@@ -13,13 +13,13 @@
     <table>
         <tr>
             <td width="30%">
-                <img src="http://pin.poverkadoma.ru/photo4pdf/{{ $protokol_photo }}" height="450">
+                <img src="http://pin.poverkadoma.ru/photo4pdf/{{ $protokol_photo }}">
             </td>
             <td width="30%">
-                <img src="http://pin.poverkadoma.ru/photo4pdf/{{ $protokol_photo1 }}" height="450">
+                <img src="http://pin.poverkadoma.ru/photo4pdf/{{ $protokol_photo1 }}">
             </td>
             <td width="30%">
-                <img src="http://pin.poverkadoma.ru/photo4pdf/{{ $meter_photo }}" height="450">
+                <img src="http://pin.poverkadoma.ru/photo4pdf/{{ $meter_photo }}">
             </td>
         </tr>
     </table>
