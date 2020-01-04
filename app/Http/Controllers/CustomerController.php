@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use App\Protokol;
+use Carbon\Traits\Date;
 use Illuminate\Http\Request;
 use PDF;
+use Carbon\Carbon;
 
 class CustomerController extends Controller
 {
@@ -63,11 +65,23 @@ class CustomerController extends Controller
 
     public function getPDF($id)
     {
-
         $data = Protokol::find($id)->toArray();
+        preg_match('/(\d\d\d\d)\-(\d\d)/', $data['protokol_dt'],$matches);
+        $file = preg_replace('/photos\//','',$data['protokol_photo']);
+        $data['protokol_photo'] = $matches[1].'/'.$matches[2].'/'.$file;
+        $file = preg_replace('/photos\//','',$data['protokol_photo1']);
+        $data['protokol_photo1'] = $matches[1].'/'.$matches[2].'/'.$file;
+        $file = preg_replace('/photos\//','',$data['meter_photo']);
+        $data['meter_photo'] = $matches[1].'/'.$matches[2].'/'.$file;
+
+        $protokol_num = $data['protokol_num'];
+        $data['protokol_num'] = intval(substr($protokol_num, 0,-7)).'-'.intval(substr($protokol_num, -7,2)).'-'.intval(substr($protokol_num, -5));
+
+        $date =  Carbon::createFromFormat('Y-m-d H:i:s', $data['protokol_dt']);
+        $data['protokol_dt'] = $date->format('d.m.Y');
 //dd($data);
         $data[] = ['title' => 'Poverkadoma.ru'];
-        $pdf = PDF::loadView('protokolPDF', $data);
+        $pdf = PDF::loadView('protokolPDF', $data)->setPaper('a4', 'landscape');
 
         return $pdf->download("protokol$id.pdf");
     }

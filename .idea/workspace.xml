@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a243e355-4b01-481f-94e3-1400a702b076" name="Default Changelist" comment="report">
-      <change afterPath="$PROJECT_DIR$/resources/views/protokolPDF.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/canmakeru.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/canmakeru.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Customer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Customer/DataGrid.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer/DataGrid.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MainController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/protokolPDF.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/protokolPDF.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -152,7 +144,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/components/Report" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../vodabur.info" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -203,7 +195,9 @@
       <workItem from="1573551584361" duration="6000" />
       <workItem from="1573551598496" duration="29613000" />
       <workItem from="1574399172326" duration="13951000" />
-      <workItem from="1576513109854" duration="8506000" />
+      <workItem from="1576513109854" duration="9198000" />
+      <workItem from="1576776149618" duration="965000" />
+      <workItem from="1578125090445" duration="4629000" />
     </task>
     <task id="LOCAL-00001" summary="show protokols for customers">
       <created>1567820560267</created>
