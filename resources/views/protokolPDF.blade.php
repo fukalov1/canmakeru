@@ -12,14 +12,14 @@
     <h5 align="center">Результаты поверки № {{ $protokol_num }} от {{ $protokol_dt }} г.</h5>
     <table>
         <tr>
-            <td>
-                <img src="http://pin.poverkadoma.ru/photo/{{ $protokol_photo }}" height="450">
+            <td width="30%">
+                <img src="http://pin.poverkadoma.ru/photo4pdf/{{ $protokol_photo }}" height="450">
             </td>
-            <td>
-                <img src="http://pin.poverkadoma.ru/photo/{{ $protokol_photo1 }}" height="450">
+            <td width="30%">
+                <img src="http://pin.poverkadoma.ru/photo4pdf/{{ $protokol_photo1 }}" height="450">
             </td>
-            <td>
-                <img src="http://pin.poverkadoma.ru/photo/{{ $meter_photo }}" height="450">
+            <td width="30%">
+                <img src="http://pin.poverkadoma.ru/photo4pdf/{{ $meter_photo }}" height="450">
             </td>
         </tr>
     </table>
