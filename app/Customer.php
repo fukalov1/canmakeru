@@ -28,7 +28,7 @@ class Customer extends Authenticatable
     protected $dates = ['deleted_at'];
 
     public function slave_customers() {
-        return $this->hasMany(SlaveCustomer::class);
+        return $this->hasMany(SlaveCustomer::class, 'customer_id');
     }
 
     public function getWorkers() {

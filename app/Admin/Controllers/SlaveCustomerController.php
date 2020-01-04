@@ -16,7 +16,8 @@ class SlaveCustomerController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\SlaveCustomer';
+    protected $customer='';
+    protected $title = 'Работники';
 
     /**
      * Make a grid builder.
@@ -25,11 +26,20 @@ class SlaveCustomerController extends AdminController
      */
     protected function grid()
     {
+        $this->getHeader();
+
         $grid = new Grid(new SlaveCustomer);
 
-        $grid->column('id', __('Id'));
-        $grid->column('customer_id', __('Customer id'));
-        $grid->column('slave_id', __('Slave id'));
+        $grid->header(function () {
+            return "<div style='padding: 10px;'>Клиент: <b>".$this->customer."</b></div>";
+        });
+
+        $grid->model()->where('customer_id', session('customer_id'));
+
+
+//        $grid->column('id', __('Id'));
+//        $grid->column('customer_id', __('Customer id'));
+        $grid->column('slave.name', __('ФИО'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
@@ -44,7 +54,14 @@ class SlaveCustomerController extends AdminController
      */
     protected function detail($id)
     {
+
+        $this->getHeader();
+
         $show = new Show(SlaveCustomer::findOrFail($id));
+        $show->header(function ($query) {
+            return "<div style='padding: 10px;'>Клиент: <b>".$this->customer."</b></div>";
+        });
+
 
         $show->field('id', __('Id'));
         $show->field('customer_id', __('Customer id'));
@@ -65,10 +82,10 @@ class SlaveCustomerController extends AdminController
         $form = new Form(new SlaveCustomer);
 
         $customer_id = 0;
-        if (request()->customer_id)
-            $customer_id = request()->customer_id;
+//        if (request()->customer_id)
+//            $customer_id = request()->customer_id;
 
-        $form->hidden('customer_id')->value($customer_id);
+        $form->hidden('customer_id')->value(session('customer_id'));
 //        $form->number('slave_id', __('Slave id'));
         $form->select('slave_id', 'ФИО')->options(function ($id) {
             $customers = Customer::select('id','name')->get()->sortBy('name');
@@ -77,4 +94,14 @@ class SlaveCustomerController extends AdminController
 
         return $form;
     }
+
+    public function getHeader()
+    {
+        $customers = Customer::find(session('customer_id'));
+//        dd($customers->name);
+        $this->customer = $customers->name;
+        $this->title .= ' - '.$customers->name;
+//            dd($this->title);
+    }
+
 }
