@@ -206,7 +206,7 @@ class MainController extends Controller
         $disk->setAccessToken(config('YANDEX_TOKEN'));
 
         //Вывод превьюшки
-        $size = '360x540';
+        $size = '330x495';
         $img = $disk->getImagePreview('/'.$year.'-'.$month.'/'.$file, $size);
         header("Content-type: image/jpeg");
 
