@@ -8,8 +8,10 @@
     </style>
 </head>
 <body>
-    <h4 align="center">Общество с ограниченной ответственностью "МС-Ресурс"</h4>
-    <h5 align="center">Результаты поверки № {{ $protokol_num }} от {{ $protokol_dt }} г.</h5>
+    <h6 align="center">
+        Общество с ограниченной ответственностью "МС-Ресурс"<br/>
+        Результаты поверки № {{ $protokol_num }} от {{ $protokol_dt }} г.
+    </h6>
     <table width="100%">
         <tr>
             <td width="33%">
