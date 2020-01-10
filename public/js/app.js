@@ -78995,14 +78995,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 // import {eventBus} from '../../app.js'
@@ -79952,61 +79944,58 @@ var render = function() {
         _c("thead", [
           _c(
             "tr",
-            [
-              _vm._l(_vm.column_names, function(item, index) {
-                return _c(
-                  "th",
-                  [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(item) +
-                        "\n                        "
-                    ),
-                    _vm.getType(index) === "desc"
-                      ? _c("font-awesome-icon", {
-                          attrs: { icon: "sort-up" },
-                          on: {
-                            click: function($event) {
-                              return _vm.setSort(index, "asc")
-                            }
+            _vm._l(_vm.column_names, function(item, index) {
+              return _c(
+                "th",
+                [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(item) +
+                      "\n                        "
+                  ),
+                  _vm.getType(index) === "desc"
+                    ? _c("font-awesome-icon", {
+                        attrs: { icon: "sort-up" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setSort(index, "asc")
                           }
-                        })
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.getType(index) === "asc"
-                      ? _c("font-awesome-icon", {
-                          attrs: { icon: "sort-down" },
-                          on: {
-                            click: function($event) {
-                              return _vm.setSort(index, "desc")
-                            }
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.getType(index) === "asc"
+                    ? _c("font-awesome-icon", {
+                        attrs: { icon: "sort-down" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setSort(index, "desc")
                           }
-                        })
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.getType(index) === ""
-                      ? _c("font-awesome-icon", {
-                          attrs: { icon: "sort" },
-                          on: {
-                            click: function($event) {
-                              return _vm.setSort(index, "asc")
-                            }
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.getType(index) === ""
+                    ? _c("font-awesome-icon", {
+                        attrs: { icon: "sort" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setSort(index, "asc")
                           }
-                        })
-                      : _vm._e()
-                  ],
-                  1
-                )
-              }),
-              _vm._v(" "),
-              _c("th")
-            ],
-            2
+                        }
+                      })
+                    : _vm._e()
+                ],
+                1
+              )
+            }),
+            0
           )
         ]),
         _vm._v(" "),
         _c(
           "tbody",
+<<<<<<< HEAD
           _vm._l(_vm.protokols_, function(item) {
             return _c(
               "tr",
@@ -80091,6 +80080,88 @@ var render = function() {
             )
           }),
           0
+=======
+          [
+            _vm.protokols_.length === 0
+              ? _c("tr", [_vm._m(0)])
+              : _vm._l(_vm.protokols_, function(item) {
+                  return _c(
+                    "tr",
+                    _vm._l(_vm.columns, function(field) {
+                      return _c("td", [
+                        field === "protokol_photo"
+                          ? _c(
+                              "span",
+                              [
+                                _c("font-awesome-icon", {
+                                  staticClass: "pointer",
+                                  attrs: {
+                                    icon: "file",
+                                    title: "свидетельство лицевая сторона "
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showPhoto(item)
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("font-awesome-icon", {
+                                  staticClass: "pointer",
+                                  attrs: {
+                                    icon: "file-alt",
+                                    title: "свидетельство обратная сторона "
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showPhoto1(item)
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("font-awesome-icon", {
+                                  staticClass: "pointer",
+                                  attrs: {
+                                    icon: "file-image",
+                                    title: "фото счетчика"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showMeter(item)
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("font-awesome-icon", {
+                                  staticClass: "pointer",
+                                  attrs: {
+                                    icon: "file-pdf",
+                                    title: "выгрузить результат поверки в PDF"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.exportPDF(item)
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _c("span", [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(item[field]) +
+                                  "\n                        "
+                              )
+                            ])
+                      ])
+                    }),
+                    0
+                  )
+                })
+          ],
+          2
+>>>>>>> 3f21a540085fc97706e365c23bfa7e97bbbdb52b
         )
       ]),
       _vm._v(" "),
@@ -80127,7 +80198,20 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-center" }, [
+      _c("h3", [
+        _vm._v(
+          "\n                            Загружаются данные о поверках, пожалуйста подождите...\n                        "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

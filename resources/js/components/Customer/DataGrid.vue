@@ -106,13 +106,17 @@
                         <font-awesome-icon icon="sort-down"  v-if="getType(index)==='asc'" @click="setSort(index,'desc')"/>
                         <font-awesome-icon icon="sort" v-if="getType(index)===''" @click="setSort(index,'asc')"/>
                     </th>
-                    <th>
-
-                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in protokols_">
+                <tr v-if="protokols_.length===0">
+                    <td class="text-center">
+                        <h3>
+                            Загружаются данные о поверках, пожалуйста подождите...
+                        </h3>
+                    </td>
+                </tr>
+                <tr v-else v-for="item in protokols_">
                     <td v-for="field in columns">
                         <span
                            v-if="field==='protokol_photo'">
@@ -135,28 +139,16 @@
                             @click="showMeter(item)"
                             title="фото счетчика"
                         />
+                            <font-awesome-icon
+                                @click="exportPDF(item)"
+                                class="pointer"
+                                icon="file-pdf"
+                                title="выгрузить результат поверки в PDF"
+                            />
                         </span>
-<!--                        <span class="pointer"-->
-<!--                           @click="showPhoto1(item)"-->
-<!--                           v-else-if="field==='protokol_photo1'">-->
-<!--                            {{ item[field] }}-->
-<!--                        </span>-->
-<!--                        <span class="pointer"-->
-<!--                           @click="showMeter(item)"-->
-<!--                           v-else-if="field==='meter_photo'">-->
-<!--                            {{ item[field] }}-->
-<!--                        </span>-->
                         <span v-else>
                             {{ item[field] }}
                         </span>
-                    </td>
-                    <td>
-                        <font-awesome-icon
-                            class="pointer"
-                            icon="file-pdf"
-                            @click="exportPDF(item)"
-                            title="выгрузить результат поверки в PDF"
-                        />
                     </td>
                 </tr>
             </tbody>

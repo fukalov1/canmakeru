@@ -154,7 +154,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/components/Report" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../vodabur.info" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -205,9 +205,15 @@
       <workItem from="1573551584361" duration="6000" />
       <workItem from="1573551598496" duration="29613000" />
       <workItem from="1574399172326" duration="13951000" />
+<<<<<<< HEAD
       <workItem from="1576513109854" duration="8506000" />
       <workItem from="1577103713578" duration="3734000" />
       <workItem from="1578631251448" duration="1595000" />
+=======
+      <workItem from="1576513109854" duration="9198000" />
+      <workItem from="1576776149618" duration="965000" />
+      <workItem from="1578125090445" duration="4629000" />
+>>>>>>> 3f21a540085fc97706e365c23bfa7e97bbbdb52b
     </task>
     <task id="LOCAL-00001" summary="show protokols for customers">
       <created>1567820560267</created>

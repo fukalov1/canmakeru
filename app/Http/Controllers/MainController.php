@@ -222,6 +222,22 @@ class MainController extends Controller
 
     }
 
+   public function getPhoto4Pdf($year='2019',$month='01',$file='')
+    {
+        $disk = new DiskClient();
+        //Устанавливаем полученный токен
+
+        $disk->setAccessToken(config('YANDEX_TOKEN'));
+
+        //Вывод превьюшки
+        $size = '330x495';
+        $img = $disk->getImagePreview('/'.$year.'-'.$month.'/'.$file, $size);
+        header("Content-type: image/jpeg");
+
+        echo $img['body'];
+
+    }
+
     public function showResult(Request $request)
     {
 
