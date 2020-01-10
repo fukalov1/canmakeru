@@ -220,9 +220,6 @@ class MainController extends Controller
 
    public function getPhoto4Pdf($year='2019',$month='01',$file='')
     {
-        $width = 768;
-        $height = 1024;
-
         $disk = new DiskClient();
         //Устанавливаем полученный токен
 
@@ -233,24 +230,7 @@ class MainController extends Controller
         $img = $disk->getImagePreview('/'.$year.'-'.$month.'/'.$file, $size);
         header("Content-type: image/jpeg");
 
-        try {
-            $i = Image::make($img['body']);
-            $w = $i->width();
-            $h = $i->height();
-
-            if ($w/$h > $width/$height) {
-                $i->resize(round($height*$w/$h,0), $height);
-            }
-            else {
-                $i->resize($width, round($width*$h/$w,0));
-            }
-            if ($w>$h)
-                $i->rotate(90);
-            echo $i->stream();
-        }
-        catch (\Exception $exception) {
-
-        }
+        echo $img['body'];
 
     }
 
