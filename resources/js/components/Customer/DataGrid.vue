@@ -110,10 +110,10 @@
             </thead>
             <tbody>
                 <tr v-if="protokols_.length===0">
-                    <td class="text-center">
-                        <h3>
-                            Загружаются данные о поверках, пожалуйста подождите...
-                        </h3>
+                    <td class="text-center" colspan="6">
+                        <h6>
+                            Нет данных о поверках
+                        </h6>
                     </td>
                 </tr>
                 <tr v-else v-for="item in protokols_">
