@@ -84,7 +84,7 @@ class CustomerController extends Controller
         $data[] = ['title' => 'Poverkadoma.ru'];
         $pdf = PDF::loadView('protokolPDF', $data)->setPaper('a4', 'landscape');
 
-        return $pdf->download("svid".$data['protokol_num'].".pdf");
+        return $pdf->download("svid ".$data['protokol_num'].".pdf");
     }
 
 }
