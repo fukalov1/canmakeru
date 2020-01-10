@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Protokol;
+use Intervention\Image\Facades\Image as Imagez;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\Passport;
 use GuzzleHttp;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Yandex\OAuth\OAuthClient;
 use App\Customer;
 use Illuminate\Support\Facades\Log;
+use Intervention\Image\Facades\Image;
 
 use Yandex\OAuth\Exception\AuthRequestException;
 
@@ -34,112 +36,7 @@ class MainController extends Controller
     }
 
     public function index() {
-
-
-//        $client = new OAuthClient(config('YANDEX_CLIENT_ID'), config('YANDEX_PASS'));
-
-//            try {
-    // осуществляем обмен
-//            $client->requestAccessToken('1817294');
-//            } catch (AuthRequestException $ex) {
-//                echo $ex->getMessage();
-//            }
-
-// забираем полученный токен
-//        $token = $client->getAccessToken();
-//        dd($token);
-
-//        echo '<a href="https://oauth.yandex.ru/authorize?response_type=code&client_id='.$client_id.'">Страница запроса доступа</a>';
-//        $client = new OAuthClient(env('YANDEX_CLIENT_ID'));
-// сделать редирект и выйти
-//        $client->authRedirect(true, OAuthClient::TOKEN_AUTH_TYPE);
-//Передать в запросе какое-то значение в параметре state, чтобы Yandex в ответе его вернул
-//        $state = 'yandex-php-library';
-//        $client->authRedirect(true, OAuthClient::TOKEN_AUTH_TYPE, $state);
-
-        // Формирование параметров (тела) POST-запроса с указанием кода подтверждения
-//        $query = array(
-//            'grant_type' => 'authorization_code',
-//            'code' => 9958708,
-//            'client_id' => env('YANDEX_CLIENT_ID'),
-//            'client_secret' => env('YANDEX_PASS')
-//        );
-//        $query = http_build_query($query);
-//
-//        // Формирование заголовков POST-запроса
-//        $header = "Content-type: application/x-www-form-urlencoded";
-//
-//        // Выполнение POST-запроса и вывод результата
-//        $opts = array('http' =>
-//            array(
-//                'method'  => 'POST',
-//                'header'  => $header,
-//                'content' => $query
-//            )
-//        );
-//        $context = stream_context_create($opts);
-//        $result = file_get_contents('https://oauth.yandex.ru/token', false, $context);
-//        $result = json_decode($result);
-//
-//        // Токен необходимо сохранить для использования в запросах к API Директа
-//        echo $result->access_token;
-//
-//        exit;
-
-//        $guzzle = new GuzzleHttp\Client;
-//
-//        $response = $guzzle->post('http://your-app.com/oauth/token', [
-//            'form_params' => [
-//                'grant_type' => 'authorization_code',
-//                'client_id' => env('YANDEX_CLIENT_ID'),
-//                'client_secret' => env('YANDEX_PASS'),
-//                'code' => 9958708
-//            ],
-//        ]);
-//
-//        dd($response);
-//exit;
-//        $disk = new DiskClient();
-        //Устанавливаем полученный токен
-
-//        $disk->setAccessToken(env('YANDEX_TOKEN'));
-        //Получаем список файлов из директории
-//        $files = $disk->directoryContents();
-//        $obj = collect($files);
-//
-//        $dirs = $obj->filter(function ($value, $key) {
-//            return $value['resourceType']=='dir' and $value['displayName']=='2019-08-30';
-//        });
-//
-//        dd(count($dirs));
-
-
-//        foreach($files as $file) {
-//            if($file['contentType'] == 'image/jpeg') {
-//                echo  $file['href']."<br>";
-//                Вывод превьюшки
-//                $size = '100x100';
-//                $img = $disk->getImagePreview($file['href'], $size);
-//                $imgData = base64_encode($img['body']);
-//                $path = $file['href'];
-//                $type = pathinfo($path, PATHINFO_EXTENSION);
-//                $src = 'data: '.mime_content_type($file['displayName']).';base64,'.$imgData;
-//                $base64 = 'data:image/'.$type.';base64,' . $imgData;
-//                echo '<img src="'.$base64.'">';
-//                echo $img['body'];
-//            }
-//        }
-
-        //Получаем свободное и занятое место/
-//        $diskSpace = $disk->diskSpaceInfo();
-//        echo "Всего места: ". $diskSpace['availableBytes']."байт.";
-//        echo "<br />Использовано: ".$diskSpace['usedBytes']."байт.";
-//        echo "<br/>Свободно:".round(($diskSpace['availableBytes'] - $diskSpace['usedBytes']) / 1024 / 1024 / 1024, 2)
-//            ."ГБ из ".round($diskSpace['availableBytes'] / 1024 / 1024 / 1024, 2)."ГБ.";
-
-
         return view('welcome');
-
     }
 
     public function getSpaceDisk() {
@@ -289,6 +186,8 @@ class MainController extends Controller
 
    public function getPhoto($year='2019',$month='01',$file='')
     {
+        $width = 768;
+        $height = 1024;
         $disk = new DiskClient();
         //Устанавливаем полученный токен
 
@@ -299,7 +198,27 @@ class MainController extends Controller
         $img = $disk->getImagePreview('/'.$year.'-'.$month.'/'.$file, $size);
         header("Content-type: image/jpeg");
 
-        echo $img['body'];
+        try {
+            $i = Image::make($img['body']);
+            $w = $i->width();
+            $h = $i->height();
+
+            if ($w/$h > $width/$height) {
+                $i->resize(round($height*$w/$h,0), $height);
+            }
+            else {
+                $i->resize($width, round($width*$h/$w,0));
+            }
+//        $i->crop($width,$height);
+            echo $i->stream();
+        }
+        catch (\Exception $exception) {
+            Log::warning('Error write preview '.public_path('uploads').'/images/thumbnail/'.$filename." Error: ".$exception->getMessage() );
+        }
+
+        $i->save(public_path('uploads').'/images/thumbnail/'.$filename);
+
+//        echo $img['body'];
 
     }
 

@@ -8,7 +8,8 @@
     <h1>Общество с ограниченной ответственностью "МС-Ресурс"</h1>
     <h1>Результаты поверки № {{ $protokol_num }} от {{ $protokol_dt }}</h1>
     <h4>Свидетельство (лицевая сторона) </h4>
-    <img src="{{ asset('/photo/'.$protokol_photo) }}">
+    http://127.0.0.1:8000/{{$protokol_photo}}
+{{--    <img src="{{ asset($protokol_photo) }} ">--}}
 {{--    <h4>Свидетельство (обратная сторона) </h4>--}}
 {{--    <img src="http://pin.poverkadoma.ru/photo/{{ $protokol_photo1 }}">--}}
 {{--    <h4>Фото счетчика </h4>--}}

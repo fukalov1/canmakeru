@@ -64,6 +64,8 @@ class CustomerController extends Controller
     public function getPDF($id)
     {
 
+        PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif', 'setPaper'=> 'landscape']);
+
         $data = Protokol::find($id)->toArray();
 //dd($data);
         $data[] = ['title' => 'Poverkadoma.ru'];

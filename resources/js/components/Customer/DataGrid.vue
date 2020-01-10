@@ -151,10 +151,10 @@
                         </span>
                     </td>
                     <td>
-                        <!--                            @click="exportPDF(item)"-->
                         <font-awesome-icon
                             class="pointer"
                             icon="file-pdf"
+                            @click="exportPDF(item)"
                             title="выгрузить результат поверки в PDF"
                         />
                     </td>
