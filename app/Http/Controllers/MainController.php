@@ -214,7 +214,7 @@ class MainController extends Controller
                 $w=$w+$h-$h=$w;
             }
             if ($w/$h<0.7) {
-                $i->crop(768, 1024);
+                $i->crop(768, 1280);
             }
             echo $i->stream();
         }
