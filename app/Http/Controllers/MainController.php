@@ -209,8 +209,13 @@ class MainController extends Controller
             else {
                 $i->resize($width, round($width*$h/$w,0));
             }
-            if ($w>$h)
+            if ($w>$h) {
                 $i->rotate(90);
+                $w=$w+$h-$h=$w;
+            }
+            if ($w/$h<0.7) {
+                $i->crop(768, 1024);
+            }
             echo $i->stream();
         }
         catch (\Exception $exception) {
