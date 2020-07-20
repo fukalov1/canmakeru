@@ -28,6 +28,16 @@ if ($conn->connect_error) {
     throw new RuntimeException('Error : ('. $conn->connect_errno .') ');
 }
 
+
+$siType = $_POST['siType']; // - тип СИ
+$waterType = $_POST['waterType']; //- Тип воды
+$regNumber = $_POST['regNumber']; // - регистрационный номер
+$serialNumber = $_POST['serialNumber']; // - заводской номер
+$checkInterval = $_POST['checkInterval']; // - интервал поверки
+$checkMethod = $_POST['checkMethod']; // - методика поверки
+
+
+
 $stmt = $conn->prepare("select id cust_id FROM customers where code=? and enabled=1");
 $stmt->bind_param("s", $_POST['partnerKey']);
 $stmt->execute();
@@ -108,8 +118,16 @@ $message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo";
 error_log($message." ID: ".$cust_id, 0);
 wrileLog($cust_id, $message);
 
-$stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng) VALUES (?, ?, ?, ?, ?, ?,?,?,?)");
-$stmt->bind_param("iisssisdd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng']);
+$nextTest = null;
+if ((int)$checkInterval > 0) {
+    $nextTest = strtotime('+1 MONTH', strtotime($_POST['dt']));
+    $nextTest = strtotime('-1 DAYS', $nextTest);
+    $nextTest = date("Y-m-d H:i:s", $nextTest);
+}
+
+$stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("iisssisddssssssd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng'], $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest);
 $stmt->execute();
 
 

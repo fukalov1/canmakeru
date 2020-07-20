@@ -24,7 +24,7 @@ class Protokols extends Migration
             $table->double('lat');
             $table->double('lng');
             $table->timestamp('updated_dt');
-            $table->timestamp('protokol_dt')->nullable();
+            $table->dateTime('protokol_dt')->default(null);
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });
