@@ -116,7 +116,7 @@ if ($exists) {
 
 $nextTest = null;
 if ((int)$checkInterval > 0) {
-    $nextTest = strtotime("+1$checkInterval MONTH", strtotime($_POST['dt']));
+    $nextTest = strtotime("+$checkInterval YEAR", strtotime($_POST['dt']));
     $nextTest = strtotime('-1 DAYS', $nextTest);
     $nextTest = date("Y-m-d H:i:s", $nextTest);
 }
