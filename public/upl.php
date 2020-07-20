@@ -116,7 +116,7 @@ if ($exists) {
 
 $nextTest = null;
 if ((int)$checkInterval > 0) {
-    $nextTest = strtotime('+1 MONTH', strtotime($_POST['dt']));
+    $nextTest = strtotime("+1$checkInterval MONTH", strtotime($_POST['dt']));
     $nextTest = strtotime('-1 DAYS', $nextTest);
     $nextTest = date("Y-m-d H:i:s", $nextTest);
 }
@@ -129,7 +129,7 @@ wrileLog($cust_id, $message);
 
 $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) 
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("iisssisddssssssd", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng'], $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest);
+$stmt->bind_param("iisssisddsssssss", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng'], $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest);
 $stmt->execute();
 
 
