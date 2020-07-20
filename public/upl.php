@@ -114,16 +114,18 @@ if ($exists) {
     $conn->query('delete from protokols  where  protokol_num='.$_POST['id'].' and pin='.$_POST['pin']);
 }
 
-$message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo";
-error_log($message." ID: ".$cust_id, 0);
-wrileLog($cust_id, $message);
-
 $nextTest = null;
 if ((int)$checkInterval > 0) {
     $nextTest = strtotime('+1 MONTH', strtotime($_POST['dt']));
     $nextTest = strtotime('-1 DAYS', $nextTest);
     $nextTest = date("Y-m-d H:i:s", $nextTest);
 }
+
+
+$message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo, $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest";
+error_log($message." ID: ".$cust_id, 0);
+wrileLog($cust_id, $message);
+
 
 $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) 
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
