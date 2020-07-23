@@ -72,7 +72,7 @@ class ProtokolController extends AdminController
             });
         }
 
-        $grid->model()->where('customer_id',session('customer_id'));
+        $grid->model()->where('customer_id',session('customer_id'))->orderBy('protokol_dt', 'desc');
 
         $grid->column('protokol_num', __('№ свидетельства'))->sortable();
         $grid->column('protokol_dt', __('Дата свидетельства'))->sortable();
