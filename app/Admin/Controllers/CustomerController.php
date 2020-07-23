@@ -51,6 +51,10 @@ class CustomerController extends AdminController
                 0    => 'Не активны',
                 1    => 'Активны',
             ]);
+            $filter->in('export_fgis', 'Выгружать во ФГИС')->radio([
+                '1'    => 'да',
+                '0'    => 'нет',
+            ]);
 
         });
 
