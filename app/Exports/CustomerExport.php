@@ -39,7 +39,7 @@ class CustomerExport implements FromCollection, Responsable
                         $protokol->serialNumber,
                         '',
                         date('Y-m-d', strtotime($protokol->updated_dt)),
-                        date('Y-m-d', $protokol->nextTest),
+                        date('Y-m-d', strtotime($protokol->nextTest)),
                         'Нет данных', 'МИ 1592-2015', 'Пригодно',
                         $protokol->protokol_num,
                         '', '', '', '', 'гэт63-2017', '', ''
