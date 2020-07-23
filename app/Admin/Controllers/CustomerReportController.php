@@ -3,11 +3,13 @@
 namespace App\Admin\Controllers;
 
 use App\Customer;
+use App\Exports\CustomerExport;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerReportController extends AdminController
 {
@@ -100,5 +102,12 @@ class CustomerReportController extends AdminController
         $form->number('enabled', __('Enabled'))->default(1);
 
         return $form;
+    }
+
+
+
+    public function exportToFGIS()
+    {
+        return new CustomerExport();
     }
 }

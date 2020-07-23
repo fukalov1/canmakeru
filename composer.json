@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "barryvdh/laravel-dompdf": "^0.8.5",
-        "encore/laravel-admin": "1.7.8",
+        "encore/laravel-admin": "1.7.*",
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
         "laravel-admin-ext/chartjs": "^1.0",
@@ -18,6 +18,7 @@
         "laravel/framework": "5.8.*",
         "laravel/passport": "7.*",
         "laravel/tinker": "^1.0",
+        "maatwebsite/excel": "^3.1",
         "nixsolutions/yandex-php-library": "dev-master"
     },
     "require-dev": {

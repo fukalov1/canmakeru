@@ -11,6 +11,10 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use App\Admin\Actions\Post\Slave;
+use Illuminate\Database\Eloquent\Collection;
+use League\Csv\Writer;
+use Schema;
+use SplTempFileObject;
 
 
 class CustomerController extends AdminController
@@ -21,6 +25,7 @@ class CustomerController extends AdminController
      * @var string
      */
     protected $title = 'Партнеры';
+
 
     /**
      * Make a grid builder.
@@ -49,6 +54,11 @@ class CustomerController extends AdminController
 
         });
 
+        $grid->header(function ($query) {
+            return '<a href="/admin/export-fgis" target="_blank">выгрузить данные для ФГИС</a>';
+        });
+
+
         if (Admin::user()->roles[0]->slug!='administrator') {
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
@@ -72,6 +82,7 @@ class CustomerController extends AdminController
         });
         $grid->column('comment', __('Комментарий'));
         $grid->column('enabled', __('Активен'));
+        $grid->column('export_fgis', __('Выгружать во ФГИС'));
         $grid->column('email', __('E-mail'));
 
         return $grid;
@@ -124,6 +135,7 @@ class CustomerController extends AdminController
         $form->text('name', __('ФИО'));
         $form->text('comment', __('Комментарий'));
         $form->switch('enabled', __('Активен'))->default(1);
+        $form->switch('export_fgis', __('Выгружать во ФГИС'))->default(1);
         $form->email('email', __('E-mail'))->required(true);
 
 //        $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
@@ -134,5 +146,72 @@ class CustomerController extends AdminController
 //        });
 
         return $form;
+    }
+
+    private function exportToFGIS()
+    {
+        $protokols = collect([]);
+        $customers = Customer::where('export_fgis',1)->get();
+        foreach ($customers as $customer) {
+            foreach ($customer->protokols as $protokol) {
+                $protokols->push($protokol);
+//                $file .= "$protokol->siType;$protokol->regNumber;;;;1;$protokol->serialNumber;;2020-03-01;2026-02-28;Нет данных;МИ 1592-2015;Пригодно;110-20-6;;;;;гэт63-2017;;\n";
+            }
+        }
+        $this->createCsv($protokols, 'main_meta');
+    }
+
+    private function createCsv($modelCollection, $tableName){
+
+        $csv = Writer::createFromFileObject(new SplTempFileObject());
+
+        // This creates header columns in the CSV file - probably not needed in some cases.
+        $csv->insertOne(Schema::getColumnListing($tableName));
+
+        foreach ($modelCollection as $data){
+            $csv->insertOne($data->toArray());
+        }
+
+        $csv->output($tableName . '.csv');
+
+    }
+
+    private function exportToFGIS1()
+    {
+//        $file = "TypePOV;GosNumberPOV;NamePOV;DesignationSiPOV;DeviceMarkPOV;DeviceCountPOV;SerialNumPOV;SerialNumEndPOV;CalibrationDatePOV;NextcheckDatePOV;MarkCipherPOV;DocPOV;DeprcatedPOV;NumCertfPOV;NumSvidPOV;PrimPOV;ScopePOV;StandartPOV;GpsPOV;SiPOV;SoPOV\n";
+        $protokols = collect([]);
+        $customers = Customer::where('export_fgis',1)->get();
+        foreach ($customers as $customer) {
+            foreach ($customer->protokols as $protokol) {
+                $protokols->push($protokol);
+//                $file .= "$protokol->siType;$protokol->regNumber;;;;1;$protokol->serialNumber;;2020-03-01;2026-02-28;Нет данных;МИ 1592-2015;Пригодно;110-20-6;;;;;гэт63-2017;;\n";
+            }
+        }
+        $headers = array(
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="tweets.csv"',
+        );
+
+        $columns = ['siType','regNumber','serialNumber','createdAt','nextTest'];
+
+        $callback = function() use($protokols, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($protokols as $protokol) {
+                $row['siType']  = $protokol->siType;
+                $row['regNumber']    = $protokol->regNumber;
+                $row['serialNumber']    = $protokol->serialNumber;
+                $row['createdAt']  = $protokol->created_at;
+                $row['nextTest']  = $protokol->nextTest;
+
+                fputcsv($file, array($row['siType'], $row['regNumber'], $row['serialNumber'], $row['createdAt'], $row['nextTest']));
+            }
+
+            fclose($file);
+        };
+        dd($callback);
+
+        return response()->stream($callback, 200, $headers);
     }
 }

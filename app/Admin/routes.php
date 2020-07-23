@@ -19,6 +19,7 @@ Route::group([
     $router->resource('protokols', ProtokolController::class)->middleware('set_customer');
     $router->get('customer_chart', 'CustomerChartController@index')->middleware('set_customer');
     $router->get('customer_report', 'CustomerReportController@index');
+    $router->get('export-fgis', 'CustomerReportController@exportToFgis');
 
     $router->resource('slave_customers', SlaveCustomerController::class)->middleware('set_customer');
 
