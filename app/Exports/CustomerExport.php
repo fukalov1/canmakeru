@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Customer;
+use App\Protokol;
 use Maatwebsite\Excel\Excel;
 use Illuminate\Contracts\Support\Responsable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -31,22 +32,36 @@ class CustomerExport implements FromCollection, Responsable
 
         $customers = Customer::where('export_fgis',1)->get();
         foreach ($customers as $customer) {
-            foreach ($customer->protokols as $protokol) {
+            foreach ($customer->new_protokols as $protokol) {
                 if ($protokol->regNumber) {
                     $protokols->push([
-                        $protokol->siType,
+                        '1',
                         $protokol->regNumber, '', '', '', 1,
                         $protokol->serialNumber,
                         '',
                         date('Y-m-d', strtotime($protokol->updated_dt)),
                         date('Y-m-d', strtotime($protokol->nextTest)),
-                        'Нет данных', 'МИ 1592-2015', 'Пригодно',
-                        $protokol->protokol_num,
+                        'Нет данных',  $protokol->checkMethod, 'Пригодно',
+                        $this->getProtokolNumber($protokol->protokol_num),
                         '', '', '', '', 'гэт63-2017', '', ''
                     ]);
                 }
             }
+            Protokol::where('customer_id', $customer->id)
+                ->update(['exported' => 1]);
         }
         return $protokols;
     }
+
+    private function getProtokolNumber($protokol_num)
+    {
+        if ($protokol_num) {
+            return intval(substr($protokol_num, 0, -7)) . '-' . intval(substr($protokol_num, -7, 2)) . '-' . intval(substr($protokol_num, -5));
+        }
+        else {
+            return '';
+        }
+    }
+
+
 }

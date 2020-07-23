@@ -23,4 +23,7 @@ Route::group([
 
     $router->resource('slave_customers', SlaveCustomerController::class)->middleware('set_customer');
 
+
+
+
 });

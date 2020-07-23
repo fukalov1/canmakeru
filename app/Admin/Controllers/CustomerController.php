@@ -85,8 +85,14 @@ class CustomerController extends AdminController
             return '<a href="/admin/customer_chart?set='.$this->id.'" title="Динамика поверок "><span class="fa fa-bar-chart"/></a>';
         });
         $grid->column('comment', __('Комментарий'));
-        $grid->column('enabled', __('Активен'));
-        $grid->column('export_fgis', __('Выгружать во ФГИС'));
+        $grid->column('enabled', __('Активен'))->icon([
+            0 => '',
+            1 => 'check',
+        ], $default = '');
+        $grid->column('export_fgis', __('Выгружать во ФГИС'))->icon([
+            0 => '',
+            1 => 'check',
+        ], $default = '');
         $grid->column('email', __('E-mail'));
 
         return $grid;

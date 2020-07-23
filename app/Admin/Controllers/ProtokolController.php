@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Protokol\BatchClearExport;
 use App\Customer;
 use App\Protokol;
 use Encore\Admin\Controllers\AdminController;
@@ -40,6 +41,16 @@ class ProtokolController extends AdminController
             return "<div style='padding: 10px;'>Клиент: <b>".$this->customer."</b></div>";
         });
 
+        $grid->tools(function ($tools) {
+            $tools->batch(function ($batch) {
+                $batch->add(new BatchClearExport());
+            });
+        });
+
+        $grid->batchActions(function ($batch) {
+            $batch->add(new BatchClearExport());
+        });
+
         $grid->filter(function($filter){
 
             // Remove the default id filter
@@ -47,7 +58,10 @@ class ProtokolController extends AdminController
 
             $filter->like('protokol_num', 'Номер свидетельства');
             $filter->between('protokol_dt', 'Дата свидетельства')->date();
-
+            $filter->in('exported', 'Выгружен')->radio([
+                '1'    => 'да',
+                '0'    => 'нет',
+            ]);
         });
 
         if (Admin::user()->roles[0]->slug!='administrator') {
@@ -82,6 +96,10 @@ class ProtokolController extends AdminController
         $grid->column('serialNumber', 'Заводской номер');
         $grid->column('nextTest', 'След. поверка');
 //        $grid->column('updated_dt', __('Дата изменения'));
+        $grid->column('exported', __('Выгружен'))->icon([
+            0 => '',
+            1 => 'check',
+        ], $default = '');
 
         return $grid;
     }
@@ -120,6 +138,7 @@ class ProtokolController extends AdminController
     {
         $form = new Form(new Protokol);
 
+        $form->switch('exported', __('Выгружен'))->default(0);
         $form->number('protokol_num', __('Protokol num'));
         $form->number('pin', __('Pin'));
         $form->text('protokol_photo', __('Protokol photo'));

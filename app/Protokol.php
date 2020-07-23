@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Protokol extends Model
 {
 
+    protected $fillable = ['exported'];
+
     const UPDATED_AT = 'updated_dt';
 
     public function uploadExistFile($filename, $path)
