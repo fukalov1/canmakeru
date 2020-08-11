@@ -31,6 +31,10 @@ class AddCustomersToFgis extends Migration
     {
         Schema::table('customers', function (Blueprint $table) {
             $table->dropColumn('export_fgis');
+            $table->dropColumn('hour_zone');
+            $table->dropColumn('ideal');
+            $table->dropColumn('get');
+            $table->dropColumn('type_ideal');
         });
     }
 }

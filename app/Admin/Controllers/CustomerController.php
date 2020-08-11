@@ -145,6 +145,7 @@ class CustomerController extends AdminController
         $form->text('name', __('ФИО'));
         $form->text('comment', __('Комментарий'));
         $form->switch('enabled', __('Активен'))->default(1);
+        $form->number('hour_zone', 'Временная зона (по Москве)')->default(0);
         $form->switch('export_fgis', __('Выгружать во ФГИС'))->default(1);
         $form->email('email', __('E-mail'))->required(true);
         $form->text('ideal', __('Эталон'));
