@@ -147,6 +147,15 @@ class CustomerController extends AdminController
         $form->switch('enabled', __('Активен'))->default(1);
         $form->switch('export_fgis', __('Выгружать во ФГИС'))->default(1);
         $form->email('email', __('E-mail'))->required(true);
+        $form->text('ideal', __('Эталон'));
+        $form->text('get', __('ГЭТ'));
+        $form->select('type_ideal', 'Тип эталона')->options(
+            [
+                0 => 'Эталон',
+                1 => 'Не утвержденный',
+                2 => 'СИ, как эталон',
+            ]
+        );
 
 //        $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
 //            $form->select('slave_id', 'ФИО')->options(function ($id) {
@@ -154,6 +163,11 @@ class CustomerController extends AdminController
 //                return $customers->pluck('name', 'id');
 //            });
 //        });
+
+        $form->hasMany('customer_tools', 'Средства измерения, применяемые при поверке', function (Form\NestedForm $form) {
+            $form->text('typeNum', 'Регистрационный номер типа СИ');
+            $form->text('manufactureNum', 'Заводской номер СИ');
+        });
 
         return $form;
     }
@@ -165,7 +179,6 @@ class CustomerController extends AdminController
         foreach ($customers as $customer) {
             foreach ($customer->protokols as $protokol) {
                 $protokols->push($protokol);
-//                $file .= "$protokol->siType;$protokol->regNumber;;;;1;$protokol->serialNumber;;2020-03-01;2026-02-28;Нет данных;МИ 1592-2015;Пригодно;110-20-6;;;;;гэт63-2017;;\n";
             }
         }
         $this->createCsv($protokols, 'main_meta');
@@ -186,9 +199,12 @@ class CustomerController extends AdminController
 
     }
 
-    private function exportToFGIS1()
+    private function exportXmlToFGIS()
     {
-//        $file = "TypePOV;GosNumberPOV;NamePOV;DesignationSiPOV;DeviceMarkPOV;DeviceCountPOV;SerialNumPOV;SerialNumEndPOV;CalibrationDatePOV;NextcheckDatePOV;MarkCipherPOV;DocPOV;DeprcatedPOV;NumCertfPOV;NumSvidPOV;PrimPOV;ScopePOV;StandartPOV;GpsPOV;SiPOV;SoPOV\n";
+
+        $file = '<?xml version="1.0" encoding="utf-8" ?>\n\t
+            <gost:application xmlns:gost="urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14">\n';
+
         $protokols = collect([]);
         $customers = Customer::where('export_fgis',1)->get();
         foreach ($customers as $customer) {
@@ -198,15 +214,9 @@ class CustomerController extends AdminController
             }
         }
         $headers = array(
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="tweets.csv"',
+            'Content-Type' => 'text/xml',
+            'Content-Disposition' => 'attachment; filename="poverka.xml"',
         );
-
-        $columns = ['siType','regNumber','serialNumber','createdAt','nextTest'];
-
-        $callback = function() use($protokols, $columns) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $columns);
 
             foreach ($protokols as $protokol) {
                 $row['siType']  = $protokol->siType;
@@ -215,13 +225,45 @@ class CustomerController extends AdminController
                 $row['createdAt']  = $protokol->created_at;
                 $row['nextTest']  = $protokol->nextTest;
 
-                fputcsv($file, array($row['siType'], $row['regNumber'], $row['serialNumber'], $row['createdAt'], $row['nextTest']));
+                $file .= '	<gost:result>
+		<gost:miInfo>
+			<gost:etaMI>
+				<gost:primaryRec>
+					<gost:mitypeNumber>76062-19</gost:mitypeNumber>
+					<gost:modification>DS1102E</gost:modification>
+					<gost:manufactureNum>1205-2019</gost:manufactureNum>
+					<gost:manufactureYear>2019</gost:manufactureYear>
+ 					<gost:isOwner>true</gost:isOwner>
+ 					<gost:gps>
+ 						<gost:title>Государственная поверочная схема для средств измерений массы</gost:title>
+ 						<gost:npeNumber>гэт3-2008</gost:npeNumber>
+ 						<gost:rank>4Р</gost:rank>
+ 					</gost:gps>
+ 				</gost:primaryRec>
+ 			</gost:etaMI>
+ 		</gost:miInfo>
+ 		<gost:signCipher>ЭЭЭ</gost:signCipher>
+ 		<gost:vrfDate>2020-05-12+03:00</gost:vrfDate>
+ 		<gost:validDate>2021-05-11+03:00</gost:validDate>
+ 		<gost:applicable>
+ 			<gost:certNum>3457-2020</gost:certNum>
+ 			<gost:signPass>true</gost:signPass>
+ 			<gost:signMi>false</gost:signMi>
+ 		</gost:applicable>
+ 		<gost:docTitle>МП 2301-0179-2019</gost:docTitle>
+ 		<gost:means>
+ 			<gost:uve>
+ 				<gost:number>3.1.ZАР.0636.2018</gost:number>
+ 			</gost:uve>
+ 		</gost:means>
+ 		<gost:additional_info>Поверка 21-XML 2020-04-14</gost:additional_info>
+ 	</gost:result>';
             }
 
-            fclose($file);
-        };
-        dd($callback);
+            $file .= '</gost:application>';
+//            fclose($file);
 
-        return response()->stream($callback, 200, $headers);
+        return response()->content($file);
+
     }
 }

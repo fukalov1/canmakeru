@@ -19,6 +19,8 @@ header('Content-Type: text/plain; charset=utf-8');
 // Create connection
 //try {
     $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->set_charset("utf8");
+
 //}
 //catch (Exception $e) {
 //    die('Error : ('. $conn->connect_errno .') ');

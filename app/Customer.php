@@ -31,6 +31,10 @@ class Customer extends Authenticatable
         return $this->hasMany(SlaveCustomer::class, 'customer_id');
     }
 
+    public function customer_tools() {
+        return $this->hasMany(CustomerTool::class, 'customer_id');
+    }
+
     public function getWorkers() {
         return $this->whereIn('id', $this->find(auth()->guard('customer')->user()->id)->slave_customers->pluck('slave_id'))->get();
     }

@@ -15,6 +15,10 @@ class AddCustomersToFgis extends Migration
     {
         Schema::table('customers', function (Blueprint $table) {
             $table->boolean('export_fgis')->default(true);
+            $table->integer('hour_zone')->default(0);
+            $table->string('ideal')->nullable();
+            $table->string('get')->nullable();
+            $table->enum('type_ideal', ['эталон','не утвержденный','СИ, как эталон']);
         });
     }
 
