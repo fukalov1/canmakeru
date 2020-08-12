@@ -59,7 +59,7 @@ class CustomerController extends AdminController
         });
 
         $grid->header(function ($query) {
-            return '<a href="/admin/export-fgis" target="_blank">выгрузить данные для ФГИС</a>';
+            return '<a href="/admin/export-fgis" target="_blank">Экспорт XML для ФГИС</a>';
         });
 
 
@@ -141,22 +141,23 @@ class CustomerController extends AdminController
     {
         $form = new Form(new Customer);
 
-        $form->text('code', __('Код'))->required(true);;
-        $form->text('name', __('ФИО'));
-        $form->text('comment', __('Комментарий'));
-        $form->switch('enabled', __('Активен'))->default(1);
-        $form->number('hour_zone', 'Временная зона (по Москве)')->default(0);
-        $form->switch('export_fgis', __('Выгружать во ФГИС'))->default(1);
-        $form->email('email', __('E-mail'))->required(true);
-        $form->text('ideal', __('Эталон'));
-        $form->text('get', __('ГЭТ'));
-        $form->select('type_ideal', 'Тип эталона')->options(
-            [
-                0 => 'Эталон',
-                1 => 'Не утвержденный',
-                2 => 'СИ, как эталон',
-            ]
-        );
+        $form->tab('Данные партнера', function ($form) {
+            $form->text('code', __('Код'))->required(true);;
+            $form->text('name', __('ФИО'));
+            $form->text('comment', __('Комментарий'));
+            $form->switch('enabled', __('Активен'))->default(1);
+            $form->number('hour_zone', 'Временная зона (по Москве)')->default(0);
+            $form->switch('export_fgis', __('Выгружать во ФГИС'))->default(1);
+            $form->email('email', __('E-mail'))->required(true);
+            $form->text('ideal', __('Эталон'));
+            $form->text('get', __('ГЭТ'));
+            $form->select('type_ideal', 'Тип эталона')->options(
+                [
+                    0 => 'Эталон',
+                    1 => 'Не утвержденный',
+                    2 => 'СИ, как эталон',
+                ]
+            );
 
 //        $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
 //            $form->select('slave_id', 'ФИО')->options(function ($id) {
@@ -164,10 +165,12 @@ class CustomerController extends AdminController
 //                return $customers->pluck('name', 'id');
 //            });
 //        });
+        })->tab('Средства измерения, применяемые при поверке', function ($form) {
 
-        $form->hasMany('customer_tools', 'Средства измерения, применяемые при поверке', function (Form\NestedForm $form) {
-            $form->text('typeNum', 'Регистрационный номер типа СИ');
-            $form->text('manufactureNum', 'Заводской номер СИ');
+            $form->hasMany('customer_tools', 'Средство измерения', function (Form\NestedForm $form) {
+                $form->text('typeNum', 'Регистрационный номер типа СИ')->required(true);
+                $form->text('manufactureNum', 'Заводской номер СИ')->required(true);
+            });
         });
 
         return $form;

@@ -104,10 +104,14 @@ class CustomerReportController extends AdminController
         return $form;
     }
 
-
-
-    public function exportToFGIS()
+    public function exportXmlFGIS()
     {
         return new CustomerExport();
     }
+
+    public function exportCsvFgis()
+    {
+        return new CustomerExport();
+    }
+
 }
