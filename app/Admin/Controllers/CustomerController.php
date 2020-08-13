@@ -272,7 +272,7 @@ class CustomerController extends AdminController
                     if ($customer->type_ideal == 'СИ, как эталон') {
                         $protokols .= "\t\t\t<gost:mieta>
                                 <gost:number>{$customer->ideal}</gost:number>
-                            </gost:mieta>";
+                        </gost:mieta>\n";
                     }
 
                     foreach ($customer->customer_tools as $customer_tool) {
