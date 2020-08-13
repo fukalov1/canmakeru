@@ -262,13 +262,13 @@ class CustomerController extends AdminController
 
                     $protokols .= "\t\t<gost:means>\n";
 
-                    if ($customer->type_ideal == 0 or $customer->type_ideal==null) {
+                    if ($customer->type_ideal == 'эталон' or $customer->type_ideal==null) {
                         $ideal = $customer->ideal ? $customer->ideal : '3.2.ВЮМ.0023.2019';
                         $protokols .= "\t\t\t<gost:uve>
                                 <gost:number>$ideal</gost:number>
                         </gost:uve>\n";
                     }
-                    if ($customer->type_ideal == 2) {
+                    if ($customer->type_ideal == 'СИ, как эталон') {
                         $protokols .= "\t\t\t<gost:mieta>
                                 <gost:number>{$customer->ideal}</gost:number>
                             </gost:mieta>";
@@ -285,7 +285,7 @@ class CustomerController extends AdminController
 
                     $protokols .= "\t\t</gost:means>\n";
 
-                    if ($customer->type_ideal == 1) {
+                    if ($customer->type_ideal == 'не утвержденный') {
                         $protokols .= "<gost:additional_info>{$customer->ideal}</gost:additional_info>";
                     }
 
