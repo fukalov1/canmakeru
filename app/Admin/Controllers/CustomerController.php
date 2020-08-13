@@ -165,13 +165,14 @@ class CustomerController extends AdminController
             });
             $form->text('ideal', __('Эталон'));
             $form->text('get', __('ГЭТ'));
-            $form->select('type_ideal', 'Тип эталона')->options(
+            $form->radio('type_ideal', 'Тип эталона')->options(
                 [
-                    0 => 'Эталон',
-                    1 => 'Не утвержденный',
-                    2 => 'СИ, как эталон',
+                    'эталон' => 'эталон',
+                    'не утвержденный' => 'не утвержденный',
+                    'СИ, как эталон' => 'СИ, как эталон'
                 ]
-            );
+            )->value('не утвержденный');
+
 //        })->tab('Работники', function ($form) {
 //         $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
 //            $form->select('slave_id', 'ФИО')->options(function ($id) {
