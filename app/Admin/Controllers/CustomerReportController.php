@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Customer;
 use App\Exports\CustomerExport;
+use App\Exports\CustomerExportXml;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -102,11 +103,6 @@ class CustomerReportController extends AdminController
         $form->number('enabled', __('Enabled'))->default(1);
 
         return $form;
-    }
-
-    public function exportXmlFGIS()
-    {
-        return new CustomerExport();
     }
 
     public function exportCsvFgis()

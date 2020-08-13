@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Customer;
+use App\Protokol;
 use App\SlaveCustomer;
 use DemeterChain\C;
 use Encore\Admin\Controllers\AdminController;
@@ -11,6 +12,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use App\Admin\Actions\Post\Slave;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Database\Eloquent\Collection;
 use League\Csv\Writer;
 use Schema;
@@ -142,13 +144,25 @@ class CustomerController extends AdminController
         $form = new Form(new Customer);
 
         $form->tab('Данные партнера', function ($form) {
-            $form->text('code', __('Код'))->required(true);;
-            $form->text('name', __('ФИО'));
+            $form->text('code', __('Код'))->rules(function ($form) {
+                if (!$id = $form->model()->id) {
+                    return 'unique:customers';
+                }
+            });
+            $form->text('name', __('ФИО'))->rules(function ($form) {
+                if (!$id = $form->model()->id) {
+                    return 'unique:customers';
+                }
+            });
             $form->text('comment', __('Комментарий'));
             $form->switch('enabled', __('Активен'))->default(1);
             $form->number('hour_zone', 'Временная зона (по Москве)')->default(0);
             $form->switch('export_fgis', __('Выгружать во ФГИС'))->default(1);
-            $form->email('email', __('E-mail'))->required(true);
+            $form->email('email', __('E-mail'))->rules(function ($form) {
+                if (!$id = $form->model()->id) {
+                    return 'unique:customers';
+                }
+            });
             $form->text('ideal', __('Эталон'));
             $form->text('get', __('ГЭТ'));
             $form->select('type_ideal', 'Тип эталона')->options(
@@ -158,18 +172,18 @@ class CustomerController extends AdminController
                     2 => 'СИ, как эталон',
                 ]
             );
-
-//        $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
+//        })->tab('Работники', function ($form) {
+//         $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
 //            $form->select('slave_id', 'ФИО')->options(function ($id) {
 //                $customers = Customer::select('id','name')->get()->sortBy('name');
 //                return $customers->pluck('name', 'id');
 //            });
-//        });
+//          });
         })->tab('Средства измерения, применяемые при поверке', function ($form) {
 
             $form->hasMany('customer_tools', 'Средство измерения', function (Form\NestedForm $form) {
-                $form->text('typeNum', 'Регистрационный номер типа СИ')->required(true);
-                $form->text('manufactureNum', 'Заводской номер СИ')->required(true);
+                $form->text('typeNum', 'Регистрационный номер типа СИ')->rules('required|max:128');
+                $form->text('manufactureNum', 'Заводской номер СИ')->rules('required|max:128');
             });
         });
 
@@ -203,71 +217,101 @@ class CustomerController extends AdminController
 
     }
 
-    private function exportXmlToFGIS()
+    public function exportXmlToFGIS()
     {
-
-        $file = '<?xml version="1.0" encoding="utf-8" ?>\n\t
-            <gost:application xmlns:gost="urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14">\n';
-
-        $protokols = collect([]);
-        $customers = Customer::where('export_fgis',1)->get();
-        foreach ($customers as $customer) {
-            foreach ($customer->protokols as $protokol) {
-                $protokols->push($protokol);
-//                $file .= "$protokol->siType;$protokol->regNumber;;;;1;$protokol->serialNumber;;2020-03-01;2026-02-28;Нет данных;МИ 1592-2015;Пригодно;110-20-6;;;;;гэт63-2017;;\n";
-            }
-        }
         $headers = array(
             'Content-Type' => 'text/xml',
             'Content-Disposition' => 'attachment; filename="poverka.xml"',
         );
 
-            foreach ($protokols as $protokol) {
-                $row['siType']  = $protokol->siType;
-                $row['regNumber']    = $protokol->regNumber;
-                $row['serialNumber']    = $protokol->serialNumber;
-                $row['createdAt']  = $protokol->created_at;
-                $row['nextTest']  = $protokol->nextTest;
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
 
-                $file .= '	<gost:result>
-		<gost:miInfo>
-			<gost:etaMI>
-				<gost:primaryRec>
-					<gost:mitypeNumber>76062-19</gost:mitypeNumber>
-					<gost:modification>DS1102E</gost:modification>
-					<gost:manufactureNum>1205-2019</gost:manufactureNum>
-					<gost:manufactureYear>2019</gost:manufactureYear>
- 					<gost:isOwner>true</gost:isOwner>
- 					<gost:gps>
- 						<gost:title>Государственная поверочная схема для средств измерений массы</gost:title>
- 						<gost:npeNumber>гэт3-2008</gost:npeNumber>
- 						<gost:rank>4Р</gost:rank>
- 					</gost:gps>
- 				</gost:primaryRec>
- 			</gost:etaMI>
- 		</gost:miInfo>
- 		<gost:signCipher>ЭЭЭ</gost:signCipher>
- 		<gost:vrfDate>2020-05-12+03:00</gost:vrfDate>
- 		<gost:validDate>2021-05-11+03:00</gost:validDate>
- 		<gost:applicable>
- 			<gost:certNum>3457-2020</gost:certNum>
- 			<gost:signPass>true</gost:signPass>
- 			<gost:signMi>false</gost:signMi>
- 		</gost:applicable>
- 		<gost:docTitle>МП 2301-0179-2019</gost:docTitle>
- 		<gost:means>
- 			<gost:uve>
- 				<gost:number>3.1.ZАР.0636.2018</gost:number>
- 			</gost:uve>
- 		</gost:means>
- 		<gost:additional_info>Поверка 21-XML 2020-04-14</gost:additional_info>
- 	</gost:result>';
+        $customers = Customer::where('export_fgis',1)->get();
+
+
+        foreach ($customers as $customer) {
+            foreach ($customer->new_protokols as $protokol) {
+                if ($protokol->regNumber) {
+
+                    $protokols .= "\t<gost:result>\n";
+
+                    $protokols .= "\t\t<gost:miInfo>
+                    <gost:singleMI>
+                            <gost:mitypeNumber>" . $protokol->regNumber . "</gost:mitypeNumber>
+                            <gost:manufactureNum>" . $protokol->siType . "</gost:manufactureNum>
+                            <gost:modification>" . $protokol->serialNumber . "</gost:modification>
+                    </gost:singleMI>
+                </gost:miInfo>\n";
+
+                    $nextTest = null;
+                    if ((int)$protokol->checkInterval > 0) {
+                        $nextTest = strtotime("+$protokol->checkInterval YEAR", strtotime($protokol->protokol_dt));
+                        $nextTest = strtotime('-1 DAYS', $nextTest);
+                        $nextTest = date("Y-m-d H:i:s", $nextTest);
+                    }
+
+                    $protokols .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
+                    <gost:vrfDate>" . $protokol->protokol_dt . "</gost:vrfDate>
+                    <gost:validDate>" . $nextTest . "</gost:validDate>
+                    <gost:applicable>
+                            <gost:certNum>" . $this->getProtokolNumber($protokol->protokol_num) . "</gost:certNum>
+                            <gost:signPass>false</gost:signPass>
+                            <gost:signMi>false</gost:signMi>
+                    </gost:applicable>
+                    <gost:docTitle>" . $protokol->checkMethod . "</gost:docTitle>\n";
+
+                    $protokols .= "\t\t<gost:means>\n";
+
+
+                    if ($protokol->type_ideal == 0) {
+                        $ideal = $protokol->ideal ? $protokol->ideal : '3.2.ВЮМ.0023.2019';
+                        $protokols .= "\t\t\t<gost:uve>
+                                <gost:number>$ideal</gost:number>
+                        </gost:uve>\n";
+                    }
+                    if ($protokol->type_ideal == 2) {
+                        $protokols .= "\t\t\t<gost:mieta>
+                                <gost:number>{$protokol->ideal}</gost:number>
+                            </gost:mieta>";
+                    }
+
+                    foreach ($customer->customer_tools as $customer_tool) {
+                        $protokols .= "\t\t\t<gost:mis>
+                            <gost:mi>
+                                <gost:typeNum>{$customer_tool->typeNum}</gost:typeNum>
+                                <gost:manufactureNum>{$customer_tool->manufactureNum}</gost:manufactureNum>
+                            </gost:mi>
+                        </gost:mis>\n";
+                    }
+
+                    $protokols .= "\t\t</gost:means>\n";
+
+                    if ($protokol->type_ideal == 1) {
+                        $protokols .= "<gost:additional_info>{$protokol->ideal}</gost:additional_info>";
+                    }
+
+                    $protokols .= "\t</gost:result>\n</gost:application>";
+                }
             }
+            Protokol::where('customer_id', $customer->id)
+                ->update(['exported' => 1]);
+        }
 
-            $file .= '</gost:application>';
-//            fclose($file);
 
-        return response()->content($file);
+        return response()->stream(function () use ($protokols)  {
+            echo $protokols;
+        }, 200, $headers);
 
     }
+
+    private function getProtokolNumber($protokol_num)
+    {
+        if ($protokol_num) {
+            return intval(substr($protokol_num, 0, -7)) . '-' . intval(substr($protokol_num, -7, 2)) . '-' . intval(substr($protokol_num, -5));
+        }
+        else {
+            return '';
+        }
+    }
+
 }
