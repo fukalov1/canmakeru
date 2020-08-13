@@ -290,13 +290,13 @@ class CustomerController extends AdminController
                         $protokols .= "<gost:additional_info>{$protokol->ideal}</gost:additional_info>";
                     }
 
-                    $protokols .= "\t</gost:result>\n</gost:application>";
+                    $protokols .= "\t</gost:result>\n";
                 }
             }
             Protokol::where('customer_id', $customer->id)
                 ->update(['exported' => 1]);
         }
-
+        $protokols .= "</gost:application>";
 
         return response()->stream(function () use ($protokols)  {
             echo $protokols;
