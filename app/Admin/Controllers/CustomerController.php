@@ -156,7 +156,7 @@ class CustomerController extends AdminController
             });
             $form->text('comment', __('Комментарий'));
             $form->switch('enabled', __('Активен'))->default(1);
-            $form->number('hour_zone', 'Временная зона (по Москве)')->default(0);
+            $form->number('hour_zone', 'Часовой пояс')->default(0);
             $form->switch('export_fgis', __('Выгружать во ФГИС'))->default(1);
             $form->email('email', __('E-mail'))->rules(function ($form) {
                 if (!$id = $form->model()->id) {
@@ -248,12 +248,15 @@ class CustomerController extends AdminController
                     if ((int)$protokol->checkInterval > 0) {
                         $nextTest = strtotime("+$protokol->checkInterval YEAR", strtotime($protokol->protokol_dt));
                         $nextTest = strtotime('-1 DAYS', $nextTest);
-                        $nextTest = date("Y-m-d H:i:s", $nextTest);
+                        $nextTest = date("Y-m-d", $nextTest);
                     }
 
+                    $hour_zone = sprintf('+0%d:00', $customer->hour_zone);
+                    //dd($customer->hour_zone, $hour_zone);
+
                     $protokols .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
-                    <gost:vrfDate>" . $protokol->protokol_dt . "</gost:vrfDate>
-                    <gost:validDate>" . $nextTest . "</gost:validDate>
+                    <gost:vrfDate>" .date("Y-m-d",strtotime($protokol->protokol_dt)) .$hour_zone. "</gost:vrfDate>
+                    <gost:validDate>" . $nextTest .$hour_zone. "</gost:validDate>
                     <gost:applicable>
                             <gost:certNum>" . $this->getProtokolNumber($protokol->protokol_num) . "</gost:certNum>
                             <gost:signPass>false</gost:signPass>
@@ -280,15 +283,15 @@ class CustomerController extends AdminController
                                 <gost:number>{$customer->get}</gost:number>
                         </gost:uve>\n";
                     }
-
+                    $protokols .= "\t\t\t<gost:mis>\n";
                     foreach ($customer->customer_tools as $customer_tool) {
-                        $protokols .= "\t\t\t<gost:mis>
-                            <gost:mi>
+
+                        $protokols .= "\t\t\t\t<gost:mi>
                                 <gost:typeNum>{$customer_tool->typeNum}</gost:typeNum>
                                 <gost:manufactureNum>{$customer_tool->manufactureNum}</gost:manufactureNum>
-                            </gost:mi>
-                        </gost:mis>\n";
+                            </gost:mi>\n";
                     }
+                    $protokols .= "\t\t\t</gost:mis>\n";
 
                     $protokols .= "\t\t</gost:means>\n";
 

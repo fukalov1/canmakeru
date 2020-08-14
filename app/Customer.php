@@ -53,7 +53,7 @@ class Customer extends Authenticatable
     }
 
     public function new_protokols() {
-	    return $this->hasMany(Protokol::class)->where('protokols.exported', '=', '0');
+	    return $this->hasMany(Protokol::class)->where('protokols.exported', '=', '1');
     }
 
     public function getDataChart($id) {
