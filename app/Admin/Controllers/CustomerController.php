@@ -220,9 +220,10 @@ class CustomerController extends AdminController
 
     public function exportXmlToFGIS()
     {
+        $date = date('Y-m-d', time());
         $headers = array(
             'Content-Type' => 'text/xml',
-            'Content-Disposition' => 'attachment; filename="poverka.xml"',
+            'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
 
         $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
