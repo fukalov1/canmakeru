@@ -240,8 +240,8 @@ class CustomerController extends AdminController
                     $protokols .= "\t\t<gost:miInfo>
                     <gost:singleMI>
                             <gost:mitypeNumber>" . $protokol->regNumber . "</gost:mitypeNumber>
-                            <gost:manufactureNum>" . $protokol->siType . "</gost:manufactureNum>
-                            <gost:modification>" . $protokol->serialNumber . "</gost:modification>
+                            <gost:manufactureNum>" . $protokol->serialNumber . "</gost:manufactureNum>
+                            <gost:modification>" . $protokol->siType . "</gost:modification>
                     </gost:singleMI>
                 </gost:miInfo>\n";
 
