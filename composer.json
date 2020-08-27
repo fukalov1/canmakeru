@@ -19,6 +19,7 @@
         "laravel/passport": "7.*",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
+        "phpoffice/phpexcel": "dev-master",
         "nixsolutions/yandex-php-library": "dev-master"
     },
     "require-dev": {

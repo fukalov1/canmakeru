@@ -55,6 +55,7 @@ class MyDashboard extends Dashboard
         return view('serviceDashboard', $data);
     }
 
+
     public static function  viewDinamic() {
 
         $quest  = Customer::join('protokols','customers.id','protokols.customer_id')

@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Customer;
+use App\Imports\ProtokolsImport;
 use App\Protokol;
 use App\SlaveCustomer;
 use DemeterChain\C;
@@ -12,11 +13,14 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use App\Admin\Actions\Post\Slave;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\Eloquent\Collection;
 use League\Csv\Writer;
 use Schema;
 use SplTempFileObject;
+use PHPExcel;
+use PHPExcel_IOFactory;
 
 
 class CustomerController extends AdminController
@@ -169,7 +173,8 @@ class CustomerController extends AdminController
                 [
                     'эталон' => 'эталон',
                     'не утвержденный' => 'не утвержденный',
-                    'СИ, как эталон' => 'СИ, как эталон'
+                    'СИ, как эталон' => 'СИ, как эталон',
+                    'СИ, как эталон, не утвержденный в ФИВ' => 'СИ, как эталонб , не утвержденный в ФИВ',
                 ]
             )->value('не утвержденный');
 
@@ -278,6 +283,11 @@ class CustomerController extends AdminController
                                 <gost:number>{$customer->ideal}</gost:number>
                         </gost:mieta>\n";
                     }
+                    else if ($customer->type_ideal == 'СИ, как эталон, не утвержденный в ФИВ') {
+                        $protokols .= "\t\t\t<gost:mieta>
+                                <gost:number>{$customer->ideal}</gost:number>
+                        </gost:mieta>\n";
+                    }
                     else if ($customer->type_ideal == 'не утвержденный') {
                         $ideal = $customer->ideal ? $customer->ideal : '3.2.ВЮМ.0023.2019';
                         $protokols .= "\t\t\t<gost:uve>
@@ -312,6 +322,123 @@ class CustomerController extends AdminController
             echo $protokols;
         }, 200, $headers);
 
+    }
+
+
+    public function convertXlsToXml(Request $request)
+    {
+
+        $date = date('Y-m-d', time());
+        $headers = array(
+            'Content-Type' => 'text/xml',
+            'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
+        );
+
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+
+
+
+
+        if (request()->file('file_xls')) {
+            $path = request()->file('file_xls')->getRealPath();
+
+            $objPHPExcel = PHPExcel_IOFactory::load($path);
+            $sheet = $objPHPExcel->getSheet(0);
+            $objWorksheet = $objPHPExcel->getActiveSheet();
+            $highestRow = $objWorksheet->getHighestRow();
+            $highestColumn = $sheet->getHighestColumn();
+
+            $data = [];
+            for ($row = 2; $row <= $highestRow; ++$row) {
+                $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
+                    NULL,
+                    TRUE,
+                    FALSE);
+//                dd($rowData[0]);
+                if ($rowData[0][0] == '') {
+                    break;
+                }
+                $data[] = $rowData[0];
+            }
+
+            foreach ($data as $protokol) {
+                if ($protokol[0]) {
+
+                    $protokols .= "\t<gost:result>\n";
+
+                    $protokols .= "\t\t<gost:miInfo>
+                    <gost:singleMI>
+                            <gost:mitypeNumber>" . $protokol[0] . "</gost:mitypeNumber>
+                            <gost:manufactureNum>" . $protokol[2] . "</gost:manufactureNum>
+                            <gost:modification>" . $protokol[1] . "</gost:modification>
+                    </gost:singleMI>
+                </gost:miInfo>\n";
+
+
+                    $hour_zone = sprintf('+0%d:00', $protokol[12]);
+
+                    $protokols .= "\t\t<gost:signCipher>" . $protokol[13] . "</gost:signCipher>
+                    <gost:vrfDate>" .date("Y-m-d",strtotime($protokol[3])) .$hour_zone. "</gost:vrfDate>
+                    <gost:validDate>" . date("Y-m-d",strtotime($protokol[4])) .$hour_zone. "</gost:validDate>
+                    <gost:applicable>
+                            <gost:certNum>" . $protokol[7] . "</gost:certNum>
+                            <gost:signPass>false</gost:signPass>
+                            <gost:signMi>false</gost:signMi>
+                    </gost:applicable>
+                    <gost:docTitle>" . $protokol[5] . "</gost:docTitle>\n";
+
+                    $protokols .= "\t\t<gost:means>\n";
+
+                    if ($protokol[8]) {
+                        $protokols .= "\t\t\t<gost:uve>
+                                <gost:number>$protokol[8]</gost:number>
+                        </gost:uve>\n";
+                    }
+                    else if ($protokol[9]) {
+                        $protokols .= "\t\t\t<gost:mieta>
+                                <gost:number>{$protokol[9]}</gost:number>
+                        </gost:mieta>\n";
+                    }
+
+                    $protokols .= "\t\t\t<gost:mis>\n";
+                    $customer_tools = explode('|', $protokol[10]);
+                    foreach ($customer_tools as $customer_tool) {
+//                        dd($customer_tool);
+                        $item = explode(',', $customer_tool);
+//                        dd($item);
+                        if (is_array($item)) {
+                            if (count($item)==2) {
+                                $protokols .= "\t\t\t\t<gost:mi>
+                                <gost:typeNum>{$item[0]}</gost:typeNum>
+                                <gost:manufactureNum>{$item[1]}</gost:manufactureNum>
+                            </gost:mi>\n";
+                            }
+                        }
+                    }
+                    $protokols .= "\t\t\t</gost:mis>\n";
+
+                    $protokols .= "\t\t</gost:means>\n";
+
+                    if ($protokol[11]) {
+                        $protokols .= "<gost:additional_info>{$protokol[11]}</gost:additional_info>";
+                    }
+
+                    $protokols .= "\t</gost:result>\n";
+                }
+            }
+
+            $protokols .= "</gost:application>";
+//dd($protokols);
+
+            return response()->stream(function () use ($protokols)  {
+                echo $protokols;
+            }, 200, $headers);
+
+        }
+        else {
+            dd('error');
+            return back()->with('error', 'Excel file is empty.');
+        }
     }
 
     private function getProtokolNumber($protokol_num)

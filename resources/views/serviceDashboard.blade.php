@@ -1,5 +1,5 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<div class="col-lg-12">
+<div class="col-lg-6">
     <div class="row">
         <div class="col-lg-12">
             <b>
@@ -22,7 +22,7 @@
                     </li>
                     <li>
                         <input type="text" id="code" placeholder="введите код">
-                        <button type="button" id="refreshToken">обновить</button>
+                        <button type="button" class="btn btn-success" id="refreshToken">обновить</button>
                     </li>
                 </ol>
 
@@ -30,4 +30,22 @@
         </div>
     </div>
 
+</div>
+<div class="col-lg-6">
+    <form action="/admin/convert-xls-xml" method="POST" enctype="multipart/form-data">
+    @csrf <!-- {{ csrf_field() }} -->
+    <div class="row">
+        <div class="col-lg-12">
+            <b>
+                Конвертация данных о поверках в XML
+            </b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <input type="file" name="file_xls" id="file_xls" placeholder="файл-источник">
+            <button type="submit" class="btn btn-danger" id="convertXlsToXML">конвертировать</button>
+        </div>
+    </div>
+    </form>
 </div>

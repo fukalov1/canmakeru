@@ -21,6 +21,8 @@ Route::group([
     $router->get('customer_report', 'CustomerReportController@index');
     $router->get('export-fgis', 'CustomerController@exportXmlToFGIS');
 
+    $router->post('convert-xls-xml', 'CustomerController@convertXlsToXml');
+
     $router->resource('slave_customers', SlaveCustomerController::class)->middleware('set_customer');
 
 
