@@ -350,10 +350,11 @@ class CustomerController extends AdminController
 
             $data = [];
             for ($row = 2; $row <= $highestRow; ++$row) {
+//                $objWorksheet->getCell('D'.$row)->getFormattedValue();
                 $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
                     NULL,
                     TRUE,
-                    FALSE);
+                    TRUE);
 //                dd($rowData[0]);
                 if ($rowData[0][0] == '') {
                     break;
