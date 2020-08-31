@@ -377,8 +377,8 @@ class CustomerController extends AdminController
                     $hour_zone = sprintf('+0%d:00', $protokol[12]);
 //dd($protokol[3], strtotime($protokol[3]));
                     $protokols .= "\t\t<gost:signCipher>" . $protokol[13] . "</gost:signCipher>
-                    <gost:vrfDate>" .$protokol[3].$hour_zone. "</gost:vrfDate>
-                    <gost:validDate>" . $protokol[4] .$hour_zone. "</gost:validDate>
+                    <gost:vrfDate>" .date("Y-m-d",strtotime($protokol[3])).$hour_zone. "</gost:vrfDate>
+                    <gost:validDate>" . date("Y-m-d",strtotime($protokol[4])) .$hour_zone. "</gost:validDate>
                     <gost:applicable>
                             <gost:certNum>" . $protokol[7] . "</gost:certNum>
                             <gost:signPass>false</gost:signPass>
