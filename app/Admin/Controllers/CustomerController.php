@@ -167,10 +167,11 @@ class CustomerController extends AdminController
                     return 'unique:customers';
                 }
             });
-            $form->text('ideal', __('Эталон'));
             $form->text('get', __('ГЭТ'));
+            $form->text('ideal', __('Эталон'));
             $form->text('ci_as_ideal', __('СИ, как эталон'));
             $form->text('ci_as_ideal_fake', __('СИ, как эталон, не утвержденный в ФИВ'));
+            $form->text('notes', __('Примечание'));
 
 //        })->tab('Работники', function ($form) {
 //         $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
@@ -299,8 +300,8 @@ class CustomerController extends AdminController
 
                     $protokols .= "\t\t</gost:means>\n";
 
-                    if ($customer->ci_as_ideal_fake) {
-                        $protokols .= "<gost:additional_info>{$customer->ideal}</gost:additional_info>";
+                    if ($customer->notes) {
+                        $protokols .= "<gost:additional_info>{$customer->notes}</gost:additional_info>";
                     }
 
                     $protokols .= "\t</gost:result>\n";
