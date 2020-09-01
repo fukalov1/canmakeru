@@ -169,14 +169,8 @@ class CustomerController extends AdminController
             });
             $form->text('ideal', __('Эталон'));
             $form->text('get', __('ГЭТ'));
-            $form->radio('type_ideal', 'Тип эталона')->options(
-                [
-                    'эталон' => 'эталон',
-                    'не утвержденный' => 'не утвержденный',
-                    'СИ, как эталон' => 'СИ, как эталон',
-                    'СИ, как эталон, не утвержденный в ФИВ' => 'СИ, как эталонб , не утвержденный в ФИВ',
-                ]
-            )->value('не утвержденный');
+            $form->text('ci_as_ideal', __('СИ, как эталон'));
+            $form->text('ci_as_ideal_fake', __('СИ, как эталон, не утвержденный в ФИВ'));
 
 //        })->tab('Работники', function ($form) {
 //         $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
@@ -272,27 +266,26 @@ class CustomerController extends AdminController
 
                     $protokols .= "\t\t<gost:means>\n";
 
-                    if ($customer->type_ideal == 'эталон' or $customer->type_ideal==null) {
+                    if ($customer->ideal) {
                         $ideal = $customer->ideal ? $customer->ideal : '3.2.ВЮМ.0023.2019';
                         $protokols .= "\t\t\t<gost:uve>
                                 <gost:number>$ideal</gost:number>
                         </gost:uve>\n";
                     }
-                    else if ($customer->type_ideal == 'СИ, как эталон') {
+                    else if ($customer->ci_as_ideal) {
                         $protokols .= "\t\t\t<gost:mieta>
-                                <gost:number>{$customer->ideal}</gost:number>
+                                <gost:number>{$customer->ci_as_ideal}</gost:number>
                         </gost:mieta>\n";
                     }
-                    else if ($customer->type_ideal == 'СИ, как эталон, не утвержденный в ФИВ') {
+                    else if ($customer->ci_as_ideal_fake) {
                         $protokols .= "\t\t\t<gost:mieta>
-                                <gost:number>{$customer->ideal}</gost:number>
+                                <gost:number>{$customer->ci_as_ideal_fake}</gost:number>
                         </gost:mieta>\n";
                     }
-                    else if ($customer->type_ideal == 'не утвержденный') {
-                        $ideal = $customer->ideal ? $customer->ideal : '3.2.ВЮМ.0023.2019';
-                        $protokols .= "\t\t\t<gost:uve>
+                    else if ($customer->get) {
+                        $protokols .= "\t\t\t<gost:npe>
                                 <gost:number>{$customer->get}</gost:number>
-                        </gost:uve>\n";
+                        </gost:npe>\n";
                     }
                     $protokols .= "\t\t\t<gost:mis>\n";
                     foreach ($customer->customer_tools as $customer_tool) {
@@ -306,7 +299,7 @@ class CustomerController extends AdminController
 
                     $protokols .= "\t\t</gost:means>\n";
 
-                    if ($customer->type_ideal == 'не утвержденный') {
+                    if ($customer->ci_as_ideal_fake) {
                         $protokols .= "<gost:additional_info>{$customer->ideal}</gost:additional_info>";
                     }
 
@@ -374,9 +367,9 @@ class CustomerController extends AdminController
                 </gost:miInfo>\n";
 
 
-                    $hour_zone = sprintf('+0%d:00', $protokol[12]);
+                    $hour_zone = sprintf('+0%d:00', $protokol[13]);
 //dd($protokol[3], strtotime($protokol[3]));
-                    $protokols .= "\t\t<gost:signCipher>" . $protokol[13] . "</gost:signCipher>
+                    $protokols .= "\t\t<gost:signCipher>" . $protokol[14] . "</gost:signCipher>
                     <gost:vrfDate>" .date("Y-m-d",strtotime($protokol[3])).$hour_zone. "</gost:vrfDate>
                     <gost:validDate>" . date("Y-m-d",strtotime($protokol[4])) .$hour_zone. "</gost:validDate>
                     <gost:applicable>
@@ -389,18 +382,23 @@ class CustomerController extends AdminController
                     $protokols .= "\t\t<gost:means>\n";
 
                     if ($protokol[8]) {
-                        $protokols .= "\t\t\t<gost:uve>
+                        $protokols .= "\t\t\t<gost:npe>
                                 <gost:number>$protokol[8]</gost:number>
-                        </gost:uve>\n";
+                        </gost:npe>\n";
                     }
                     else if ($protokol[9]) {
+                        $protokols .= "\t\t\t<gost:uve>
+                                <gost:number>$protokol[9]</gost:number>
+                        </gost:uve>\n";
+                    }
+                    else if ($protokol[10]) {
                         $protokols .= "\t\t\t<gost:mieta>
-                                <gost:number>{$protokol[9]}</gost:number>
+                                <gost:number>{$protokol[10]}</gost:number>
                         </gost:mieta>\n";
                     }
 
                     $protokols .= "\t\t\t<gost:mis>\n";
-                    $customer_tools = explode('|', $protokol[10]);
+                    $customer_tools = explode('|', $protokol[11]);
                     foreach ($customer_tools as $customer_tool) {
 //                        dd($customer_tool);
                         $item = explode(',', $customer_tool);
@@ -418,8 +416,8 @@ class CustomerController extends AdminController
 
                     $protokols .= "\t\t</gost:means>\n";
 
-                    if ($protokol[11]) {
-                        $protokols .= "<gost:additional_info>{$protokol[11]}</gost:additional_info>";
+                    if ($protokol[12]) {
+                        $protokols .= "<gost:additional_info>{$protokol[12]}</gost:additional_info>";
                     }
 
                     $protokols .= "\t</gost:result>\n";

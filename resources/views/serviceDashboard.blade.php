@@ -44,6 +44,7 @@
     <div class="row">
         <div class="col-lg-12">
             <input type="file" name="file_xls" id="file_xls" placeholder="файл-источник">
+            <button type="reset" class="btn btn-default">сбросить</button>
             <button type="submit" class="btn btn-danger" id="convertXlsToXML">конвертировать</button>
         </div>
     </div>
