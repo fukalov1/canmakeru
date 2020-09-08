@@ -2,18 +2,19 @@
 
 namespace App;
 
-use App\Protokol;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-//use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
-use App\Notifications\ResetPassword as ResetPasswordNotification;
-use App\SlaveCustomer;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class Customer extends Authenticatable
+class Customer extends Model implements AuthenticatableContract
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, HasApiTokens;
+    use Authenticatable;
+
 
     protected $guard = 'customer';
 
@@ -49,11 +50,11 @@ class Customer extends Authenticatable
     }
 
     public function protokols() {
-	    return $this->hasMany(Protokol::class);
+        return $this->hasMany(Protokol::class);
     }
 
     public function new_protokols() {
-	    return $this->hasMany(Protokol::class)->where('protokols.exported', '=', '0');
+        return $this->hasMany(Protokol::class)->where('protokols.exported', '=', '0');
     }
 
     public function getDataChart($id) {

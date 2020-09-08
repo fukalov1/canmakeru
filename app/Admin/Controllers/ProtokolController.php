@@ -41,11 +41,11 @@ class ProtokolController extends AdminController
             return "<div style='padding: 10px;'>Клиент: <b>".$this->customer."</b></div>";
         });
 
-        $grid->tools(function ($tools) {
-            $tools->batch(function ($batch) {
-                $batch->add(new BatchClearExport());
-            });
-        });
+//        $grid->tools(function ($tools) {
+//            $tools->batch(function ($batch) {
+//                $batch->add(new BatchClearExport());
+//            });
+//        });
 
         $grid->batchActions(function ($batch) {
             $batch->add(new BatchClearExport());

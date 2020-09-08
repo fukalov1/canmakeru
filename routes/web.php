@@ -66,3 +66,7 @@ Route::group(['middleware' => ['auth:customer']], function () {
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

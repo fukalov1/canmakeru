@@ -1,67 +1,32 @@
-import 'axios';
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
 
 require('./bootstrap');
 
 window.Vue = require('vue');
-window.axios = require('axios');
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSort, faSortUp, faSortDown, faFilePdf, faFile, faFileAlt, faFileImage } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+/**
+ * The following block of code may be used to automatically register your
+ * Vue components. It will recursively scan this directory for the Vue
+ * components and automatically register them with their "basename".
+ *
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ */
 
-library.add(faSort, faSortUp, faSortDown, faFilePdf, faFile, faFileAlt, faFileImage)
+// const files = require.context('./', true, /\.vue$/i)
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-Vue.component('customer-room', require('./components/Customer/CustomerRoom.vue'));
-Vue.component('profile-user', require('./components/Customer/ProfileUser.vue'));
-
-export const eventBus = new Vue();
-export default eventBus;
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
 
 const app = new Vue({
     el: '#app',
-
 });
-
-$(function () {
-
-    $.ajaxSetup({
-        headers:
-            { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
-    });
-
-    $('#getCode').on('click', function () {
-        var params = "menubar=no,location=no,resizable=no,scrollbars=no,status=no";
-        window.open('https://oauth.yandex.ru/authorize?response_type=code&client_id='+$('#clientId').val(), 'Yandex', params);
-    });
-
-    $('#refreshToken').on('click', function () {
-
-        if($('#code').val()==='') {
-            alert('Для успешного обновления токена необходимо ввести код.');
-        }
-        else {
-            console.log('start refresh token');
-            $.ajax({
-                url: "/admin/refresh_token",
-                method: "POST",
-                data: {
-                    code: $('#code').val()
-                },
-                success: function (response) {
-                    console.log('result', response);
-                    alert('Токен успешно обновлен!',response.message);
-                    document.location = '/admin/';
-                },
-                error: function (result) {
-                    alert('Error refresh token', result);
-                }
-            });
-        }
-
-    });
-
-
-});
-

@@ -51,7 +51,6 @@ class MyDashboard extends Dashboard
             'YANDEX_PASS' => config('YANDEX_PASS'),
             'YANDEX_TOKEN' => config('YANDEX_TOKEN'),
         ];
-
         return view('serviceDashboard', $data);
     }
 

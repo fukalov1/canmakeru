@@ -2,26 +2,17 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\Slave;
 use App\Customer;
-use App\Imports\ProtokolsImport;
 use App\Protokol;
-use App\SlaveCustomer;
-use DemeterChain\C;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-use App\Admin\Actions\Post\Slave;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Database\Eloquent\Collection;
-use League\Csv\Writer;
-use Schema;
-use SplTempFileObject;
 use PHPExcel;
 use PHPExcel_IOFactory;
-
 
 class CustomerController extends AdminController
 {
@@ -32,7 +23,6 @@ class CustomerController extends AdminController
      */
     protected $title = 'Партнеры';
 
-
     /**
      * Make a grid builder.
      *
@@ -40,7 +30,8 @@ class CustomerController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new Customer);
+        $grid = new Grid(new Customer());
+
         $grid->filter(function($filter){
 
             // Remove the default id filter
@@ -67,7 +58,6 @@ class CustomerController extends AdminController
         $grid->header(function ($query) {
             return '<a href="/admin/export-fgis" target="_blank">Экспорт XML для ФГИС</a>';
         });
-
 
         if (Admin::user()->roles[0]->slug!='administrator') {
             $grid->actions(function ($actions) {
@@ -145,7 +135,7 @@ class CustomerController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Customer);
+        $form = new Form(new Customer());
 
         $form->tab('Данные партнера', function ($form) {
             $form->text('code', __('Код'))->rules(function ($form) {
@@ -170,16 +160,15 @@ class CustomerController extends AdminController
             $form->text('get', __('ГЭТ'));
             $form->text('ideal', __('Эталон'));
             $form->text('ci_as_ideal', __('СИ, как эталон'));
-            $form->text('ci_as_ideal_fake', __('СИ, как эталон, не утвержденный в ФИВ'));
             $form->text('notes', __('Примечание'));
 
-//        })->tab('Работники', function ($form) {
-//         $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
-//            $form->select('slave_id', 'ФИО')->options(function ($id) {
-//                $customers = Customer::select('id','name')->get()->sortBy('name');
-//                return $customers->pluck('name', 'id');
-//            });
-//          });
+        })->tab('Работники', function ($form) {
+            $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
+                $form->select('slave_id', 'ФИО')->options(function ($id) {
+                    $customers = Customer::select('id', 'name')->get()->sortBy('name');
+                    return $customers->pluck('name', 'id');
+                });
+            });
         })->tab('Средства измерения, применяемые при поверке', function ($form) {
 
             $form->hasMany('customer_tools', 'Средство измерения', function (Form\NestedForm $form) {
