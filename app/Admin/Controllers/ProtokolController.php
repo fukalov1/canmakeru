@@ -33,12 +33,13 @@ class ProtokolController extends AdminController
 
         $this->getHeader();
 
+
         $grid = new Grid(new Protokol);
 
 
 
         $grid->header(function ($query) {
-            return "<div style='padding: 10px;'>Клиент: <b>".$this->customer."</b></div>";
+            return "<div style='padding: 10px;'>Клиент: <b><a href=\"/admin/customers\" title='вернуться к списку клиентов'>".$this->customer."</a></b></div>";
         });
 
 //        $grid->tools(function ($tools) {
@@ -58,10 +59,7 @@ class ProtokolController extends AdminController
 
             $filter->like('protokol_num', 'Номер свидетельства');
             $filter->between('protokol_dt', 'Дата свидетельства')->date();
-            $filter->in('exported', 'Выгружен')->radio([
-                '1'    => 'да',
-                '0'    => 'нет',
-            ]);
+            $filter->like('exported', 'Пакет выгрузки')->default(0);
         });
 
         if (Admin::user()->roles[0]->slug!='administrator') {
@@ -96,10 +94,7 @@ class ProtokolController extends AdminController
         $grid->column('serialNumber', 'Заводской номер');
         $grid->column('nextTest', 'След. поверка');
 //        $grid->column('updated_dt', __('Дата изменения'));
-        $grid->column('exported', __('Выгружен'))->icon([
-            0 => '',
-            1 => 'check',
-        ], $default = '');
+        $grid->column('exported', __('Пакет'))->editable();
 
         return $grid;
     }
@@ -138,7 +133,7 @@ class ProtokolController extends AdminController
     {
         $form = new Form(new Protokol);
 
-        $form->switch('exported', __('Выгружен'))->default(0);
+        $form->number('exported', __('Пакет выгрузки'))->default(0);
         $form->number('protokol_num', __('Protokol num'));
         $form->number('pin', __('Pin'));
         $form->text('protokol_photo', __('Protokol photo'));

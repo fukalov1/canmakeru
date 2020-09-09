@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Post\Slave;
+use App\AdminConfig;
 use App\Customer;
 use App\Protokol;
 use Encore\Admin\Controllers\AdminController;
@@ -209,6 +210,9 @@ class CustomerController extends AdminController
 
     public function exportXmlToFGIS()
     {
+
+        $package_number = $this->updatePackageNumber();
+
         $date = date('Y-m-d', time());
         $headers = array(
             'Content-Type' => 'text/xml',
@@ -294,10 +298,12 @@ class CustomerController extends AdminController
                     }
 
                     $protokols .= "\t</gost:result>\n";
+
+                    Protokol::find($protokol->id)
+                        ->update(['exported' => $package_number]);
                 }
             }
-            Protokol::where('customer_id', $customer->id)
-                ->update(['exported' => 1]);
+
         }
         $protokols .= "</gost:application>";
 
@@ -310,7 +316,6 @@ class CustomerController extends AdminController
 
     public function convertXlsToXml(Request $request)
     {
-
         $date = date('Y-m-d', time());
         $headers = array(
             'Content-Type' => 'text/xml',
@@ -436,6 +441,16 @@ class CustomerController extends AdminController
         else {
             return '';
         }
+    }
+
+
+    private function updatePackageNumber()
+    {
+        $package_number = config('package_number', 1);
+        $package_number++;
+        $admin_config = AdminConfig::where('name', 'package_number')->update(['value' => $package_number]);
+
+        return $package_number;
     }
 
 }

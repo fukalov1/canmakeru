@@ -14,7 +14,7 @@ class BatchClearExport extends BatchAction
     {
         $protokol = new Protokol();
         foreach ($collection as $model) {
-            $protokol->find($model->id)->update(['exported' => false]);
+            $protokol->find($model->id)->update(['exported' => 0]);
         }
 
         return $this->response()->success('Success message...')->refresh();
