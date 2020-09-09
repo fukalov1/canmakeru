@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\ExportOneFgis;
 use App\Admin\Actions\Post\Slave;
 use App\AdminConfig;
 use App\Customer;
@@ -70,6 +71,7 @@ class CustomerController extends AdminController
         else {
             $grid->actions(function ($actions) {
                 $actions->add(new Slave());
+//                $actions->add(new ExportOneFgis());
             });
         }
 
@@ -82,14 +84,16 @@ class CustomerController extends AdminController
             return '<a href="/admin/customer_chart?set='.$this->id.'" title="Динамика поверок "><span class="fa fa-bar-chart"/></a>';
         });
         $grid->column('comment', __('Комментарий'));
-        $grid->column('enabled', __('Активен'))->icon([
-            0 => '',
-            1 => 'check',
-        ], $default = '');
-        $grid->column('export_fgis', __('Выгружать во ФГИС'))->icon([
-            0 => '',
-            1 => 'check',
-        ], $default = '');
+        $grid->column('enabled', __('Активен'))->display(function () {
+            return $this->enabled ? "&#10004;" : '';
+        });
+//        $grid->column('export_fgis', __('Выгружать во ФГИС'))->icon([
+//            0 => '',
+//            1 => 'check',
+//        ], $default = '');
+        $grid->column('export_fgis', __('Выгружать во ФГИС'))->display(function () {
+            return $this->export_fgis >0  ? "<a href=\"/admin/export-one-fgis/{$this->id}\" title='выгрузить протоколы партнера во ФГИС' target='_blank'>&#10004;</a>" : '';
+        });
         $grid->column('email', __('E-mail'));
 
         return $grid;
@@ -225,85 +229,8 @@ class CustomerController extends AdminController
 
 
         foreach ($customers as $customer) {
-            foreach ($customer->new_protokols as $protokol) {
-                if ($protokol->regNumber) {
-
-                    $protokols .= "\t<gost:result>\n";
-
-                    $protokols .= "\t\t<gost:miInfo>
-                    <gost:singleMI>
-                            <gost:mitypeNumber>" . $protokol->regNumber . "</gost:mitypeNumber>
-                            <gost:manufactureNum>" . $protokol->serialNumber . "</gost:manufactureNum>
-                            <gost:modification>" . $protokol->siType . "</gost:modification>
-                    </gost:singleMI>
-                </gost:miInfo>\n";
-
-                    $nextTest = null;
-                    if ((int)$protokol->checkInterval > 0) {
-                        $nextTest = strtotime("+$protokol->checkInterval YEAR", strtotime($protokol->protokol_dt));
-                        $nextTest = strtotime('-1 DAYS', $nextTest);
-                        $nextTest = date("Y-m-d", $nextTest);
-                    }
-
-                    $hour_zone = sprintf('+0%d:00', $customer->hour_zone);
-                    //dd($customer->hour_zone, $hour_zone);
-
-                    $protokols .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
-                    <gost:vrfDate>" .date("Y-m-d",strtotime($protokol->protokol_dt)) .$hour_zone. "</gost:vrfDate>
-                    <gost:validDate>" . $nextTest .$hour_zone. "</gost:validDate>
-                    <gost:applicable>
-                            <gost:certNum>" . $this->getProtokolNumber($protokol->protokol_num) . "</gost:certNum>
-                            <gost:signPass>false</gost:signPass>
-                            <gost:signMi>false</gost:signMi>
-                    </gost:applicable>
-                    <gost:docTitle>" . $protokol->checkMethod . "</gost:docTitle>\n";
-
-                    $protokols .= "\t\t<gost:means>\n";
-
-                    if ($customer->ideal) {
-                        $ideal = $customer->ideal ? $customer->ideal : '3.2.ВЮМ.0023.2019';
-                        $protokols .= "\t\t\t<gost:uve>
-                                <gost:number>$ideal</gost:number>
-                        </gost:uve>\n";
-                    }
-                    else if ($customer->ci_as_ideal) {
-                        $protokols .= "\t\t\t<gost:mieta>
-                                <gost:number>{$customer->ci_as_ideal}</gost:number>
-                        </gost:mieta>\n";
-                    }
-                    else if ($customer->ci_as_ideal_fake) {
-                        $protokols .= "\t\t\t<gost:mieta>
-                                <gost:number>{$customer->ci_as_ideal_fake}</gost:number>
-                        </gost:mieta>\n";
-                    }
-                    else if ($customer->get) {
-                        $protokols .= "\t\t\t<gost:npe>
-                                <gost:number>{$customer->get}</gost:number>
-                        </gost:npe>\n";
-                    }
-                    $protokols .= "\t\t\t<gost:mis>\n";
-                    foreach ($customer->customer_tools as $customer_tool) {
-
-                        $protokols .= "\t\t\t\t<gost:mi>
-                                <gost:typeNum>{$customer_tool->typeNum}</gost:typeNum>
-                                <gost:manufactureNum>{$customer_tool->manufactureNum}</gost:manufactureNum>
-                            </gost:mi>\n";
-                    }
-                    $protokols .= "\t\t\t</gost:mis>\n";
-
-                    $protokols .= "\t\t</gost:means>\n";
-
-                    if ($customer->notes) {
-                        $protokols .= "<gost:additional_info>{$customer->notes}</gost:additional_info>";
-                    }
-
-                    $protokols .= "\t</gost:result>\n";
-
-                    Protokol::find($protokol->id)
-                        ->update(['exported' => $package_number]);
-                }
-            }
-
+            // подготовливаем xml по результатам поверок
+            $protokols .= $this->prepareData($customer, $package_number);
         }
         $protokols .= "</gost:application>";
 
@@ -313,6 +240,117 @@ class CustomerController extends AdminController
 
     }
 
+    public function exportOneXmlToFGIS($id)
+    {
+
+        $package_number = $this->updatePackageNumber();
+
+        $date = date('Y-m-d', time());
+        $headers = array(
+            'Content-Type' => 'text/xml',
+            'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
+        );
+
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+
+        $customer = Customer::find($id);
+
+        // подготовливаем xml по результатам поверок
+        $protokols .= $this->prepareData($customer, $package_number);
+
+        $protokols .= "</gost:application>";
+
+        return response()->stream(function () use ($protokols)  {
+            echo $protokols;
+        }, 200, $headers);
+
+    }
+
+    private function prepareData($customer, $package_number)
+    {
+        $protokols = '';
+
+        foreach ($customer->new_protokols as $protokol) {
+            if ($protokol->regNumber) {
+
+                $protokols .= "\t<gost:result>\n";
+
+                $protokols .= "\t\t<gost:miInfo>
+                    <gost:singleMI>
+                            <gost:mitypeNumber>" . $protokol->regNumber . "</gost:mitypeNumber>
+                            <gost:manufactureNum>" . $protokol->serialNumber . "</gost:manufactureNum>
+                            <gost:modification>" . $protokol->siType . "</gost:modification>
+                    </gost:singleMI>
+                </gost:miInfo>\n";
+
+                $nextTest = null;
+                if ((int)$protokol->checkInterval > 0) {
+                    $nextTest = strtotime("+$protokol->checkInterval YEAR", strtotime($protokol->protokol_dt));
+                    $nextTest = strtotime('-1 DAYS', $nextTest);
+                    $nextTest = date("Y-m-d", $nextTest);
+                }
+
+                $hour_zone = sprintf('+0%d:00', $customer->hour_zone);
+                //dd($customer->hour_zone, $hour_zone);
+
+                $protokols .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
+                    <gost:vrfDate>" .date("Y-m-d",strtotime($protokol->protokol_dt)) .$hour_zone. "</gost:vrfDate>
+                    <gost:validDate>" . $nextTest .$hour_zone. "</gost:validDate>
+                    <gost:applicable>
+                            <gost:certNum>" . $this->getProtokolNumber($protokol->protokol_num) . "</gost:certNum>
+                            <gost:signPass>false</gost:signPass>
+                            <gost:signMi>false</gost:signMi>
+                    </gost:applicable>
+                    <gost:docTitle>" . $protokol->checkMethod . "</gost:docTitle>\n";
+
+                $protokols .= "\t\t<gost:means>\n";
+
+                if ($customer->ideal) {
+                    $ideal = $customer->ideal ? $customer->ideal : '3.2.ВЮМ.0023.2019';
+                    $protokols .= "\t\t\t<gost:uve>
+                                <gost:number>$ideal</gost:number>
+                        </gost:uve>\n";
+                }
+                else if ($customer->ci_as_ideal) {
+                    $protokols .= "\t\t\t<gost:mieta>
+                                <gost:number>{$customer->ci_as_ideal}</gost:number>
+                        </gost:mieta>\n";
+                }
+                else if ($customer->ci_as_ideal_fake) {
+                    $protokols .= "\t\t\t<gost:mieta>
+                                <gost:number>{$customer->ci_as_ideal_fake}</gost:number>
+                        </gost:mieta>\n";
+                }
+                else if ($customer->get) {
+                    $protokols .= "\t\t\t<gost:npe>
+                                <gost:number>{$customer->get}</gost:number>
+                        </gost:npe>\n";
+                }
+                $protokols .= "\t\t\t<gost:mis>\n";
+                foreach ($customer->customer_tools as $customer_tool) {
+
+                    $protokols .= "\t\t\t\t<gost:mi>
+                                <gost:typeNum>{$customer_tool->typeNum}</gost:typeNum>
+                                <gost:manufactureNum>{$customer_tool->manufactureNum}</gost:manufactureNum>
+                            </gost:mi>\n";
+                }
+                $protokols .= "\t\t\t</gost:mis>\n";
+
+                $protokols .= "\t\t</gost:means>\n";
+
+                if ($customer->notes) {
+                    $protokols .= "<gost:additional_info>{$customer->notes}</gost:additional_info>";
+                }
+
+                $protokols .= "\t</gost:result>\n";
+
+                Protokol::find($protokol->id)
+                    ->update(['exported' => $package_number]);
+            }
+        }
+
+        return $protokols;
+    }
 
     public function convertXlsToXml(Request $request)
     {
@@ -442,7 +480,6 @@ class CustomerController extends AdminController
             return '';
         }
     }
-
 
     private function updatePackageNumber()
     {

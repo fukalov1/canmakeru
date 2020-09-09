@@ -20,6 +20,7 @@ Route::group([
     $router->get('customer_chart', 'CustomerChartController@index')->middleware('set_customer');
     $router->get('customer_report', 'CustomerReportController@index');
     $router->get('export-fgis', 'CustomerController@exportXmlToFGIS');
+    $router->get('export-one-fgis/{id}', 'CustomerController@exportOneXmlToFGIS');
 
     $router->post('convert-xls-xml', 'CustomerController@convertXlsToXml');
 
