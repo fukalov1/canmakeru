@@ -266,11 +266,45 @@ class CustomerController extends AdminController
 
     }
 
-    private function prepareData($customer, $package_number)
+    public function exportPackageXmlToFGIS()
+    {
+
+        $package_number = \request()->package_number;
+
+        $date = date('Y-m-d', time());
+        $headers = array(
+            'Content-Type' => 'text/xml',
+            'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
+        );
+
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+
+        $customers = Customer::where('export_fgis',1)->get();
+
+
+        foreach ($customers as $customer) {
+            // подготовливаем xml по результатам поверок
+            $protokols .= $this->prepareData($customer, $package_number, 'exist');
+        }
+        $protokols .= "</gost:application>";
+
+        return response()->stream(function () use ($protokols)  {
+            echo $protokols;
+        }, 200, $headers);
+
+    }
+
+    private function prepareData($customer, $package_number, $type = 'new')
     {
         $protokols = '';
 
-        foreach ($customer->new_protokols as $protokol) {
+        if ($type == 'new')
+            $new_protokols = $customer->new_protokols;
+        else if ($type == 'exist')
+            $new_protokols = $customer->protokols->where('exported', $package_number);
+
+
+        foreach ($new_protokols as $protokol) {
             if ($protokol->regNumber) {
 
                 $protokols .= "\t<gost:result>\n";

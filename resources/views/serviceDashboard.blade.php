@@ -1,5 +1,5 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<div class="col-lg-6">
+<div class="col-lg-4">
     <div class="row">
         <div class="col-lg-12">
             <b>
@@ -31,7 +31,27 @@
     </div>
 
 </div>
-<div class="col-lg-6">
+<div class="col-lg-4">
+    <form action="/admin/export-package-fgis" method="POST" enctype="multipart/form-data">
+    @csrf <!-- {{ csrf_field() }} -->
+    <div class="row">
+        <div class="col-lg-12">
+            <b>
+                Выгрузка во ФГИС
+            </b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <label>Номер пакета</label>
+            <input type="text" name="package_number" value="{{ config('package_number', 1) }}" placeholder="номер пакета"><br/>
+            <button type="reset" class="btn btn-default">сбросить</button>
+            <button type="submit" class="btn btn-info" id="convertXlsToXML">старт</button>
+        </div>
+    </div>
+    </form>
+</div>
+<div class="col-lg-4">
     <form action="/admin/convert-xls-xml" method="POST" enctype="multipart/form-data">
     @csrf <!-- {{ csrf_field() }} -->
     <div class="row">
