@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Customer;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
@@ -19,4 +24,6 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+
 }

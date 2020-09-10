@@ -9,11 +9,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Auth\Passwords\CanResetPassword;
 
-class Customer extends Model implements AuthenticatableContract
+class Customer extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Notifiable, SoftDeletes, HasApiTokens;
     use Authenticatable;
+    use CanResetPassword;
 
 
     protected $guard = 'customer';
