@@ -71,7 +71,7 @@ class CustomerController extends AdminController
         else {
             $grid->actions(function ($actions) {
                 $actions->add(new Slave());
-//                $actions->add(new ExportOneFgis());
+                $actions->add(new ExportOneFgis());
             });
         }
 
@@ -92,7 +92,7 @@ class CustomerController extends AdminController
 //            1 => 'check',
 //        ], $default = '');
         $grid->column('export_fgis', __('Выгружать во ФГИС'))->display(function () {
-            return $this->export_fgis >0  ? "<a href=\"/admin/export-one-fgis/{$this->id}\" title='выгрузить протоколы партнера во ФГИС' target='_blank'>&#10004;</a>" : '';
+            return $this->export_fgis >0  ? "&#10004;" : '';
         });
         $grid->column('email', __('E-mail'));
 
