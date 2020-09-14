@@ -82,7 +82,6 @@
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Actions/Post/ExportOneFgis.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Actions/Post/ExportOneFgis.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Actions/Protokol/BatchClearExport.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" afterDir="false" />
@@ -2381,7 +2380,8 @@
       <workItem from="1599360534688" duration="7069000" />
       <workItem from="1599541170218" duration="14113000" />
       <workItem from="1599562321192" duration="1942000" />
-      <workItem from="1600066638206" duration="1399000" />
+      <workItem from="1600066638206" duration="2710000" />
+      <workItem from="1600087167157" duration="44000" />
     </task>
     <servers />
   </component>

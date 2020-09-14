@@ -83,7 +83,7 @@ class CustomerController extends AdminController
         $grid->dinamic('Динамика поверок')->display(function () {
             return '<a href="/admin/customer_chart?set='.$this->id.'" title="Динамика поверок "><span class="fa fa-bar-chart"/></a>';
         });
-        $grid->column('comment', __('Комментарий'));
+        $grid->column('comment', __('Комментарий'))->sortable();
         $grid->column('enabled', __('Активен'))->display(function () {
             return $this->enabled ? "&#10004;" : '';
         });
@@ -94,7 +94,7 @@ class CustomerController extends AdminController
         $grid->column('export_fgis', __('Выгружать во ФГИС'))->display(function () {
             return $this->export_fgis >0  ? "&#10004;" : '';
         });
-        $grid->column('email', __('E-mail'));
+        $grid->column('email', __('E-mail'))->sortable();
 
         return $grid;
     }
