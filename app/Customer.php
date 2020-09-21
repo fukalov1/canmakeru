@@ -53,7 +53,7 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
     }
 
     public function protokols() {
-        return $this->hasMany(Protokol::class);
+        return $this->hasMany(Protokol::class)->orderBy('id', 'desc');
     }
 
     public function new_protokols() {

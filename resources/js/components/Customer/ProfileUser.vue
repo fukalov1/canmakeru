@@ -24,18 +24,6 @@
                                 {{ this.data.email }}
                             </td>
                         </tr>
-<!--                        <tr>-->
-<!--                            <th>-->
-<!--                                <button class="button">-->
-<!--                                    сохранить-->
-<!--                                </button>-->
-<!--                            </th>-->
-<!--                            <th>-->
-<!--                                <button class="button">-->
-<!--                                    отменить-->
-<!--                                </button>-->
-<!--                            </th>-->
-<!--                        </tr>-->
                     </tbody>
                 </table>
             </div>

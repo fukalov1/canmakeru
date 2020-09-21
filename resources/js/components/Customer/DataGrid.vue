@@ -193,12 +193,12 @@
             protokols: {
                 type: Array,
                 default: []
-            }
+            },
         },
         data() {
             return {
-                columns: ['protokol_num','protokol_dt','pin','protokol_photo'],
-                column_names: ['Номер св-ва','Дата поверки','Пин-код','Фото поверки'],
+                columns: ['protokol_num','protokol_dt','pin','siType','waterType','regNumber','serialNumber','checkMethod','protokol_photo'],
+                column_names: ['Номер св-ва','Дата поверки','Пин-код', 'Тип СИ', 'Тип воды', 'Регистр. номер', 'Заводской номер', 'Методика поверки', 'Фото поверки'],
                 sort_columns: {fld: null, type: ''},
                 data: [],
                 page: 1,

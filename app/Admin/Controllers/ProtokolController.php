@@ -72,8 +72,8 @@ class ProtokolController extends AdminController
 
         $grid->model()->where('customer_id',session('customer_id'))->orderBy('protokol_dt', 'desc');
 
-        $grid->column('protokol_num', __('№ свидетельства'))->sortable();
-        $grid->column('protokol_dt', __('Дата свидетельства'))->sortable();
+        $grid->column('protokol_num', __('№ свид-ва'))->sortable();
+        $grid->column('protokol_dt', __('Дата свид-ва'))->sortable();
         $grid->column('pin', __('Pin'));
         $grid->photos('Фото')->modal('Фото поверки', function ($model) {
             $matches = [];
@@ -90,8 +90,9 @@ class ProtokolController extends AdminController
         $grid->column('lng', __('Дол.'));
         $grid->column('siType', 'Тип СИ');
         $grid->column('waterType', 'Тип воды');
-        $grid->column('regNumber', 'Регистрационный номер');
-        $grid->column('serialNumber', 'Заводской номер');
+        $grid->column('regNumber', 'Регистр. №');
+        $grid->column('serialNumber', 'Заводской №');
+        $grid->column('checkMethod', 'Методика поверки');
         $grid->column('nextTest', 'След. поверка');
 //        $grid->column('updated_dt', __('Дата изменения'));
         $grid->column('exported', __('Пакет'))->editable();

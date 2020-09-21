@@ -34,7 +34,14 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <data-grid :customer_id="customer_id" :protokols="this.protokols" v-if="protokols.length>0"/>
+                <div v-if="progress" class="row">
+                    <div class="col-12">
+                        <h3>
+                            Идет загрузка данных. Пожалуйста, ожидайте...
+                        </h3>
+                    </div>
+                </div>
+                <data-grid :customer_id="customer_id" :protokols="this.protokols" v-if="protokols.length>0" v-else/>
             </div>
             <div class="tab-pane fade" id="statistic" role="tabpanel" aria-labelledby="statistic-tab">
                 <div class="statistic">
@@ -65,7 +72,8 @@
             return {
                 customer_id: 0,
                 data: [],
-                protokols: []
+                protokols: [],
+                progress: false
             }
         },
         mounted() {
@@ -106,18 +114,29 @@
                     });
             },
             getProtokols() {
+                this.progress = true;
                 axios({
                     url: `/data/protokols`,
                     method: 'POST',
                     data: {customer_id: this.customer_id}
                 })
                     .then(response => {
+                        this.progress = false;
                         this.protokols = response.data.data;
                     })
                     .catch(error => {
-
+                        this.progress = false;
                     });
             },
         }
     }
 </script>
+
+<style scope>
+    h3 {
+        text-align: center;
+        font-size: 25px;
+        font-weight: 700;
+        padding: 30px 0;
+    }
+</style>
