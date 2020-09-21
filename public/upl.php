@@ -132,7 +132,9 @@ wrileLog($cust_id, $message);
 $stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) 
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 $stmt->bind_param("iisssisddsssssss", $_POST['id'], $_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng'], $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest);
-$stmt->execute();
+if (!$stmt->execute()) {
+    wrileLog($cust_id, mysqli_error($conn));
+}
 
 
 
