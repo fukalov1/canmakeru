@@ -135,6 +135,10 @@ $stmt->bind_param("iisssisddsssssss", $_POST['id'], $_POST['pin'],$p_photo, $p_p
 if (!$stmt->execute()) {
     wrileLog($cust_id, mysqli_error($conn));
 }
+else {
+    wrileLog($cust_id, "INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) 
+VALUES ({$_POST['id']}, {$_POST['pin']},$p_photo, $p_photo1, $m_photo, $cust_id, {$_POST['dt']}, {$_POST['lat']}, {$_POST['lng']}, $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest");
+}
 
 
 
