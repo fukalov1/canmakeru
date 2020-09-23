@@ -38,7 +38,9 @@ $serialNumber = $_POST['serialNumber']; // - заводской номер
 $checkInterval = $_POST['checkInterval']; // - интервал поверки
 $checkMethod = $_POST['checkMethod']; // - методика поверки
 
-
+//if (empty($siType)||empty($waterType)||empty($regNumber)||empty($serialNumber)||empty($checkInterval)||empty($checkMethod)) {
+//    die("Не загружены дополнительные данные о поверке (тип СИ,Тип воды,регистрационный номер,заводской номер,методика поверки)");
+//}
 
 $stmt = $conn->prepare("select id cust_id FROM customers where code=? and enabled=1");
 $stmt->bind_param("s", $_POST['partnerKey']);
