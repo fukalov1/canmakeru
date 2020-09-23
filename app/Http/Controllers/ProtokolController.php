@@ -8,8 +8,9 @@ use App\Protokol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Redirect,Response,File;
 use Exception;
-use Illuminate\Http\File;
+//use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -32,7 +33,10 @@ class ProtokolController extends Controller
             'partnerKey' => 'required|string',
             'protokol_num' => 'required|numeric',
             'pin' => 'required|numeric',
-            'dt' => 'required|string'
+            'dt' => 'required|string',
+            'protokol_photo' => 'required',
+            'protokol_photo1' => 'required',
+            'meter_photo' => 'required'
         ]);
         if ($validator->fails()) {
             return response(
@@ -55,6 +59,9 @@ class ProtokolController extends Controller
         $serialNumber = $request->input('serialNumber'); // - заводской номер
         $checkInterval = $request->input('checkInterval'); // - интервал поверки
         $checkMethod = $request->input('checkMethod'); // - методика поверки
+
+
+//        dd('test',$request->file('protokol_photo'));
 
         // get Customer
         $customer = $this->customer
@@ -122,21 +129,11 @@ class ProtokolController extends Controller
     private function checkLoadPhoto($request, $p, $p1, $m)
     {
         try {
-//            $path = $request->file('protokol_photo')->storeAs(
-//                $p
-//            );
-
-            Storage::putFileAs(storage_path(), new File(storage_path()), $p);
-
-//            $path = Storage::putFileAs(
-//                storage_path(), $request->file('protokol_photo'), $p
-//            );
-//            $path = Storage::putFileAs(
-//                'avatars', $request->file('protokol_photo1'), $p1
-//            );
-//            $path = Storage::putFileAs(
-//                'avatars', $request->file('meter_photo'), $m
-//            );
+            if($request->file()) {
+                $request->file('protokol_photo')->storeAs('temp', $p, 'photos');
+                $request->file('protokol_photo1')->storeAs('temp', $p1, 'photos');
+                $request->file('meter_photo')->storeAs('temp', $m, 'photos');
+            }
         }
         catch (FileException $exception) {
             report($exception);
