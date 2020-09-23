@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
-use App\Http\Requests\StoreProtokol;
 use App\Protokol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Redirect,Response,File;
-use Exception;
-//use Illuminate\Http\File;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
@@ -36,7 +32,13 @@ class ProtokolController extends Controller
             'dt' => 'required|string',
             'protokol_photo' => 'required',
             'protokol_photo1' => 'required',
-            'meter_photo' => 'required'
+            'meter_photo' => 'required',
+            'siType' => 'required',
+            'waterType' => 'required',
+            'regNumber' => 'required',
+            'serialNumber' => 'required',
+            'checkInterval' => 'required',
+            'checkMethod' => 'required',
         ]);
         if ($validator->fails()) {
             return response(

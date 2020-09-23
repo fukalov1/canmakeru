@@ -83,7 +83,6 @@
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProtokolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProtokolController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/MyDashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/MyDashboard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
