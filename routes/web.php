@@ -26,7 +26,6 @@ Route::get('/photo/{year}/{month}/{file}', 'MainController@getPhoto');
 Route::get('/photo4pdf/{year}/{month}/{file}', 'MainController@getPhoto4Pdf');
 
 
-
 Route::post('/uploads', 'MainController@saveResultMeter');
 
 Route::get('/redirect', function () {

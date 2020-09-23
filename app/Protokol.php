@@ -9,9 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class Protokol extends Model
 {
 
-    protected $fillable = ['exported'];
+    public const LOG_CHANNEL = 'customlog';
 
-    const UPDATED_AT = 'updated_dt';
+    protected $fillable = ['protokol_num', 'pin', 'protokol_photo', 'protokol_photo1', 'meter_photo', 'customer_id', 'protokol_dt', 'lat', 'lng',
+        'siType', 'waterType', 'regNumber', 'serialNumber', 'checkInterval', 'checkMethod', 'nextTest', 'exported'];
+
+//    const CREATED_AT = 'created_at';
+//    const UPDATED_AT = 'updated_at';
 
     public function uploadExistFile($filename, $path)
     {
@@ -76,7 +80,6 @@ class Protokol extends Model
         $error = '';
         $success = false;
 
-//        dd(public_path('photos/temp/').$dest1);
 
         try {
             $disk = new DiskClient();
@@ -122,9 +125,12 @@ class Protokol extends Model
             $success = true;
 
         }
-        catch (Exception $ex) {
+        catch (\Throwable $ex) {
             //Выводим сообщение об исключении.
-            $error =  $ex->getMessage();
+            $success =  $ex->getMessage();
+//            Log::channel(self::LOG_CHANNEL)->debug("Экспорт файла $file с ошибкой $success");
+            Log::info("Экспорт файла $file с ошибкой $success");
+            dd($ex->getMessage());
 
         }
         return $success;
@@ -160,7 +166,7 @@ class Protokol extends Model
                 $photo1 = preg_replace('/photos\//', '', $protokol->protokol_photo1);
                 $meter = preg_replace('/photos\//', '', $protokol->meter_photo);
 
-                $old_folder =  (new Carbon($protokol->updated_dt))->formatLocalized('%Y-%m');
+                $old_folder =  (new Carbon($protokol->updated_at))->formatLocalized('%Y-%m');
                 $folder =  (new Carbon($protokol->protokol_dt))->formatLocalized('%Y-%m');
 
                 if ($folder != $folder_current) {

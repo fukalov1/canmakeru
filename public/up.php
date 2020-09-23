@@ -64,7 +64,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 //Output any connection error
 if ($conn->connect_error) {
-    die('Error : ('. $conn->connect_errno .') '. $mysqli->connect_error);
+    die('Error : ('. $conn->connect_errno .') '. mysqli_error($conn));
 }
 if (isset($_REQUEST['id'])) {
     $prot_id = floatval($_REQUEST['id']);
@@ -74,7 +74,7 @@ if (isset($_REQUEST['id'])) {
 }
 // echo $prot_id;
 
-$stmt = $conn->prepare("SELECT protokol_num, pin, protokol_photo, meter_photo, protokol_photo1, protokol_dt FROM protokols where protokol_num=? and pin=? order by updated_dt desc");
+$stmt = $conn->prepare("SELECT protokol_num, pin, protokol_photo, meter_photo, protokol_photo1, protokol_dt FROM protokols where protokol_num=? and pin=? order by updated_at desc");
 $stmt->bind_param("ii", $prot_id, $_REQUEST['pin']);
 $stmt->execute();
 $stmt->bind_result($protokol_num, $pin, $protokol_photo, $meter_photo, $protokol_photo1, $protokol_dt);

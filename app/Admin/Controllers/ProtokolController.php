@@ -94,7 +94,7 @@ class ProtokolController extends AdminController
         $grid->column('serialNumber', 'Заводской №');
         $grid->column('checkMethod', 'Методика поверки');
         $grid->column('nextTest', 'След. поверка');
-//        $grid->column('updated_dt', __('Дата изменения'));
+//        $grid->column('updated_at', __('Дата изменения'));
         $grid->column('exported', __('Пакет'))->editable();
 
         return $grid;
@@ -117,7 +117,7 @@ class ProtokolController extends AdminController
         $show->field('protokol_photo1', __('Protokol photo1'));
         $show->field('meter_photo', __('Meter photo'));
 //        $show->field('customer_id', __('Customer id'));
-        $show->field('updated_dt', __('Updated dt'));
+        $show->field('updated_at', __('Updated dt'));
         $show->field('lat', __('Lat'));
         $show->field('lng', __('Lng'));
         $show->field('protokol_dt', __('Protokol dt'));
@@ -141,7 +141,7 @@ class ProtokolController extends AdminController
         $form->text('protokol_photo1', __('Protokol photo1'));
         $form->text('meter_photo', __('Meter photo'));
 //        $form->number('customer_id', __('Customer id'));
-//        $form->datetime('updated_dt', __('Updated dt'))->default(date('Y-m-d H:i:s'));
+//        $form->datetime('updated_at', __('Updated dt'))->default(date('Y-m-d H:i:s'));
         $form->decimal('lat', __('Lat'));
         $form->decimal('lng', __('Lng'));
         $form->datetime('protokol_dt', __('Protokol dt'))->default(date('Y-m-d H:i:s'));
