@@ -268,9 +268,7 @@ class CustomerController extends AdminController
 
     public function exportPackageXmlToFGIS()
     {
-
         $package_number = \request()->package_number;
-
         $date = date('Y-m-d', time());
         $headers = array(
             'Content-Type' => 'text/xml',
@@ -278,9 +276,7 @@ class CustomerController extends AdminController
         );
 
         $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
-
         $customers = Customer::where('export_fgis',1)->get();
-
 
         foreach ($customers as $customer) {
             // подготовливаем xml по результатам поверок

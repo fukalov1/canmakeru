@@ -119,11 +119,11 @@ class ProtokolController extends Controller
             ]);
         }
         else {
-            Log::channel($this->log)->debug("Партнер $partnerKey не найден.");
+            Log::channel($this->log)->debug("The partner with code $partnerKey not found!");
             return response(
                 json_encode([
                     'result' => 1,
-                    'message' => 'Партнер не найден'
+                    'message' => "The partner with code $partnerKey not found!"
                 ]));
         }
     }

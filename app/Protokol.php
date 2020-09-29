@@ -14,9 +14,6 @@ class Protokol extends Model
     protected $fillable = ['protokol_num', 'pin', 'protokol_photo', 'protokol_photo1', 'meter_photo', 'customer_id', 'protokol_dt', 'lat', 'lng',
         'siType', 'waterType', 'regNumber', 'serialNumber', 'checkInterval', 'checkMethod', 'nextTest', 'exported'];
 
-//    const CREATED_AT = 'created_at';
-//    const UPDATED_AT = 'updated_at';
-
     public function uploadExistFile($filename, $path)
     {
 
