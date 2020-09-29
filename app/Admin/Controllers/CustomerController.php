@@ -281,7 +281,6 @@ class CustomerController extends AdminController
 
         $customers = Customer::where('export_fgis',1)->get();
 
-
         foreach ($customers as $customer) {
             // подготовливаем xml по результатам поверок
             $protokols .= $this->prepareData($customer, $package_number, 'exist');
@@ -296,20 +295,20 @@ class CustomerController extends AdminController
 
     private function prepareData($customer, $package_number, $type = 'new')
     {
-        $protokols = '';
+        $result = '';
 
+        // выбираем поверки клиента либо новые, либо из пакета
         if ($type == 'new')
             $new_protokols = $customer->new_protokols;
         else if ($type == 'exist')
             $new_protokols = $customer->protokols->where('exported', $package_number);
 
-
         foreach ($new_protokols as $protokol) {
             if ($protokol->regNumber) {
 
-                $protokols .= "\t<gost:result>\n";
+                $result .= "\t<gost:result>\n";
 
-                $protokols .= "\t\t<gost:miInfo>
+                $result .= "\t\t<gost:miInfo>
                     <gost:singleMI>
                             <gost:mitypeNumber>" . $protokol->regNumber . "</gost:mitypeNumber>
                             <gost:manufactureNum>" . $protokol->serialNumber . "</gost:manufactureNum>
@@ -327,7 +326,7 @@ class CustomerController extends AdminController
                 $hour_zone = sprintf('+0%d:00', $customer->hour_zone);
                 //dd($customer->hour_zone, $hour_zone);
 
-                $protokols .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
+                $result .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
                     <gost:vrfDate>" .date("Y-m-d",strtotime($protokol->protokol_dt)) .$hour_zone. "</gost:vrfDate>
                     <gost:validDate>" . $nextTest .$hour_zone. "</gost:validDate>
                     <gost:applicable>
@@ -337,53 +336,55 @@ class CustomerController extends AdminController
                     </gost:applicable>
                     <gost:docTitle>" . $protokol->checkMethod . "</gost:docTitle>\n";
 
-                $protokols .= "\t\t<gost:means>\n";
+                $result .= "\t\t<gost:means>\n";
 
                 if ($customer->ideal) {
                     $ideal = $customer->ideal ? $customer->ideal : '3.2.ВЮМ.0023.2019';
-                    $protokols .= "\t\t\t<gost:uve>
+                    $result .= "\t\t\t<gost:uve>
                                 <gost:number>$ideal</gost:number>
                         </gost:uve>\n";
                 }
                 else if ($customer->ci_as_ideal) {
-                    $protokols .= "\t\t\t<gost:mieta>
+                    $result .= "\t\t\t<gost:mieta>
                                 <gost:number>{$customer->ci_as_ideal}</gost:number>
                         </gost:mieta>\n";
                 }
                 else if ($customer->ci_as_ideal_fake) {
-                    $protokols .= "\t\t\t<gost:mieta>
+                    $result .= "\t\t\t<gost:mieta>
                                 <gost:number>{$customer->ci_as_ideal_fake}</gost:number>
                         </gost:mieta>\n";
                 }
                 else if ($customer->get) {
-                    $protokols .= "\t\t\t<gost:npe>
+                    $result .= "\t\t\t<gost:npe>
                                 <gost:number>{$customer->get}</gost:number>
                         </gost:npe>\n";
                 }
-                $protokols .= "\t\t\t<gost:mis>\n";
+                $result .= "\t\t\t<gost:mis>\n";
                 foreach ($customer->customer_tools as $customer_tool) {
 
-                    $protokols .= "\t\t\t\t<gost:mi>
+                    $result .= "\t\t\t\t<gost:mi>
                                 <gost:typeNum>{$customer_tool->typeNum}</gost:typeNum>
                                 <gost:manufactureNum>{$customer_tool->manufactureNum}</gost:manufactureNum>
                             </gost:mi>\n";
                 }
-                $protokols .= "\t\t\t</gost:mis>\n";
+                $result .= "\t\t\t</gost:mis>\n";
 
-                $protokols .= "\t\t</gost:means>\n";
+                $result .= "\t\t</gost:means>\n";
 
                 if ($customer->notes) {
-                    $protokols .= "<gost:additional_info>{$customer->notes}</gost:additional_info>";
+                    $result .= "<gost:additional_info>{$customer->notes}</gost:additional_info>";
                 }
 
-                $protokols .= "\t</gost:result>\n";
+                $result .= "\t</gost:result>\n";
 
-                Protokol::find($protokol->id)
-                    ->update(['exported' => $package_number]);
+                if ($type == 'new') {
+                    Protokol::find($protokol->id)
+                        ->update(['exported' => $package_number]);
+                }
             }
         }
 
-        return $protokols;
+        return $result;
     }
 
     public function convertXlsToXml(Request $request)
