@@ -323,7 +323,7 @@ class CustomerController extends AdminController
                     $nextTest = date("Y-m-d", $nextTest);
                 }
 
-                $hour_zone = sprintf('+0%d:00', $customer->hour_zone);
+                $hour_zone = sprintf('+%02d:00', $customer->hour_zone);
                 //dd($customer->hour_zone, $hour_zone);
 
                 $result .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
