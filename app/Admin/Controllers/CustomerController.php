@@ -359,15 +359,17 @@ class CustomerController extends AdminController
                                 <gost:number>{$customer->get}</gost:number>
                         </gost:npe>\n";
                 }
-                $result .= "\t\t\t<gost:mis>\n";
-                foreach ($customer->customer_tools as $customer_tool) {
+                if($customer->customer_tools) {
+                    $result .= "\t\t\t<gost:mis>\n";
+                    foreach ($customer->customer_tools as $customer_tool) {
 
-                    $result .= "\t\t\t\t<gost:mi>
+                        $result .= "\t\t\t\t<gost:mi>
                                 <gost:typeNum>{$customer_tool->typeNum}</gost:typeNum>
                                 <gost:manufactureNum>{$customer_tool->manufactureNum}</gost:manufactureNum>
                             </gost:mi>\n";
+                    }
+                    $result .= "\t\t\t</gost:mis>\n";
                 }
-                $result .= "\t\t\t</gost:mis>\n";
 
                 $result .= "\t\t</gost:means>\n";
 
