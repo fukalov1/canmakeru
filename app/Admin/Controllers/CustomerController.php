@@ -359,7 +359,7 @@ class CustomerController extends AdminController
                                 <gost:number>{$customer->get}</gost:number>
                         </gost:npe>\n";
                 }
-                if($customer->customer_tools) {
+                if(!$customer->customer_tools) {
                     $result .= "\t\t\t<gost:mis>\n";
                     foreach ($customer->customer_tools as $customer_tool) {
 
