@@ -69,11 +69,10 @@ class ProtokolController extends AdminController
                 $actions->disableView();
             });
         }
-
         $grid->model()->where('customer_id',session('customer_id'))->orderBy('protokol_dt', 'desc');
 
         $grid->column('protokol_num', __('№ свид-ва'))->sortable();
-        $grid->column('protokol_dt', __('Дата свид-ва'))->sortable();
+//        $grid->column('protokol_dt', __('Дата свид-ва'))->sortable();
         $grid->column('pin', __('Pin'));
         $grid->photos('Фото')->modal('Фото поверки', function ($model) {
             $matches = [];
