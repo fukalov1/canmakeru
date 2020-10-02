@@ -72,7 +72,7 @@ class ProtokolController extends AdminController
         $grid->model()->where('customer_id',session('customer_id'))->orderBy('protokol_dt', 'desc');
 
         $grid->column('protokol_num', __('№ свид-ва'))->sortable();
-//        $grid->column('protokol_dt', __('Дата свид-ва'))->sortable();
+        $grid->column('protokol_dt', __('Дата свид-ва'))->sortable();
         $grid->column('pin', __('Pin'));
         $grid->photos('Фото')->modal('Фото поверки', function ($model) {
             $matches = [];
@@ -143,7 +143,7 @@ class ProtokolController extends AdminController
 //        $form->datetime('updated_dt', __('Updated dt'))->default(date('Y-m-d H:i:s'));
         $form->decimal('lat', __('Lat'));
         $form->decimal('lng', __('Lng'));
-        $form->datetime('protokol_dt', __('Protokol dt'))->default(date('Y-m-d H:i:s'));
+        $form->datetime('protokol_dt', __('Дата свид-ва'))->default(date('Y-m-d H:i:s'));
         $form->text('siType', 'Тип СИ');
         $form->text('waterType', 'Тип воды');
         $form->text('regNumber', 'Регистрационный номер');
