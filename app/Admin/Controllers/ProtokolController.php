@@ -36,7 +36,7 @@ class ProtokolController extends AdminController
 
         $grid = new Grid(new Protokol);
 
-
+        $grid->paginate(100);
 
         $grid->header(function ($query) {
             return "<div style='padding: 10px;'>Клиент: <b><a href=\"/admin/customers\" title='вернуться к списку клиентов'>".$this->customer."</a></b></div>";

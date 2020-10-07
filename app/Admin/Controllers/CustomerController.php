@@ -34,6 +34,8 @@ class CustomerController extends AdminController
     {
         $grid = new Grid(new Customer());
 
+        $grid->paginate(100);
+
         $grid->filter(function($filter){
 
             // Remove the default id filter
