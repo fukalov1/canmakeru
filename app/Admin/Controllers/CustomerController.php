@@ -153,7 +153,8 @@ class CustomerController extends AdminController
                     return 'unique:customers';
                 }
             });
-            $form->text('comment', __('Комментарий'));
+            $form->text('comments', __('Комментарий'));
+            $form->text('password', __('Пароль'))->default('123456');
             $form->switch('enabled', __('Активен'))->default(1);
             $form->number('hour_zone', 'Часовой пояс')->default(0);
             $form->switch('export_fgis', __('Выгружать во ФГИС'))->default(1);
