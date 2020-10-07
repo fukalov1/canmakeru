@@ -36,6 +36,7 @@ class ProtokolController extends AdminController
 
         $grid = new Grid(new Protokol);
 
+        $grid->perPages([50, 100, 200, 500]);
         $grid->paginate(100);
 
         $grid->header(function ($query) {

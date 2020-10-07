@@ -34,6 +34,7 @@ class CustomerController extends AdminController
     {
         $grid = new Grid(new Customer());
 
+        $grid->perPages([50, 100, 200, 500]);
         $grid->paginate(100);
 
         $grid->filter(function($filter){
