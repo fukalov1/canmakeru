@@ -11,6 +11,11 @@ if($_SERVER['REQUEST_METHOD'] != 'POST'){
     die("Загрузка невозможна");
 }
 
+// обрезаем пробелы с краев в параметрах
+foreach ($_POST as $key => $value) {
+    $_POST[$key] = trim($value);
+}
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 $conn->set_charset("utf8");
