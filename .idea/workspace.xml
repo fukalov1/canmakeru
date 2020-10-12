@@ -103,7 +103,6 @@
       <change beforePath="$PROJECT_DIR$/resources/js/components/Customer/ProfileUser.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer/ProfileUser.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/passwords.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/passwords.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/serviceDashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/serviceDashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/MyDashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/MyDashboard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
@@ -2405,7 +2404,8 @@
       <workItem from="1602097214991" duration="950000" />
       <workItem from="1602137523567" duration="4658000" />
       <workItem from="1602246514484" duration="1670000" />
-      <workItem from="1602254823781" duration="8000" />
+      <workItem from="1602254823781" duration="170000" />
+      <workItem from="1602483342437" duration="10000" />
     </task>
     <servers />
   </component>

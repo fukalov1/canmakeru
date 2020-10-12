@@ -25,7 +25,6 @@ class MyDashboard extends Dashboard
 
             $disk->setAccessToken(config('YANDEX_TOKEN'));
             $disk->setDebug(true);
-            dd($disk,config('YANDEX_TOKEN'));
 
             //Получаем свободное и занятое место/
             $diskSpace = $disk->diskSpaceInfo();
