@@ -49,9 +49,10 @@ Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/login/customer', 'Auth\LoginController@customerLogin');
 //Route::post('/register/customer', 'Auth\RegisterController@createCustomer');
 
-Route::view('/home', 'home')->middleware('auth');
+//Route::view('/home', 'home')->middleware('auth');
 
 Route::group(['middleware' => ['auth:customer']], function () {
+    Route::get('/home', 'CustomerController@index');
     Route::get('/customer', 'CustomerController@index');
     Route::group(['prefix' => 'data'], function() {
         Route::post('/protokols', 'CustomerController@getDataProtokols');
@@ -64,9 +65,3 @@ Route::group(['middleware' => ['auth:customer']], function () {
     });
 });
 
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
