@@ -60,15 +60,16 @@ class CustomerController extends Controller
 
     public function checkProfile(Request $request)
     {
-        $data = ['result' => 1,
+        $data = ['result' => 0,
             'message' => "Партнер с кодом {$request->id} не найден!"];
 
         $customer = $this->customer
             ->with('customer_tools')
-            ->find($request->id);
+            ->where('code', $request->id)->first();
 
         if ($customer) {
-            $data = $customer;
+            $data['result'] = 1;
+            $data['message'] = $customer;
         }
 
         return json_encode($data);
