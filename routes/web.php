@@ -44,12 +44,10 @@ Auth::routes();
 
 Route::get('/login/customer', 'Auth\LoginController@showCustomerLoginForm');
 Route::get('/logout', 'Auth\LoginController@logout');
-//Route::get('/register/customer', 'Auth\RegisterController@showCustomerRegisterForm');
+
+Route::get('/check', 'CustomerController@checkProfile');
 
 Route::post('/login/customer', 'Auth\LoginController@customerLogin');
-//Route::post('/register/customer', 'Auth\RegisterController@createCustomer');
-
-//Route::view('/home', 'home')->middleware('auth');
 
 Route::group(['middleware' => ['auth:customer']], function () {
     Route::get('/home', 'CustomerController@index');

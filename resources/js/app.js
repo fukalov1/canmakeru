@@ -9,10 +9,10 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFile, faFileAlt, faFilePdf, faFileImage } from '@fortawesome/free-solid-svg-icons'
+import { faFile, faFileAlt, faFilePdf, faFileImage, faTrashAlt, faEdit, faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faFile, faFileAlt, faFilePdf, faFileImage)
+library.add(faFile, faFileAlt, faFilePdf, faFileImage, faTrashAlt, faEdit, faSort, faSortDown, faSortUp)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

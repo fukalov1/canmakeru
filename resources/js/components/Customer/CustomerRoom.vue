@@ -63,10 +63,11 @@
     import DataGrid from "./DataGrid";
     import Statistic from "./Statistic";
     import StatisticDay from "../Report/StatisticDay";
+    import ProfileUser from "./ProfileUser";
 
     export default {
         components: {
-            DataGrid, Statistic, StatisticDay
+            DataGrid, Statistic, StatisticDay, ProfileUser
         },
         data() {
             return {

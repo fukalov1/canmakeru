@@ -1,40 +1,51 @@
 <template>
     <div>
-        <transition name="modal" v-if="showModal">
-            <div class="modal-mask">
-                <div class="modal-wrapper">
-                    <div class="modal-container">
+        <transition name="modal-fade" v-if="showModal">
+            <div class="modal-backdrop">
 
-                        <div class="modal-header">
-                            <slot name="header">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        {{ photo_title }}
-                                    </div>
-                                    <div class="col-md-2 text-right">
-                                        <button class="btn btn-primary" @click="showModal=false">
-                                            закрыть
-                                        </button>
-                                    </div>
+                <div class="modal">
+
+                    <div class="modal-header">
+                        <slot name="header">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    {{ photo_title }}
+<!--                                    <br/>-->
+<!--                                    <a-->
+<!--                                        class="header-link"-->
+<!--                                        target="_blank"-->
+<!--                                        :href="`https://fgis.gost.ru/fundmetrology/cm/results?filter_result_docnum=${current_protokol}`">-->
+<!--                                        Посмотреть в Федеральном информационном фонде*-->
+<!--                                    </a>-->
+<!--                                    <p>* Внимание. Данные передаются в течении 60 дней</p>-->
                                 </div>
+                                <div class="col-md-2 text-right">
+                                    <button class="btn btn-primary" @click="showModal=false">
+                                        закрыть
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
 
-                            </slot>
-                        </div>
-
-                        <div class="modal-body">
-                            <slot name="body">
-                                <img :src="photo" class="photo"/>
-                            </slot>
-                        </div>
-
-<!--                        <div class="modal-footer">-->
-<!--                            <slot name="footer">-->
-<!--                                <button class="modal-default-button" @click="showModal=false">-->
-<!--                                    OK-->
-<!--                                </button>-->
-<!--                            </slot>-->
-<!--                        </div>-->
+                                </div>
+                            </div>
+                        </slot>
                     </div>
+
+                    <div class="modal-body">
+                        <slot name="body">
+                            <img :src="photo" class="photo"/>
+                        </slot>
+                    </div>
+
+                    <!--                        <div class="modal-footer">-->
+                    <!--                            <slot name="footer">-->
+                    <!--                                <button class="modal-default-button" @click="showModal=false">-->
+                    <!--                                    OK-->
+                    <!--                                </button>-->
+                    <!--                            </slot>-->
+                    <!--                        </div>-->
                 </div>
             </div>
         </transition>
@@ -102,9 +113,26 @@
                 <tr>
                     <th v-for="(item, index) in column_names">
                         {{ item }}
-                        <font-awesome-icon icon="sort-up" v-if="getType(index)==='desc'" @click="setSort(index,'asc')"/>
-                        <font-awesome-icon icon="sort-down"  v-if="getType(index)==='asc'" @click="setSort(index,'desc')"/>
-                        <font-awesome-icon icon="sort" v-if="getType(index)===''" @click="setSort(index,'asc')"/>
+                        <span v-if="index<8">
+                        <font-awesome-icon
+                            icon="sort-up"
+                            v-if="getType(index)==='desc'"
+                            @click="setSort(index,'asc')"
+                            class="mini-pointer"
+                            title="отсортировать по возрастанию"/>
+                        <font-awesome-icon
+                            icon="sort-down"
+                            v-if="getType(index)==='asc'"
+                            @click="setSort(index,'desc')"
+                            class="mini-pointer"
+                            title="отсортировать по убыванию"/>
+                        <font-awesome-icon
+                            icon="sort"
+                            v-if="getType(index)===null"
+                            @click="setSort(index,'asc')"
+                            class="mini-pointer"
+                            title="сортировка"/>
+                        </span>
                     </th>
                 </tr>
             </thead>
@@ -204,6 +232,7 @@
                 page: 1,
                 perPage: 10,
                 protokols_: this.protokols,
+                current_protokol: '',
                 word: '',
                 showModal: false,
                 photo_title: '',
@@ -311,7 +340,7 @@
             },
             showPhoto(item) {
                 this.showModal = true;
-                this.photo_title = 'Свидетельство, лицевая сторона';
+                this.photo_title = `Свидетельство № ${item.protokol_num}, лицевая сторона`;
                 let str = item.protokol_photo;
                 let date = item.protokol_dt;
                 date = date.slice(0,7);
@@ -319,10 +348,11 @@
                 str = str.replace('photos/','');
                 str = '/photo/'+ date + '/'+ str;
                 this.photo = str;
+                this.current_protokol = item.protokol_num;
             },
             showPhoto1(item) {
                 this.showModal = true;
-                this.photo_title = 'Свидетельство, обратная сторона';
+                this.photo_title = `Свидетельство № ${item.protokol_num} обратная сторона`;
                 let str = item.protokol_photo1;
                 let date = item.protokol_dt;
                 date = date.slice(0,7);
@@ -330,6 +360,7 @@
                 str = str.replace('photos/','');
                 str = '/photo/'+ date+ '/' + str;
                 this.photo = str;
+                this.current_protokol = item.protokol_num;
             },
             showMeter(item) {
                 this.showModal = true;
@@ -383,8 +414,8 @@
                 if (this.sort_columns.fld===id)
                     return this.sort_columns.type;
                 else
-                    return '';
-            }
+                    return null;
+            },
 
         }
     }
@@ -415,5 +446,117 @@
     .pointer:hover {
         color: #0d6aad;
         text-decoration: underline;
+    }
+    .mini-pointer {
+        cursor: pointer;
+        font-size: 15px;
+        color: #3490dc;
+    }
+    .mini-pointer:hover {
+        color: #0d6aad;
+        text-decoration: underline;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        /*top: unset;*/
+        /*bottom: 0;*/
+        /*left: 0;*/
+        /*right: 0;*/
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-backdrop {
+        z-index: 99;
+        opacity: 1;
+    }
+
+    .modal {
+        background: #FFFFFF;
+        box-shadow: 2px 2px 20px 1px;
+        overflow-x: auto;
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        height: auto;
+        top: unset;
+        left: auto;
+    }
+
+    .modal-header,
+    .modal-footer {
+        padding: 15px;
+        display: flex;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #eeeeee;
+        justify-content: flex-end;
+    }
+
+    .modal-body {
+        position: relative;
+        padding: 10px 20px;
+        /*overflow: auto;*/
+    }
+
+    .modal-header .close {
+        position: relative;
+        right: 10px;
+        top: -10px;
+        /*padding: 1rem;*/
+        /*margin: -1rem -1rem -1rem auto;*/
+    }
+
+    .close {
+        float: right;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        opacity: .5;
+    }
+
+    button.close {
+        padding: 0;
+        background-color: transparent;
+        border: 0;
+        -webkit-appearance: none;
+    }
+
+    .btn-danger {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+
+    .modal-fade-enter,
+    .modal-fade-leave-active {
+        opacity: 0;
+    }
+
+    .modal-fade-enter-active,
+    .modal-fade-leave-active {
+        transition: opacity .5s ease
+    }
+    .header-link {
+        font-size: 18px;
+    }
+    .modal-header p {
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+        color: red;
     }
 </style>

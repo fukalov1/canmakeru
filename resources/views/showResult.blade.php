@@ -6,10 +6,13 @@
 
         <div class="row page-check">
             <div class="col-lg-12 col-12 text-center">
-                <a href="/" title="назад на главную">
-                    <img src="/images/logo.png"/>
+                <a
+                    class="header-link"
+                    target="_blank"
+                    href="https://fgis.gost.ru/fundmetrology/cm/results?filter_result_docnum={{ $number }}">
+                    Посмотреть в Федеральном информационном фонде*
                 </a>
-
+                <p>* Внимание. Данные передаются в течении 60 дней</p>
             </div>
         </div>
         <div class="row">

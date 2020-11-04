@@ -58,6 +58,23 @@ class CustomerController extends Controller
         return $this->customer->getDataReportDays($customer_id, $start, $end);
     }
 
+    public function checkProfile(Request $request)
+    {
+        $data = ['result' => 1,
+            'message' => "Партнер с кодом {$request->id} не найден!"];
+
+        $customer = $this->customer
+            ->with('customer_tools')
+            ->find($request->id);
+
+        if ($customer) {
+            $data = $customer;
+        }
+
+        return json_encode($data);
+    }
+
+
     public function getProfile()
     {
         return json_encode($this->customer->find(auth()->guard('customer')->user()->id));
