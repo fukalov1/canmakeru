@@ -22,7 +22,7 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
     protected $guard = 'customer';
 
     protected $fillable = [
-        'name', 'email', 'password'
+        'name', 'email', 'password', 'amount', 'limit', 'frozen_limit',
     ];
 
     protected $hidden = [
@@ -37,6 +37,11 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
 
     public function customer_tools() {
         return $this->hasMany(CustomerTool::class, 'customer_id');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 
     public function getWorkers() {
@@ -152,6 +157,33 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+
+    public function calcLimit($id)
+    {
+        $customer = Customer::find($id);
+
+        $amount = $customer->transactions()->where('type', 1)->sum('amount');
+        $limit = $this->prepareLimit($amount, $customer->type);
+        $customer->amount  = $amount;
+        $customer->limit  = $limit;
+        $customer->save();
+
+    }
+
+    private function prepareLimit($amount, $type)
+    {
+        if ($type == 'ИП') {
+            $amount = $amount*2;
+        }
+        if ($type == 'Самозанятый') {
+            $amount = $amount*1.5;
+        }
+        if ($type == 'Физ. лицо') {
+            $amount = $amount*1.1;
+        }
+        return $amount;
     }
 
 }

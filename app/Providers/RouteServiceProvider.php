@@ -15,6 +15,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'App\Http\Controllers';
+    protected $rest_namespace = 'App\Http\Controllers\Rest';
 
     /**
      * The path to the "home" route for your application.
@@ -42,11 +43,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        // получим маршруты с rest api namespace partner
+        $this->mapRestApiRoutes();
+        // получим маршруты с api namespace api/...
         $this->mapApiRoutes();
-
+        // получим маршруты с web namespace
         $this->mapWebRoutes();
-
-        //
     }
 
     /**
@@ -77,4 +79,16 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
     }
+
+    protected function mapRestApiRoutes()
+    {
+        // Маршруты для Rest Api
+        Route::group([
+            'prefix' => 'partner',
+            'namespace' => $this->rest_namespace,
+        ], function ($router) {
+            require base_path('routes/rest.api.php');
+        });
+    }
+
 }

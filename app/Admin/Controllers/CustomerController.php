@@ -79,10 +79,15 @@ class CustomerController extends AdminController
         }
 
         $grid->column('code', __('Код'));
-        $grid->name('ФИО!
-        ')->display(function () {
+        $grid->name('ФИО')->display(function () {
             return '<a href="/admin/protokols?set='.$this->id.'" title="Поверки клиента '.$this->name.'">'.$this->name.'</a>';
         })->sortable();
+
+        $grid->amount('Расходы')->display(function () {
+            return '<a href="/admin/transactions?set='.$this->id.'" title="Транзакции '.$this->name.'">'.$this->amount.'</a>';
+        });
+        $grid->limit('Лимит');
+
         $grid->dinamic('Динамика поверок')->display(function () {
             return '<a href="/admin/customer_chart?set='.$this->id.'" title="Динамика поверок "><span class="fa fa-bar-chart"/></a>';
         });
@@ -156,6 +161,10 @@ class CustomerController extends AdminController
                     return 'unique:customers';
                 }
             });
+
+            $form->radio('type', 'Тип')->options(['ИП' => 'ИП', 'Самозанятый'=> 'Самозанятый', 'Физ.лицо'=> 'Физ.лицо'])->default('ИП')->stacked();
+            $form->switch('check_online', 'Онлайн-касса')->default('0');
+
             $form->text('comment', __('Комментарий'));
             $form->switch('enabled', __('Активен'))->default(1);
             $form->number('hour_zone', 'Часовой пояс')->default(0);
@@ -184,6 +193,7 @@ class CustomerController extends AdminController
                 $form->text('manufactureNum', 'Заводской номер СИ')->rules('required|max:128');
             });
         });
+
 
         return $form;
     }
