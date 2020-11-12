@@ -18,7 +18,9 @@ Route::group([
     $router->resource('customers', CustomerController::class);
 
     $router->resource('protokols', ProtokolController::class)->middleware('set_customer');
+
     $router->resource('transactions', TrancactionControler::class)->middleware('set_customer');
+    $router->resource('checks', CheckController::class)->middleware('set_customer');
 
     $router->get('customer_chart', 'CustomerChartController@index')->middleware('set_customer');
     $router->get('customer_report', 'CustomerReportController@index');

@@ -9,14 +9,14 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class TrancactionControler extends AdminController
+class CheckController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = 'Транзакции';
+    protected $title = 'Чеки';
     protected $customer='';
 
     /**
@@ -26,38 +26,39 @@ class TrancactionControler extends AdminController
      */
     protected function grid()
     {
-
         $this->getHeader();
 
         $grid = new Grid(new Transaction());
-
-        $grid->perPages([50, 100, 200, 500]);
-        $grid->paginate(100);
 
         $grid->header(function ($query) {
             return "<div style='padding: 10px;'>Клиент: <b><a href=\"/admin/customers\" title='вернуться к списку клиентов'>".$this->customer."</a></b></div>";
         });
 
+        $grid->disableCreateButton();
+        $grid->disableRowSelector();
+
+
         $grid->actions(function ($actions) {
             $actions->disableDelete();
-//            $actions->disableEdit();
-//            $actions->disableView();
+            $actions->disableEdit();
+            $actions->disableView();
         });
-
         $grid->model()
             ->where('customer_id',session('customer_id'))
-            ->where('type', 1)
+            ->where('type', 2)
             ->orderBy('created_at', 'desc');
 
         $grid->column('id', __('Id'));
-        $grid->column('uuid', __('UUID'));
+        $grid->column('uuid', __('Uuid'));
+//        $grid->column('customer_id', __('Customer id'));
         $grid->column('amount', __('Сумма'));
 //        $grid->column('type', __('Type'));
+        $grid->column('count', __('Кол-во'));
         $grid->column('status', __('Статус'));
-        $grid->column('comment', __('Комментарий'));
-        $grid->column('file', __('Фото чека'));
-//        $grid->column('response', __('Response'));
-        $grid->column('created_at', __('Создан'));
+//        $grid->column('comment', __('Comment'));
+//        $grid->column('file', __('File'));
+        $grid->column('response', __('Ответ'));
+        $grid->column('created_at', __('Создано'));
 //        $grid->column('updated_at', __('Updated at'));
 
         return $grid;
@@ -76,8 +77,10 @@ class TrancactionControler extends AdminController
         $show->field('id', __('Id'));
         $show->field('customer_id', __('Customer id'));
         $show->field('amount', __('Amount'));
+        $show->field('uuid', __('Uuid'));
         $show->field('type', __('Type'));
         $show->field('status', __('Status'));
+        $show->field('count', __('Count'));
         $show->field('comment', __('Comment'));
         $show->field('file', __('File'));
         $show->field('response', __('Response'));
@@ -96,39 +99,18 @@ class TrancactionControler extends AdminController
     {
         $form = new Form(new Transaction());
 
-        $form->hidden('customer_id')->value(session('customer_id'));
-        $form->number('amount', __('Сумма расхода'))->required()->min(10);
-        $form->hidden('type')-> value(1);
-        $form->hidden('status')->value(2);
-        $form->text('comment', __('Комментарий'));
-        $form->hidden('uuid')->value($this->GUID());
-        $form->file('file', __('Фото чека'));
-//        $form->text('response', __('Ответ'));
-
-        $form->saved(function (Form $form) {
-            $customer = new Customer();
-            $customer->calcLimit(session('customer_id'));
-        });
-
-        $form->deleted(function () {
-            $customer = new Customer();
-            $customer->calcLimit(session('customer_id'));
-        });
-
+        $form->number('customer_id', __('Customer id'));
+        $form->decimal('amount', __('Amount'));
+        $form->text('uuid', __('Uuid'));
+        $form->text('type', __('Type'));
+        $form->text('status', __('Status'));
+        $form->number('count', __('Count'))->default(1);
+        $form->text('comment', __('Comment'));
+        $form->file('file', __('File'));
+        $form->text('response', __('Response'));
 
         return $form;
     }
-
-    private function GUID()
-    {
-        if (function_exists('com_create_guid') === true)
-        {
-            return trim(com_create_guid(), '{}');
-        }
-
-        return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
-    }
-
 
     private function getHeader()
     {
@@ -136,8 +118,5 @@ class TrancactionControler extends AdminController
         $this->customer = $customers->name;
         $this->title .= ' - '.$customers->name;
     }
-
-
-
 
 }

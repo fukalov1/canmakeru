@@ -14,7 +14,7 @@ class ChangeProtokolsExported extends Migration
     public function up()
     {
         Schema::table('protokols', function (Blueprint $table) {
-            $table->integer('exported')->default(0)->after('checkMethod');
+           $table->integer('exported')->default(0)->after('checkMethod');
         });
     }
 
@@ -26,7 +26,7 @@ class ChangeProtokolsExported extends Migration
     public function down()
     {
         Schema::table('protokols', function (Blueprint $table) {
-            $table->dropColumn('exported');
+           $table->dropColumn('exported');
         });
     }
 }

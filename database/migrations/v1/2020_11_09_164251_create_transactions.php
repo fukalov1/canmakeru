@@ -17,12 +17,14 @@ class CreateTransactions extends Migration
             $table->id();
             $table->bigInteger('customer_id')->unsigned();
             $table->double('amount', 16,2);
+            $table->string('uuid')->nullable();
             $table->enum('type', [
                 'расход', 'приход'
             ]);
             $table->enum('status', [
                 'в процессе', 'подтвержденная', 'ошибка', 'отмененная'
             ]);
+            $table->integer('count')->default(1);
             $table->string('comment', 4000)->nullable();
             $table->string('file')->nullable();
             $table->json('response')->nullable();

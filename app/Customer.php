@@ -165,11 +165,28 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
         $customer = Customer::find($id);
 
         $amount = $customer->transactions()->where('type', 1)->sum('amount');
+        $cost_limit = $customer->transactions()->where('type', 2)->sum('amount');
         $limit = $this->prepareLimit($amount, $customer->type);
         $customer->amount  = $amount;
-        $customer->limit  = $limit;
+        $customer->limit  = $limit-$cost_limit;
         $customer->save();
 
+    }
+
+    /*
+     * пересчет суммы лимита после формирования чека
+     */
+    public function costLimit($id, $amount)
+    {
+        $customer = Customer::find($id);
+        $customer->limit  -= $amount;
+        $customer->save();
+    }
+
+    public function checkLimit($id, $amount=0)
+    {
+        $customer = Customer::find($id);
+        return $customer ? $customer->limit - $amount : 0;
     }
 
     private function prepareLimit($amount, $type)

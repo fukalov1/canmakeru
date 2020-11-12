@@ -86,7 +86,10 @@ class CustomerController extends AdminController
         $grid->amount('Расходы')->display(function () {
             return '<a href="/admin/transactions?set='.$this->id.'" title="Транзакции '.$this->name.'">'.$this->amount.'</a>';
         });
-        $grid->limit('Лимит');
+
+        $grid->limit('Лимит')->display(function () {
+            return '<a href="/admin/checks?set='.$this->id.'" title="Чеки '.$this->name.'">'.$this->limit.'</a>';
+        });
 
         $grid->dinamic('Динамика поверок')->display(function () {
             return '<a href="/admin/customer_chart?set='.$this->id.'" title="Динамика поверок "><span class="fa fa-bar-chart"/></a>';

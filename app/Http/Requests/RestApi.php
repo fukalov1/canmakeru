@@ -24,7 +24,7 @@ class RestApi extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|unique:customers|max:255',
+            'code' => 'required|max:255',
             'sign' => 'required',
         ];
 
