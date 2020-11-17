@@ -21,6 +21,7 @@ class AddCustomerDeposit extends Migration
             $table->enum('type', [
                 'ИП','Самозанятый','Физ.лицо'
             ]);
+              $table->integer('blank_price')->default(120);
         });
     }
 
@@ -37,6 +38,7 @@ class AddCustomerDeposit extends Migration
             $table->dropColumn('frozen_limit');
             $table->dropColumn('check_online');
             $table->dropColumn('type');
+            $table->dropColumn('blank_price');
         });
     }
 }

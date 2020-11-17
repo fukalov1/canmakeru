@@ -21,7 +21,6 @@ class KitOnlineService
 
     public function __construct()
     {
-        $this->client = new Client();
         $this->urlSendCheck = 'https://api.kit-invest.ru/WebService.svc/SendCheck';
         $this->CompanyId = config('KitOnline_CompanyId');
         $this->UserLogin = config('KitOnline_UserLogin');
@@ -81,6 +80,22 @@ class KitOnlineService
                 ]
                 ]
         ];
+
+        $json = json_encode(
+            [
+                $data
+            ]
+        );
+
+        $result = $this->sendApiRequest($json);
+
+        return $result;
+    }
+
+    public function stateCheck($transaction)
+    {
+        $data = $this->prepareRequest($transaction->uuid);
+        $data['CheckNumber'] = $transaction->uuid;
 
         $json = json_encode(
             [

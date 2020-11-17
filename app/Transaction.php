@@ -28,7 +28,8 @@ class Transaction extends Model
             $transaction->save();
 
             $customer = new Customer();
-            $customer->costLimit($customer_id, $amount*$count);
+            // пересчет оставшегося лимита на чеки
+            $customer->calcLimit($customer_id);
 
             return $transaction;
         }

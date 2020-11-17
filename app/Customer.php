@@ -164,23 +164,18 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
     {
         $customer = Customer::find($id);
 
+        // сумма всех чеков-расходов
         $amount = $customer->transactions()->where('type', 1)->sum('amount');
-        $cost_limit = $customer->transactions()->where('type', 2)->sum('amount');
-        $limit = $this->prepareLimit($amount, $customer->type);
+        $limit = $this->prepareLimit($amount, $customer);
         $customer->amount  = $amount;
-        $customer->limit  = $limit-$cost_limit;
+        if ($customer->type == 'Физ.лицо') {
+            $amount = $this->getRoundAmount($customer->transactions()->where('type', 1)->sum('amount')*100/6);
+        }
+
+        $customer->limit = $amount - $limit;
+
         $customer->save();
 
-    }
-
-    /*
-     * пересчет суммы лимита после формирования чека
-     */
-    public function costLimit($id, $amount)
-    {
-        $customer = Customer::find($id);
-        $customer->limit  -= $amount;
-        $customer->save();
     }
 
     public function checkLimit($id, $amount=0)
@@ -189,18 +184,38 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
         return $customer ? $customer->limit - $amount : 0;
     }
 
-    private function prepareLimit($amount, $type)
+    /*
+     * подсчет лимита
+     */
+    private function prepareLimit($amount, $customer)
     {
-        if ($type == 'ИП') {
-            $amount = $amount*2;
+        // сумма стоимости всех бланков
+        $blank_price = $customer->transactions()->where('type', 2)->sum('count')*$customer->blank_price;
+
+        // сумма созданных онлайн-чеков
+        $cost_limit = $customer->transactions()->where('type', 2)->sum('amount');
+
+        if ($customer->type == 'ИП') {
+            $amount = $cost_limit-$blank_price;
         }
-        if ($type == 'Самозанятый') {
-            $amount = $amount*1.5;
+        if ($customer->type == 'Самозанятый') {
+            $amount = $cost_limit-$blank_price;
         }
-        if ($type == 'Физ. лицо') {
-            $amount = $amount*1.1;
+        if ($customer->type == 'Физ.лицо') {
+            $amount = $cost_limit-$blank_price;
         }
         return $amount;
     }
 
+     /*
+      * округление суммы до десяти рублей
+      */
+    private function getRoundAmount($amount)
+    {
+        $amount = round($amount,0);
+        $amount = $amount/10;
+        $amount = ceil($amount);
+        $amount = $amount*10;
+        return $amount;
+    }
 }

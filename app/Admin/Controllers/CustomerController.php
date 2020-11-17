@@ -167,6 +167,7 @@ class CustomerController extends AdminController
 
             $form->radio('type', 'Тип')->options(['ИП' => 'ИП', 'Самозанятый'=> 'Самозанятый', 'Физ.лицо'=> 'Физ.лицо'])->default('ИП')->stacked();
             $form->switch('check_online', 'Онлайн-касса')->default('0');
+            $form->number('blank_price', ' Стоимость бланка')->default(120);
 
             $form->text('comment', __('Комментарий'));
             $form->switch('enabled', __('Активен'))->default(1);

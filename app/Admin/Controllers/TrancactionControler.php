@@ -3,11 +3,13 @@
 namespace App\Admin\Controllers;
 
 use App\Customer;
+use App\Lib\KitOnline\KitOnlineService;
 use App\Transaction;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Log;
 
 class TrancactionControler extends AdminController
 {
@@ -138,6 +140,42 @@ class TrancactionControler extends AdminController
     }
 
 
+    public function updateStatus()
+    {
 
+        $api = new KitOnlineService;
+
+        try {
+            $transactions = Transaction::where('status',1)->where('type', 'приход')->get();
+            foreach ($transactions as $transaction) {
+                $result = $api->stateCheck($transaction);
+                if (array_key_exists ('ResultCode' , $result)) {
+                    if ($result['ResultCode']===0) {
+                        $this->updateTransaction($transaction->id, $result);
+                    }
+                }
+                else if (array_key_exists ('response' , $result)) {
+                    Log::info('KitOnline Rest Api error Method: stateCheck. Result: '. $result['message']);
+                }
+            }
+        }
+        catch (\Throwable $exception) {
+            Log::info('KitOnline Rest Api error Method: stateCheck. Result: '. $exception->getMessage());
+        }
+    }
+
+
+    private function updateTransaction($id, $result)
+    {
+        $transaction = Transaction::find($id);
+        $transaction->response = $result;
+        if ($result['CheckState']['State'] == 1000) {
+            $transaction->status = 2;
+        }
+        else if ($result['CheckState']['State'] == 1010) {
+            $transaction->status = 3;
+        }
+        $transaction->save();
+    }
 
 }

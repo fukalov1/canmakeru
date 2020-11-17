@@ -37,18 +37,24 @@ class GeneralClientRestApi extends ApiController
             return collect(['response' => 'error', 'message' => 'Signature is invalid']);
         }
 
-        $amount = $request->amount;
-        $count = $request->count;
+        $customer = $this->customer
+            ->where('code', $request->code)
+            ->where('check_online', 1)
+            ->first();
+        if ($customer) {
+            $amount = $request->amount;
+            $count = $request->count;
 
-//        dd($this->checkLimit(1, $amount*$count), $amount, $count);
-        if ($this->checkLimit(1, $amount*$count)) {
-            $transaction = $this->transaction->createTransaction(1, $amount, $count);
-            $data = $this->api->sendCheck($transaction);
+            if ($this->checkLimit(1, $amount * $count)) {
+                $transaction = $this->transaction->createTransaction($customer->id, $amount, $count);
+                $data = $this->api->sendCheck($transaction);
+            } else {
+                $data = ['response' => 'error', 'message' => 'Limit is exceeded'];
+            }
         }
         else {
-            $data = ['response' =>'error', 'message' => 'Limit is exceeded'];
+            $data = ['response' => 'error', 'message' => 'Partner not found'];
         }
-
         return $data;
     }
 
