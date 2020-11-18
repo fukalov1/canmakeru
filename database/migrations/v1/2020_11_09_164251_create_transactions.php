@@ -27,6 +27,8 @@ class CreateTransactions extends Migration
             $table->integer('count')->default(1);
             $table->string('comment', 4000)->nullable();
             $table->string('file')->nullable();
+            $table->string('RequestId')->nullable();
+            $table->string('CheckQueueId')->nullable();
             $table->json('response')->nullable();
 //            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();

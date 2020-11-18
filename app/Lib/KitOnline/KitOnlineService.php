@@ -22,9 +22,10 @@ class KitOnlineService
     public function __construct()
     {
         $this->urlSendCheck = 'https://api.kit-invest.ru/WebService.svc/SendCheck';
-        $this->CompanyId = config('KitOnline_CompanyId');
-        $this->UserLogin = config('KitOnline_UserLogin');
-        $this->Password = config('KitOnline_Password');
+        $this->urlStateCheck = 'https://api.kit-invest.ru/WebService.svc/StateCheck';
+        $this->CompanyId = config('KitOnline_CompanyId', '15822');
+        $this->UserLogin = config('KitOnline_UserLogin', 'pinserver');
+        $this->Password = config('KitOnline_Password', 'w783uer67hH');
         $this->FiscalData = config('KitOnline_FiscalData', 1);
         $this->Link = config('KitOnline_Link', 1);
         $this->QRCode = config('KitOnline_QRCode', 1);
@@ -36,19 +37,18 @@ class KitOnlineService
      * @return mixed
      * @throws Exception
      */
-    public function sendApiRequest($params)
+    public function sendApiRequest($params, $type = 'send')
     {
-        $curl = new Curl( $this->urlSendCheck );
+        $url = $type == 'send' ? $this->urlSendCheck : $this->urlStateCheck;
+        $curl = new Curl( $url );
         $curl->setHttps();
         $curl->setPost( $params );
 
 		$request =  $curl->exec( );
         $response = $this->getResponseRequest($request); // Декодируем ответ
-
-        if (!empty($response->ResultCode) or $response->ResultCode > 0) {
+        if (!isset($response->ResultCode) and $response->ResultCode > 0) {
             $response = ['response' => 'error', 'message' => $response->ErrorMessage];
         }
-
 
         return $response;
     }
@@ -61,10 +61,10 @@ class KitOnlineService
     public function sendCheck($transaction)
     {
 
-        $data = $this->prepareRequest($transaction->uuid);
+        $data = $this->prepareRequest($transaction);
 
         $data['Check'] = [
-            "CheckId" => $transaction->uuid,
+            "CheckId" => $transaction->id,
             "CalculationType" =>  1,
             "Sum" =>  $transaction->amount,
             "customer" => $transaction->customer->name,
@@ -77,16 +77,18 @@ class KitOnlineService
                     "Price" => $transaction->amount/$transaction->count,
                     "Quantity" => $transaction->count,
                     "SubjectName" => "Поверка счетчика",
+                    "Tax" => 6
                 ]
                 ]
         ];
 
         $json = json_encode(
-            [
+
                 $data
-            ]
+
         );
 
+//        dd($json);
         $result = $this->sendApiRequest($json);
 
         return $result;
@@ -94,35 +96,33 @@ class KitOnlineService
 
     public function stateCheck($transaction)
     {
-        $data = $this->prepareRequest($transaction->uuid);
-        $data['CheckNumber'] = $transaction->uuid;
+        $data = $this->prepareRequest($transaction);
+        $data['CheckQueueId'] = $transaction->CheckQueueId;
 
         $json = json_encode(
-            [
-                $data
-            ]
+            $data
         );
-
-        $result = $this->sendApiRequest($json);
-
+        $result = $this->sendApiRequest($json, 'state');
         return $result;
     }
 
-    protected function prepareRequest($CheckNumber)
+    protected function prepareRequest($transaction)
     {
          $data = [
-             "CompanyId" => $this->CompanyId,
-             "RequestId" => time(),
+             "CompanyId" => intval($this->CompanyId),
+             "RequestId" => $transaction->RequestId,
              "UserLogin" => $this->UserLogin,
-             "Sign" => $this->getSign($CheckNumber),
+             "Sign" => $this->getSign($transaction),
              "RequestSource" => "МС-Ресурс"
          ];
          return ['Request' => $data];
     }
 
-    protected function getSign($CheckNumber)
+    protected function getSign($transaction)
     {
-        return md5($this->CompanyId.$this->Password.$CheckNumber);
+        $CheckNumber = sprintf("1%010d%02d", $transaction->id , 1);
+//        dd(md5($this->CompanyId.$this->Password.$CheckNumber),$this->CompanyId,$this->Password,$CheckNumber);
+        return md5($this->CompanyId . $this->Password . $transaction->RequestId);
     }
 
     /**

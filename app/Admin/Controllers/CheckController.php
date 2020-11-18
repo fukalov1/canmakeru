@@ -58,6 +58,8 @@ class CheckController extends AdminController
 //        $grid->column('comment', __('Comment'));
 //        $grid->column('file', __('File'));
         $grid->column('response', __('Ответ'));
+        $grid->column('ResponseId', __('ResponseId'));
+        $grid->column('CheckQueueId', __('CheckQueueId'));
         $grid->column('created_at', __('Создано'));
 //        $grid->column('updated_at', __('Updated at'));
 

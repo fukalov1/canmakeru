@@ -25,6 +25,7 @@ class Transaction extends Model
             $transaction->count = $count;
             $transaction->type = 'приход';
             $transaction->status = 1;
+            $transaction->RequestId = time();
             $transaction->save();
 
             $customer = new Customer();
@@ -41,6 +42,14 @@ class Transaction extends Model
         }
     }
 
+    public function setCheckQueueId($id, $CheckQueueId)
+    {
+        $transaction = Transaction::find($id);
+        $transaction->CheckQueueId = $CheckQueueId;
+        $transaction->save();
+    }
+
+
     private function GUID()
     {
         if (function_exists('com_create_guid') === true)
@@ -49,5 +58,6 @@ class Transaction extends Model
         }
 
         return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+
     }
 }

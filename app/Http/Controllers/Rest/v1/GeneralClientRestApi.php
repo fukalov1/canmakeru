@@ -48,13 +48,22 @@ class GeneralClientRestApi extends ApiController
             if ($this->checkLimit(1, $amount * $count)) {
                 $transaction = $this->transaction->createTransaction($customer->id, $amount, $count);
                 $data = $this->api->sendCheck($transaction);
+
+                if (isset($data->CheckQueueId)) {
+                    $this->transaction->setCheckQueueId($transaction->id, $data->CheckQueueId);
+                    $data = ['response' => 'success', 'message' => 'CheckQueueId: '.$data->CheckQueueId];
+                }
+                else {
+                    $data = ['response' => 'error', 'message' => 'ResultCode: '.$data->ResultCode];
+                }
             } else {
                 $data = ['response' => 'error', 'message' => 'Limit is exceeded'];
             }
         }
         else {
-            $data = ['response' => 'error', 'message' => 'Partner not found'];
+            $data = ['response' => 'error', 'message' => 'Partner '.$request->code.' not found!'];
         }
+
         return $data;
     }
 
