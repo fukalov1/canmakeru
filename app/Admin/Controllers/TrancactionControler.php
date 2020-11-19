@@ -150,10 +150,11 @@ class TrancactionControler extends AdminController
 
             $transactions->cancelErrorTransaction();
 
-            $transactions->where('status',1)
+            $transactions = $transactions->where('status',1)
                 ->where('type', 'приход')
                 ->whereNotNull('CheckQueueId')
                 ->get();
+
             foreach ($transactions as $transaction) {
                 $result = $api->stateCheck($transaction);
                 if ($result->ResultCode===0) {
@@ -175,6 +176,7 @@ class TrancactionControler extends AdminController
     {
         $transaction = Transaction::find($id);
         $transaction->response = json_encode( (array)$result );;
+        $transaction->link = $result->Link;
 
         if ($result->CheckState->State == 1000) {
             $transaction->status = 2;

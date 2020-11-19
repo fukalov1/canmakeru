@@ -49,19 +49,16 @@ class CheckController extends AdminController
             ->orderBy('created_at', 'desc');
 
         $grid->column('id', __('Id'));
-        $grid->column('uuid', __('Uuid'));
-//        $grid->column('customer_id', __('Customer id'));
+        $grid->column('RequestId', __('RequestId'));
         $grid->column('amount', __('Сумма'));
-//        $grid->column('type', __('Type'));
         $grid->column('count', __('Кол-во'));
         $grid->column('status', __('Статус'));
-//        $grid->column('comment', __('Comment'));
-//        $grid->column('file', __('File'));
-        $grid->column('response', __('Ответ'));
-        $grid->column('ResponseId', __('ResponseId'));
-        $grid->column('CheckQueueId', __('CheckQueueId'));
+
+        $grid->column('CheckQueueId', __('CheckQueueId'))->display(function () {
+            $link = $this->link ? '<a href="'.$this->link.'" target="_blank">'.$this->CheckQueueId.'</a>' : $this->CheckQueueId;
+            return $link;
+        });
         $grid->column('created_at', __('Создано'));
-//        $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }

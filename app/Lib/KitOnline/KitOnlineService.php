@@ -60,7 +60,6 @@ class KitOnlineService
      */
     public function sendCheck($transaction)
     {
-
         $data = $this->prepareRequest($transaction);
 
         $data['Check'] = [
@@ -92,9 +91,12 @@ class KitOnlineService
     public function stateCheck($transaction)
     {
         $data = $this->prepareRequest($transaction);
+        $data['Request']['FiscalData'] =1;
+        $data['Request']['Link'] =1;
         $data['CheckQueueId'] = $transaction->CheckQueueId;
 
         $json = json_encode($data);
+
         $result = $this->sendApiRequest($json, 'state');
         return $result;
     }

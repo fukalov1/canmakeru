@@ -30,6 +30,7 @@ class CreateTransactions extends Migration
             $table->string('RequestId')->nullable();
             $table->string('CheckQueueId')->nullable();
             $table->json('response')->nullable();
+            $table->string('link')->nullable();
 //            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });
