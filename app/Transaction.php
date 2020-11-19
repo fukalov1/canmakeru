@@ -49,6 +49,11 @@ class Transaction extends Model
         $transaction->save();
     }
 
+    public function cancelErrorTransaction()
+    {
+        Transaction::whereNull('CheckQueueId')->update(['status' => 3]);
+    }
+
 
     private function GUID()
     {

@@ -146,7 +146,11 @@ class TrancactionControler extends AdminController
         $api = new KitOnlineService;
 
         try {
-            $transactions = Transaction::where('status',1)
+            $transactions = new Transaction();
+
+            $transactions->cancelErrorTransaction();
+
+            $transactions->where('status',1)
                 ->where('type', 'приход')
                 ->whereNotNull('CheckQueueId')
                 ->get();

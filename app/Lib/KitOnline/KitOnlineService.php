@@ -66,15 +66,14 @@ class KitOnlineService
         $data['Check'] = [
             "CheckId" => $transaction->id,
             "CalculationType" =>  1,
-            "Sum" =>  $transaction->amount,
-            "customer" => $transaction->customer->name,
+            "Sum" =>  $transaction->amount*100,
             "Email" => $transaction->customer->email,
             "Pay" => [
-                "CashSum" => $transaction->amount
+                "CashSum" => $transaction->amount*100
                 ],
             "Subjects" => [
                 [
-                    "Price" => $transaction->amount/$transaction->count,
+                    "Price" => 100*$transaction->amount/$transaction->count,
                     "Quantity" => $transaction->count,
                     "SubjectName" => "Поверка счетчика",
                     "Tax" => 6
@@ -82,11 +81,7 @@ class KitOnlineService
                 ]
         ];
 
-        $json = json_encode(
-
-                $data
-
-        );
+        $json = json_encode($data);
 
 //        dd($json);
         $result = $this->sendApiRequest($json);
@@ -99,9 +94,7 @@ class KitOnlineService
         $data = $this->prepareRequest($transaction);
         $data['CheckQueueId'] = $transaction->CheckQueueId;
 
-        $json = json_encode(
-            $data
-        );
+        $json = json_encode($data);
         $result = $this->sendApiRequest($json, 'state');
         return $result;
     }

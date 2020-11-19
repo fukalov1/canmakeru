@@ -84,7 +84,6 @@
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Actions/Protokol/BatchClearExport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CheckController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CheckController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/MyDashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/MyDashboard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" afterDir="false" />
@@ -95,13 +94,10 @@
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Rest/v1/GeneralClientRestApi.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Rest/v1/GeneralClientRestApi.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Lib/KitOnline/KitOnlineService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lib/KitOnline/KitOnlineService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Transaction.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Transaction.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_11_09_164251_create_transactions.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/v1/2020_11_09_164251_create_transactions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
@@ -2427,7 +2423,8 @@
       <workItem from="1605003092661" duration="29467000" />
       <workItem from="1605168452410" duration="12608000" />
       <workItem from="1605595021144" duration="14040000" />
-      <workItem from="1605723240217" duration="6356000" />
+      <workItem from="1605723240217" duration="7256000" />
+      <workItem from="1605805557978" duration="576000" />
     </task>
     <servers />
   </component>
