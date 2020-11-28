@@ -63,15 +63,20 @@ class CustomerController extends Controller
         $data = ['result' => 0,
             'message' => "Партнер с кодом {$request->id} не найден!"];
 
-        $customer = $this->customer
-            ->with('customer_tools')
-            ->where('code', $request->id)->first();
-
-        if ($customer) {
+        if ($request->id == 'test_test_test') {
             $data['result'] = 1;
-            $data['message'] = $customer;
+            $data['message'] = 'Демонстрационный идентификатор. Для работы зарегистрируйте личный кабинет.';
         }
+        else {
+            $customer = $this->customer
+                ->with('customer_tools')
+                ->where('code', $request->id)->first();
 
+            if ($customer) {
+                $data['result'] = 1;
+                $data['message'] = $customer;
+            }
+        }
         return json_encode($data);
     }
 

@@ -25,4 +25,7 @@ Route::group([
     // регистрация запроса для создания чека
     Route::get('/check-create', 'GeneralClientRestApi@checkCreate');
 
+    // регистрация запроса для создания чека
+    Route::get('/list-checks', 'GeneralClientRestApi@listChecks');
+
 });

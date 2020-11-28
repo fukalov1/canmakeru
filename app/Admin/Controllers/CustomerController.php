@@ -78,9 +78,10 @@ class CustomerController extends AdminController
             });
         }
 
-        $grid->column('code', __('Код'));
+        $grid->column('code', __('UID'));
+        $grid->column('partner_code', __('Код партнера'));
         $grid->name('ФИО')->display(function () {
-            return '<a href="/admin/protokols?set='.$this->id.'" title="Поверки клиента '.$this->name.'">'.$this->name.'</a>';
+            return '<a href="/admin/acts?set='.$this->id.'" title="Акты с поверками клиента '.$this->name.'">'.$this->name.'</a>';
         })->sortable();
 
         $grid->amount('Расходы')->display(function () {

@@ -9,6 +9,7 @@ use App\Lib\KitOnline\KitOnlineService;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class GeneralClientRestApi extends ApiController
 {
@@ -85,6 +86,22 @@ class GeneralClientRestApi extends ApiController
         return $result;
     }
 
+    public function listChecks(Request $request)
+    {
+        $transactions = $this->transaction;
+
+        $transactions = $transactions->where('type',2);
+
+        if ($request->status)
+            $transactions = $transactions->where('status', $request->status);
+
+        if ($request->date1 and $request->date2) {
+            $transactions = $transactions->whereDate('created_at', '>=', $request->date1);
+            $transactions = $transactions->whereDate('created_at', '<=', $request->date2);
+        }
+
+        return $transactions->get();
+    }
 
 
     /**
