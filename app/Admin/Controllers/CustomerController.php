@@ -160,6 +160,7 @@ class CustomerController extends AdminController
                     return 'unique:customers';
                 }
             });
+            $form->number('partner_code', ' Код партнера')->default(0);
             $form->text('name', __('ФИО'))->rules(function ($form) {
                 if (!$id = $form->model()->id) {
                     return 'unique:customers';

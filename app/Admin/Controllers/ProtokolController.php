@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Protokol\BatchClearExport;
-use App\Customer;
+use App\Act;
 use App\Protokol;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
@@ -20,6 +20,8 @@ class ProtokolController extends AdminController
      */
 
     protected $customer='';
+    protected $customer_id=0;
+    protected $act='';
     protected $title = 'Протоколы';
 
 
@@ -40,7 +42,8 @@ class ProtokolController extends AdminController
         $grid->paginate(100);
 
         $grid->header(function ($query) {
-            return "<div style='padding: 10px;'>Клиент: <b><a href=\"/admin/customers\" title='вернуться к списку клиентов'>".$this->customer."</a></b></div>";
+            return "<div style='padding: 10px;'>Клиент: <b><a href=\"/admin/customers\" title='вернуться к списку клиентов'>".$this->customer.
+                "</a> / <a href=\"/admin/acts?set={$this->customer_id}\" title='вернуться к списку актов клиента'> Номер акта: {$this->act}</b></div>";
         });
 
 //        $grid->tools(function ($tools) {
@@ -70,20 +73,23 @@ class ProtokolController extends AdminController
                 $actions->disableView();
             });
         }
-        $grid->model()->where('customer_id',session('customer_id'))->orderBy('protokol_dt', 'desc');
+        $grid->model()->where('act_id',session('act_id'))->orderBy('protokol_dt', 'desc');
 
         $grid->column('protokol_num', __('№ свид-ва'))->sortable();
         $grid->column('protokol_dt', __('Дата свид-ва'))->sortable();
         $grid->column('pin', __('Pin'));
         $grid->photos('Фото')->modal('Фото поверки', function ($model) {
+            $str = '';
             $matches = [];
             preg_match('/(\d\d\d\d)\-(\d\d)/', $this->protokol_dt,$matches);
-            $file = preg_replace('/photos\//','',$this->protokol_photo);
-            $str = '<div class="row"><div class="col-lg-4"><label>Свидетельство</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/'.$file.'"><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></a></div>';
-            $file = preg_replace('/photos\//','',$this->protokol_photo1);
-            $str .= '<div class="col-lg-4"><label>Свидетельство (обратная сторона)</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/'.$file.'"><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></a></div>';
-            $file = preg_replace('/photos\//','',$this->meter_photo);
-            $str .= '<div class="col-lg-4"><label>Счетчик</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/'.$file.'"><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></a></div></div>';
+            if (count($matches) > 0) {
+                $file = preg_replace('/photos\//', '', $this->protokol_photo);
+                $str = '<div class="row"><div class="col-lg-4"><label>Свидетельство</label><a target="_blank" href="/photo/' . $matches[1] . '/' . $matches[2] . '/' . $file . '"><img src="/preview/' . $matches[1] . '/' . $matches[2] . '/' . $file . '"></a></div>';
+                $file = preg_replace('/photos\//', '', $this->protokol_photo1);
+                $str .= '<div class="col-lg-4"><label>Свидетельство (обратная сторона)</label><a target="_blank" href="/photo/' . $matches[1] . '/' . $matches[2] . '/' . $file . '"><img src="/preview/' . $matches[1] . '/' . $matches[2] . '/' . $file . '"></a></div>';
+                $file = preg_replace('/photos\//','',$this->meter_photo);
+                $str .= '<div class="col-lg-4"><label>Счетчик</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/'.$file.'"><img src="/preview/'.$matches[1].'/'.$matches[2].'/'.$file.'"></a></div></div>';
+            }
             return $str;
         });
         $grid->column('lat', __('Шир.'));
@@ -157,10 +163,13 @@ class ProtokolController extends AdminController
 
     public function getHeader()
     {
-        $customers = Customer::find(session('customer_id'));
+        $act = Act::find(session('customer_id'));
+        $customers = $act->customer;
 //        dd($customers->name);
-            $this->customer = $customers->name;
-            $this->title .= ' - '.$customers->name;
+        $this->act = $act->number_act;
+        $this->customer = $customers->name;
+        $this->customer_id = $act->customer_id;
+        $this->title .= ' - '.$customers->name;
 //            dd($this->title);
     }
 

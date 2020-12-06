@@ -29,6 +29,8 @@ Route::get('/photo4pdf/{year}/{month}/{file}', 'MainController@getPhoto4Pdf');
 
 Route::post('/uploads', 'MainController@saveResultMeter');
 
+
+
 Route::get('/redirect', function () {
     $query = http_build_query([
         'client_id' => env('YANDEX_CLIENT_ID'),

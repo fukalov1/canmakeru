@@ -121,19 +121,31 @@ $message = $_POST['id']."\t".$_POST['pin']."\t$p_photo,$p_photo1,$m_photo, $siTy
 error_log($message." ID: ".$cust_id, 0);
 wrileLog($cust_id, $message);
 
+// получение номера "нулевого" акта
+$stmt = $conn->prepare("select id act_id FROM  acts where customer_id=? limit 1");
+$stmt->bind_param("i", $cust_id);
+$stmt->execute();
+$stmt->bind_result($act_id);
 
-$stmt = $conn->prepare("INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("iisssisddsssssss", $_POST['id'],$_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng'], $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest);
+if (!$stmt->fetch()) {
+    error_log("customer '".$_POST['partnerKey']."' not found first act ", 0);
+    wrileLog('0',"customer '".$_POST['partnerKey']."' not found");
+    die("Партнер ".$_POST['partnerKey']." не найден нулевой акт");
+}
+
+$stmt->close();
+
+$stmt = $conn->prepare("INSERT INTO protokols (act_id, protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("iiisssisddsssssss", $act_id, $_POST['id'],$_POST['pin'],$p_photo, $p_photo1, $m_photo, $cust_id, $_POST['dt'], $_POST['lat'], $_POST['lng'], $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest);
 if (!$stmt->execute()) {
     wrileLog($cust_id, mysqli_error($conn));
-    die("Error insert record: ". mysqli_error($conn)." INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) VALUES ({$_POST['id']}, {$_POST['pin']},$p_photo, $p_photo1, $m_photo, $cust_id, {$_POST['dt']}, {$_POST['lat']}, {$_POST['lng']}, $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest");
+    die("Error insert record: ". mysqli_error($conn)." INSERT INTO protokols (act_id, protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) VALUES ({$act_id}, {$_POST['id']}, {$_POST['pin']},$p_photo, $p_photo1, $m_photo, $cust_id, {$_POST['dt']}, {$_POST['lat']}, {$_POST['lng']}, $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest");
 }
 else {
-    wrileLog($cust_id, "INSERT INTO protokols (protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) 
-VALUES ({$_POST['id']}, {$_POST['pin']},$p_photo, $p_photo1, $m_photo, $cust_id, {$_POST['dt']}, {$_POST['lat']}, {$_POST['lng']}, $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest");
+    wrileLog($cust_id, "INSERT INTO protokols (act_id, protokol_num, pin, protokol_photo, protokol_photo1, meter_photo, customer_id, protokol_dt, lat, lng, siType, waterType, regNumber, serialNumber, checkInterval, checkMethod, nextTest) 
+VALUES ({$act_id}, ${$_POST['id']}, {$_POST['pin']},$p_photo, $p_photo1, $m_photo, $cust_id, {$_POST['dt']}, {$_POST['lat']}, {$_POST['lng']}, $siType, $waterType, $regNumber, $serialNumber, $checkInterval, $checkMethod, $nextTest");
 }
-
 
 
     $output = `cd ../; php7.2 artisan yandex:export $p_photo`;

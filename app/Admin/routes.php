@@ -17,7 +17,8 @@ Route::group([
     $router->post('/refresh_token', 'HomeController@refreshToken');
     $router->resource('customers', CustomerController::class);
 
-    $router->resource('protokols', ProtokolController::class)->middleware('set_customer');
+    $router->resource('acts', ActController::class)->middleware('set_customer');
+    $router->resource('protokols', ProtokolController::class)->middleware('set_act');
 
     $router->resource('transactions', TrancactionControler::class)->middleware('set_customer');
     $router->resource('checks', CheckController::class)->middleware('set_customer');

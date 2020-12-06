@@ -3,8 +3,9 @@
 $servername = "localhost";
 //Define your database username here.
 $username = "canmakeru_pin";
-//Define your database password here.
 $password = "q1w2e3r4!";
+//$username = "root";
+//$password = "prm3rtm10";
 //Define your database name here.
 $dbname = "canmakeru_pin";
 $clientId = 'AgAAAAABfdEsAAXZWoNl_DpbIEbat4FZukHOk-o';

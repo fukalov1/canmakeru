@@ -152,6 +152,21 @@ class MainController extends Controller
 
     }
 
+
+    /**
+     * @param Request $request
+     */
+    public function addAct(Request $request)
+    {
+
+    }
+
+
+    /**
+     * @param string $year
+     * @param string $month
+     * @param string $file
+     */
    public function getPreview($year='2019',$month='01',$file='')
     {
         $disk = new DiskClient();

@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Protokol extends Model
 {
 
-    protected $fillable = ['exported'];
+    protected $fillable = ['act_id', 'customer_id', 'protokol_num', 'pin', 'meter_photo', 'exported', 'protokol_dt',
+        'siType', 'waterType', 'regNumber', 'serialNumber', 'checkInterval', 'checkMethod', 'nextTest'];
 
     const UPDATED_AT = 'updated_dt';
 
