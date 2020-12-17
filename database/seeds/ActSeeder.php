@@ -18,7 +18,7 @@ class ActSeeder extends Seeder
         foreach ($customers as $customer) {
             $acts->insert([
                 'customer_id' => $customer->id,
-                'number_act' => $customer->partner_code.'-20-0',
+                'number_act' => $customer->id.'-20-0',
                 'name' => 'Нулевой',
                 'date' => date('Y-m-d', time())
             ]);
