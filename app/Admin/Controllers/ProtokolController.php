@@ -21,7 +21,7 @@ class ProtokolController extends AdminController
 
     protected $customer='';
     protected $customer_id=0;
-    protected $act='';
+    protected $act=null;
     protected $title = 'Протоколы';
 
 
@@ -43,7 +43,7 @@ class ProtokolController extends AdminController
 
         $grid->header(function ($query) {
             return "<div style='padding: 10px;'>Клиент: <b><a href=\"/admin/customers\" title='вернуться к списку клиентов'>".$this->customer.
-                "</a> / <a href=\"/admin/acts?set={$this->customer_id}\" title='вернуться к списку актов клиента'> Номер акта: {$this->act}</b></div>";
+                "</a> / <a href=\"/admin/acts?set={$this->customer_id}\" title='вернуться к списку актов клиента'> Номер акта: {$this->act->number_act} от {$this->act->date}</b></div>";
         });
 
 //        $grid->tools(function ($tools) {
@@ -166,7 +166,7 @@ class ProtokolController extends AdminController
         $act = Act::find(session('customer_id'));
         $customers = $act->customer;
 //        dd($customers->name);
-        $this->act = $act->number_act;
+        $this->act = $act;
         $this->customer = $customers->name;
         $this->customer_id = $act->customer_id;
         $this->title .= ' - '.$customers->name;

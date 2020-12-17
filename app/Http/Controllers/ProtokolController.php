@@ -33,7 +33,7 @@ class ProtokolController extends Controller
 
         $rules = [
             'act'=>'required',
-            'tests'=>'required',
+            'meters'=>'required',
             'act.partnerKey'=>'required',
             'act.number_act'=>'required|string',
             'act.pin'=>'required|numeric',
@@ -114,7 +114,7 @@ class ProtokolController extends Controller
     private function addProtokol($act_id, $customer_id, $data)
     {
         $i=1;
-        foreach ($data->tests as $test) {
+        foreach ($data->meters as $meter) {
 
             $this->protokol->updateOrCreate(
                 [
@@ -125,13 +125,13 @@ class ProtokolController extends Controller
                 ],
                 [
                     'meter_photo' => $data->act->number_act."-$i.jpg",
-                    'siType' => $test->siType,
-                    'waterType' => $test->waterType,
-                    'regNumber' => $test->regNumber,
-                    'serialNumber' => $test->serialNumber,
-                    'checkInterval' => $test->checkInterval,
-                    'checkMethod' => $test->checkMethod,
-                    'nextTest' => $this->getNextTest($data->act->date, $test->checkInterval)
+                    'siType' => $meter->siType,
+                    'waterType' => $meter->waterType,
+                    'regNumber' => $meter->regNumber,
+                    'serialNumber' => $meter->serialNumber,
+                    'checkInterval' => $meter->checkInterval,
+                    'checkMethod' => $meter->checkMethod,
+                    'nextTest' => $this->getNextTest($data->act->date, $meter->checkInterval)
                 ]
             );
             $i++;
