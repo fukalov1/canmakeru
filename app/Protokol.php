@@ -1,10 +1,12 @@
 <?php
 
 namespace App;
+
 use Carbon\Carbon;
 use Yandex\Disk\DiskClient;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
+
 
 class Protokol extends Model
 {
@@ -13,6 +15,13 @@ class Protokol extends Model
         'siType', 'waterType', 'regNumber', 'serialNumber', 'checkInterval', 'checkMethod', 'nextTest'];
 
     const UPDATED_AT = 'updated_dt';
+
+
+    public function act()
+    {
+        return $this->belongsTo(Act::class);
+    }
+
 
     public function uploadExistFile($filename, $path)
     {
@@ -281,5 +290,29 @@ class Protokol extends Model
         echo "Final process records! Insert: $i Skip: $skip\n";
 
     }
+
+    /**
+     * перенос старых протоколов в нулевой акт
+     */
+    public function moveProtokols()
+    {
+        $protokol = Protokol();
+        $i=$e=0;
+        try {
+            foreach ($this->all() as $item) {
+                $act_id = $item->act() - first()->id;
+                $protokol
+                    ->where('id', $item->id)
+                    ->update(['act_id' => $act_id]);
+                ++$i;
+            }
+        }
+        catch (\Throwable $exception) {
+            ++$e;
+        }
+
+        return "Update $i Skip $e\n";
+    }
+
 
 }
