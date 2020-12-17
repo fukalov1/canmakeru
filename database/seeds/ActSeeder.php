@@ -20,7 +20,7 @@ class ActSeeder extends Seeder
                 'customer_id' => $customer->id,
                 'number_act' => $customer->partner_code.'-20-0',
                 'name' => 'Нулевой',
-                'date' => time()
+                'date' => date('Y-m-d', time())
             ]);
         }
     }
