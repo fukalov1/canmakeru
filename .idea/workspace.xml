@@ -87,19 +87,101 @@
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/protokol:delete_dublicates.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/MyDashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/MyDashboard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/VerificationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/VerificationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/MainController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/resources/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../canmakeru1/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../canmakeru1/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/ActSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/ActSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Post/Slave.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/CustomerChartController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/CustomerReportController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/HomeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/MyDashboard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/ProtokolController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/SlaveCustomerController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/routes.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Console/Commands/deleteDublicate.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Console/Commands/exportPhotos.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Console/Commands/photosRefresh.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Console/Commands/protokol:delete_dublicates.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Console/Kernel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/CustomerTool.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/Auth/VerificationController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/CustomerController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/HomeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/MainController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Controllers/ProtokolController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Kernel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Http/Middleware/SetCustomers.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Notifications/ResetPassword.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Protokol.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Providers/AppServiceProvider.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/app/SlaveCustomer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/config/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/config/auth.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/config/dompdf.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/config/excel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/config/filesystems.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/config/logging.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/database/migrations/2019_09_06_171852_customers.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/database/migrations/2019_11_06_080648_protokols.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/database/migrations/2019_11_12_085118_create_slave_customers.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/database/migrations/v1/2020_07_20_063648_protokols_new_fields.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/database/migrations/v1/2020_07_22_145921_add_customers_to_fgis.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/database/migrations/v1/2020_08_11_084958_create_customer_tools.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/database/migrations/v1/2020_09_01_010556_change_customers_to_fgis.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/Kernel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/config.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/css/app.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/images/favico.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/js/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/js/jquery.maskedinput.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/photos/meter_5bf693b525f64.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/photos/protokol1_5bf693b525f64.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/photos/protokol_5bf693b525f64.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/up.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/public/upl.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/components/Customer/CustomerRoom.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/components/Customer/DataGrid.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/components/Customer/LineChart.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/components/Customer/Paginator.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/components/Customer/ProfileUser.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/components/Customer/Statistic.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/components/ExampleComponent.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/components/Report/StatisticDay.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/js/components/Yandex/RefreshToken.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/lang/en/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/admin.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/admin/charts/customer.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/auth/login.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/auth/passwords/email.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/auth/passwords/reset.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/auth/register.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/auth/verify.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/customer.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/customer/auth/login.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/dinamicDashboard.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/errors/404.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/infoDashboard.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/layouts/app.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/layouts/auth.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/layouts/footer.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/layouts/header.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/layouts/layout.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/layouts/scripts.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/layouts/styles.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/main.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/protokolPDF.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/serviceDashboard.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/resources/views/showResult.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../canmakeru1/routes/web.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../composer.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../composer.lock" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../config/admin.php" beforeDir="false" />
@@ -2178,6 +2260,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -2418,6 +2501,7 @@
       <workItem from="1608096776776" duration="1174000" />
       <workItem from="1608181167392" duration="1768000" />
       <workItem from="1608213756573" duration="1453000" />
+      <workItem from="1608216177096" duration="469000" />
     </task>
     <servers />
   </component>

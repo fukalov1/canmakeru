@@ -19,7 +19,8 @@ class ActSeeder extends Seeder
             $acts->insert([
                 'customer_id' => $customer->id,
                 'number_act' => $customer->partner_code.'-20-0',
-                'name' => 'Нулевой'
+                'name' => 'Нулевой',
+                'date' => time()
             ]);
         }
     }
