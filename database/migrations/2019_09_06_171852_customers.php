@@ -17,7 +17,6 @@ class Customers extends Migration
             $table->bigIncrements('id');
             $table->string('code', 200)->unique();
             $table->string('name', 1000);
-            $table->string('comments', 255);
             $table->integer('enabled')->default(1);
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
