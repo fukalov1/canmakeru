@@ -40,6 +40,6 @@ class MoveProtokols extends Command
      */
     public function handle()
     {
-        $this->protokol;
+        echo $this->protokol->moveProtokols();
     }
 }
