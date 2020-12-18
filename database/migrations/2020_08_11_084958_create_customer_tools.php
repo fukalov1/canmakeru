@@ -14,8 +14,8 @@ class CreateCustomerTools extends Migration
     public function up()
     {
         Schema::create('customer_tools', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('customer_id')->unsigned();
+            $table->id();
+            $table->unsignedBigInteger('customer_id');
             $table->string('typeNum');
             $table->string('manufactureNum');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');

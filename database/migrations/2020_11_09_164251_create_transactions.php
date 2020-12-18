@@ -15,7 +15,7 @@ class CreateTransactions extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('customer_id')->unsigned();
+            $table->unsignedBigInteger('customer_id');
             $table->double('amount', 16,2);
             $table->string('uuid')->nullable();
             $table->enum('type', [
@@ -31,7 +31,7 @@ class CreateTransactions extends Migration
             $table->string('CheckQueueId')->nullable();
             $table->json('response')->nullable();
             $table->string('link')->nullable();
-//            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });
     }
