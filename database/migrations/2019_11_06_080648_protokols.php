@@ -25,6 +25,7 @@ class Protokols extends Migration
             $table->double('lat');
             $table->double('lng');
             $table->dateTime('protokol_dt')->nullable();
+            $table->dateTime('updated_dt')->nullable();
             $table->string('siType')->nullable();
             $table->string('waterType')->nullable();
             $table->string('regNumber')->nullable();

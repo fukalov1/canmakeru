@@ -87,7 +87,8 @@
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_28_055306_create_table_acts.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_05_055306_create_table_acts.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Post/Slave.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/CustomerChartController.php" beforeDir="false" />

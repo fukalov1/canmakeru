@@ -24,7 +24,7 @@ class Customers extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->boolean('export_fgis')->default(true);
+            $table->integer('export_fgis')->default(1);
             $table->integer('hour_zone')->default(0);
             $table->string('ideal')->nullable();
             $table->string('get')->nullable();
