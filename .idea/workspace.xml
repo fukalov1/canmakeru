@@ -86,18 +86,7 @@
       <change beforePath="$PROJECT_DIR$/../artisan" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_07_20_063648_protokols_new_fields.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_07_22_145921_add_customers_to_fgis.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_08_11_084958_create_customer_tools.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_09_01_010556_change_customers_to_fgis.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_09_08_181938_drop_protokols_exported.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_09_08_182216_change_protokols_exported.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_11_09_164223_add_customer_deposit.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_11_09_164251_create_transactions.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_09_164251_create_transactions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v2/2020_11_28_054831_add_partner_cod_customers.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v2/2020_11_28_055306_create_table_acts.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_05_055306_create_table_acts.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v2/2020_11_28_092734_change_foreign_add_act_id_to_protokols.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Post/Slave.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/CustomerChartController.php" beforeDir="false" />
