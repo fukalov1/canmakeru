@@ -21,12 +21,5 @@ class Act extends Model
         return $this->customer->partner_code."-".$year."-".$this->id;
     }
 
-    public function createAct()
-    {
-        $act = Act::updateOrCreate([
-
-        ]);
-        return $act->id();
-    }
 
 }

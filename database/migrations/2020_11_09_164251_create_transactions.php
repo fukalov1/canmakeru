@@ -14,8 +14,8 @@ class CreateTransactions extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('customer_id');
+            $table->increments('id');
+            $table->integer('customer_id')->unsigned();
             $table->double('amount', 16,2);
             $table->string('uuid')->nullable();
             $table->enum('type', [

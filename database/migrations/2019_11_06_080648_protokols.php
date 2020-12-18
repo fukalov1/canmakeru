@@ -14,9 +14,9 @@ class Protokols extends Migration
     public function up()
     {
         Schema::create('protokols', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('act_id');
-            $table->unsignedBigInteger('customer_id');
+            $table->increments('id');
+            $table->integer('act_id')->unsigned();
+            $table->integer('customer_id')->unsigned();
             $table->bigInteger('protokol_num');
             $table->integer('pin');
             $table->string('protokol_photo', 400);

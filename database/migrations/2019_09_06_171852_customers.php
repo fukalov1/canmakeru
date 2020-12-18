@@ -14,7 +14,7 @@ class Customers extends Migration
     public function up()
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('code', 200)->unique();
             $table->integer('partner_code')->default(0);
             $table->string('name', 1000);

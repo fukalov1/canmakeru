@@ -14,7 +14,7 @@ class CreateSlaveCustomers extends Migration
     public function up()
     {
         Schema::create('slave_customers', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->integer('customer_id')->unsigned();
             $table->integer('slave_id')->unsigned();
             $table->timestamps();

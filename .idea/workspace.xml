@@ -87,8 +87,14 @@
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Act.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Act.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_05_055306_create_table_acts.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_05_055306_create_table_acts.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_12_085118_create_slave_customers.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_12_085118_create_slave_customers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_11_084958_create_customer_tools.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_11_084958_create_customer_tools.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_09_164251_create_transactions.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_09_164251_create_transactions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Post/Slave.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/CustomerChartController.php" beforeDir="false" />
@@ -2413,7 +2419,7 @@
   <component name="PropertiesComponent">
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Exceptions" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Cinema/backend" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>

@@ -14,9 +14,8 @@ class CreateTableActs extends Migration
     public function up()
     {
         Schema::create('acts', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('act_id');
+            $table->increments('id');
+            $table->integer('customer_id')->unsigned();
             $table->string('name')->nullable();
             $table->string('number_act')->unique();
             $table->double('lat')->default(0);
@@ -24,7 +23,6 @@ class CreateTableActs extends Migration
             $table->string('address')->nullable();
             $table->date('date');
             $table->enum('type', ['пригодны','непригодны','испорчен']);
-            $table->foreign('act_id')->references('id')->on('acts')->onDelete('cascade');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });
