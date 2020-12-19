@@ -86,8 +86,6 @@
       <change beforePath="$PROJECT_DIR$/../artisan" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/config.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Post/Slave.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" />
