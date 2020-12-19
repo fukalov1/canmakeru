@@ -125,7 +125,7 @@ class ProtokolController extends Controller
                 ],
                 [
                     'protokol_dt' => $data->act->date,
-                    'meter_photo' => $data->act->number_act."-$i.jpg",
+                    'meter_photo' => 'meter_'.$data->act->number_act."-$i.jpg",
                     'siType' => $meter->siType,
                     'waterType' => $meter->waterType,
                     'regNumber' => $meter->regNumber,
@@ -174,15 +174,15 @@ class ProtokolController extends Controller
         $result = [];
         try {
             if($request->file()) {
-                $request->file('act_photo')->move(public_path('/photos/temp/'), "act_photo_$number.jpg");
-                $result[] = "act_photo_$number.jpg";
+                $request->file('act_photo')->move(public_path('/photos/temp/'), "act_$number.jpg");
+                $result[] = "act_$number.jpg";
 
                 if($request->hasfile('meter_photos'))
                 {
                     $i=1;
                     foreach($request->file('meter_photos') as $file)
                     {
-                        $name = "meter_photo_$number-$i.jpg";
+                        $name = "meter_$number-$i.jpg";
                         $file->move(public_path('/photos/temp/'), $name);
                         $i++;
                         $result[] = $name;
@@ -216,7 +216,7 @@ class ProtokolController extends Controller
         foreach ($files as $file) {
             $output = $this->protokol->uploadFile($file);
             $result = $output===true ? "Export files $file to Yandex.disk successfully" : "Don't export file $file. Error: $output";
-            Log::channel($this->log)->debug("Экспорт файла $file: $result");
+            Log::channel($this->log)->info("Экспорт файла $file: $result");
         }
     }
 

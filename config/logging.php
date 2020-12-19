@@ -47,7 +47,7 @@ return [
         ],
         'customlog' => [
             'driver' => 'single',
-            'path' => storage_path('logs/poverka.log'),
+            'path' => storage_path('logs/meters.log'),
             'level' => 'info',
         ],
 
