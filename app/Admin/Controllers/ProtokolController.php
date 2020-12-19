@@ -22,7 +22,7 @@ class ProtokolController extends AdminController
     protected $customer='';
     protected $customer_id=0;
     protected $act=null;
-    protected $title = 'Протоколы';
+    protected $title = 'Свидетельсва поверок';
 
 
     /**

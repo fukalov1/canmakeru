@@ -17,10 +17,10 @@ class Protokols extends Migration
             $table->increments('id');
             $table->integer('act_id')->unsigned();
             $table->integer('customer_id')->unsigned();
-            $table->bigInteger('protokol_num');
+            $table->string('protokol_num');
             $table->integer('pin');
-            $table->string('protokol_photo', 400);
-            $table->string('protokol_photo1', 400);
+            $table->string('protokol_photo', 400)->nullable()->default('');
+            $table->string('protokol_photo1', 400)->nullable()->default('');
             $table->string('meter_photo', 400);
             $table->double('lat')->nullable()->default(0);
             $table->double('lng')->nullable()->default(0);

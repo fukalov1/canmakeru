@@ -124,6 +124,7 @@ class ProtokolController extends Controller
                     'act_id' => $act_id
                 ],
                 [
+                    'protokol_dt' => $data->act->date,
                     'meter_photo' => $data->act->number_act."-$i.jpg",
                     'siType' => $meter->siType,
                     'waterType' => $meter->waterType,

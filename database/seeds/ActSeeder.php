@@ -19,6 +19,7 @@ class ActSeeder extends Seeder
             $acts->insert([
                 'customer_id' => $customer->id,
                 'number_act' => $customer->id.'-20-0',
+                'pin' => '0000',
                 'name' => 'Нулевой',
                 'date' => date('Y-m-d', time())
             ]);

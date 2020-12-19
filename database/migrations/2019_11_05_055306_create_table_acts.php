@@ -18,6 +18,7 @@ class CreateTableActs extends Migration
             $table->integer('customer_id')->unsigned();
             $table->string('name')->nullable();
             $table->string('number_act')->unique();
+            $table->string('pin');
             $table->double('lat')->default(0);
             $table->double('lng')->default(0);
             $table->string('address')->nullable();

@@ -29,8 +29,8 @@ class ActRequest extends FormRequest
     {
         return [
             'data' => 'required|string',
-            'act_photo' => 'required',
-            'meter_photos' => 'required',
+//            'act_photo' => 'required',
+//            'meter_photos' => 'required',
         ];
     }
 

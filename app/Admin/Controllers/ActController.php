@@ -41,11 +41,12 @@ class ActController extends AdminController
 
 //        $grid->column('number_act', __('Номер'));
         $grid->column('number_act', __('Номер акта'))->display(function () {
-            return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->name.'">'.$this->name.'</a>';
+            $name = $this->name ? "({$this->name})" : '';
+            return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.' '.$name.'</a>';
         })->sortable();
 
 //        $grid->column('customer_id', __('Customer id'));
-        $grid->column('name', __('Наименование'));
+//        $grid->column('name', __('Наименование'));
         $grid->column('type', __('Тип'));
         $grid->column('lat', __('Шир.'));
         $grid->column('lng', __('Дол.'));
