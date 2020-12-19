@@ -47,7 +47,11 @@ class ActController extends AdminController
         $grid->photos('Фото')->modal('Фото акта', function ($model) {
             $str = '';
                 $file = preg_replace('/photos\//','',$this->meter_photo);
-                $str .= '<div class="col-lg-4"><label>Акт</label><a target="_blank" href="/photo/act_'.$this->number_act.'.jpg"><img src="/preview/act_'.$this->number_act.'.jpg"></a></div>';
+            $matches = [];
+            preg_match('/(\d\d\d\d)\-(\d\d)/', $this->date,$matches);
+            if (count($matches) > 0) {
+                $str .= '<div class="row"><div class="col-lg-4"><label>Акт</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/act_' . $this->number_act . '.jpg"><img src="/preview/'.$matches[1].'/'.$matches[2].'/act_' . $this->number_act . '.jpg"></a></div></div>';
+            }
             return $str;
         });
 
