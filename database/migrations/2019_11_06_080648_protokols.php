@@ -22,8 +22,8 @@ class Protokols extends Migration
             $table->string('protokol_photo', 400);
             $table->string('protokol_photo1', 400);
             $table->string('meter_photo', 400);
-            $table->double('lat');
-            $table->double('lng');
+            $table->double('lat')->nullable()->default(0);
+            $table->double('lng')->nullable()->default(0);
             $table->dateTime('protokol_dt')->nullable();
             $table->dateTime('updated_dt')->nullable();
             $table->string('siType')->nullable();
