@@ -184,6 +184,7 @@ class CustomerController extends AdminController
             $form->text('ideal', __('Эталон'));
             $form->text('ci_as_ideal', __('СИ, как эталон'));
             $form->text('notes', __('Примечание'));
+            $form->hidden('password')->default('123456');
 
         })->tab('Работники', function ($form) {
             $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {
@@ -199,6 +200,7 @@ class CustomerController extends AdminController
                 $form->text('manufactureNum', 'Заводской номер СИ')->rules('required|max:128');
             });
         });
+
 
 
         return $form;
