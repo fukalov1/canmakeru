@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dc6d9d7-81aa-495e-ab2c-7cd840b06f9f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Cinema/prev/src/components/DataGrid.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Cinema/prev/src/components/DataGridTop.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Cinema/prev/src/components/DateFilter.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Cinema/prev/src/components/Loader.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Cinema/prev/vue.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Cinema/prev/webpack.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/css/app.9be72475.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/css/chunk-vendors.2284e9ba.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/js/app.fc44e418.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/js/app.fc44e418.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/js/chunk-vendors.97e14e78.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/js/chunk-vendors.97e14e78.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.editorconfig" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.env.example" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitattributes" beforeDir="false" />
@@ -19,6 +21,8 @@
       <change beforePath="$PROJECT_DIR$/../.idea/php.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.styleci.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cinema/prev/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../Cinema/prev/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cinema/prev/src/components/DataGrid.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../Cinema/prev/src/components/DataGrid.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/Admin/Controllers/AuthController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../app/Admin/Controllers/DirectionController.php" beforeDir="false" />
@@ -113,10 +117,6 @@
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_12_085118_create_slave_customers.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_12_085118_create_slave_customers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_07_20_063648_protokols_new_fields.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_07_22_145921_add_customers_to_fgis.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_08_11_084958_create_customer_tools.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/v1/2020_09_01_010556_change_customers_to_fgis.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/config.php" afterDir="false" />
@@ -2555,7 +2555,8 @@
       <workItem from="1608289446818" duration="993000" />
       <workItem from="1608437765335" duration="72000" />
       <workItem from="1608470128587" duration="2731000" />
-      <workItem from="1608528324629" duration="205000" />
+      <workItem from="1608528324629" duration="1083000" />
+      <workItem from="1608566860798" duration="1724000" />
     </task>
     <servers />
   </component>

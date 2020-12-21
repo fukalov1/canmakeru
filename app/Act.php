@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Act extends Model
 {
-    protected $fillable = ['number_act','customer_id','date','pin','address','lat','lng'];
+    protected $fillable = ['number_act','customer_id','date','pin','address','lat','lng', 'type'];
     protected $appends = ['nmbr_act'];
 
     public function customer()

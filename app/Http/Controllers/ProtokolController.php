@@ -33,15 +33,20 @@ class ProtokolController extends Controller
 
         $rules = [
             'act'=>'required',
-            'meters'=>'required',
             'act.partnerKey'=>'required',
             'act.number_act'=>'required|string',
             'act.pin'=>'required|numeric',
             'act.date'=>'required|date',
             'act.type'=>'required|string',
+//            'meters'=>'required_if:act.type,value',
         ];
 
+
         $validator = Validator::make(json_decode($request->input('data'), true), $rules);
+
+//        $validator->sometimes('meters', 'required', function($data){
+//            return $data->type !== 'брак';
+//        });
 
         if ($validator->fails()) {
             return response(
@@ -88,6 +93,7 @@ class ProtokolController extends Controller
                     'date' => $data->act->date,
                     'lat' => $lat,
                     'lng' => $lng,
+                    'type' => $data->act->type,
                     'address' => $address,
                 ])) {
                     if ($act->id > 0) {
