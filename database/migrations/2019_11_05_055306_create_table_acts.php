@@ -22,7 +22,7 @@ class CreateTableActs extends Migration
             $table->double('lat')->default(0);
             $table->double('lng')->default(0);
             $table->string('address')->nullable();
-            $table->date('date');
+            $table->datetime('date');
             $table->enum('type', ['пригодны','непригодны','испорчен']);
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();

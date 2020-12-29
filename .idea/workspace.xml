@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dc6d9d7-81aa-495e-ab2c-7cd840b06f9f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/css/app.9be72475.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Cinema/backend/app/Admin/Controllers/CinemaLiteController.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/css/chunk-vendors.2284e9ba.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/favicon.ico" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/js/app.fc44e418.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/js/app.fc44e418.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/js/chunk-vendors.97e14e78.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/js/chunk-vendors.97e14e78.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.editorconfig" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.env.example" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitattributes" beforeDir="false" />
@@ -21,6 +17,8 @@
       <change beforePath="$PROJECT_DIR$/../.idea/php.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.styleci.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cinema/prev/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Cinema/prev/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cinema/prev/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Cinema/prev/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Cinema/prev/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../Cinema/prev/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Cinema/prev/src/components/DataGrid.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../Cinema/prev/src/components/DataGrid.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
@@ -94,6 +92,7 @@
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Actions/Protokol/BatchClearExport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/ActController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ActController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/MyDashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/MyDashboard.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" afterDir="false" />
@@ -2556,7 +2555,8 @@
       <workItem from="1608437765335" duration="72000" />
       <workItem from="1608470128587" duration="2731000" />
       <workItem from="1608528324629" duration="1083000" />
-      <workItem from="1608566860798" duration="1724000" />
+      <workItem from="1608566860798" duration="2652000" />
+      <workItem from="1609262092341" duration="1810000" />
     </task>
     <servers />
   </component>

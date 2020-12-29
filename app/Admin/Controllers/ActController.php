@@ -44,6 +44,10 @@ class ActController extends AdminController
             return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.' '.$name.'</a>';
         })->sortable();
 
+        $grid->column('date', __('Дата'));
+
+        $grid->column('address', __('Адрес'));
+
         $grid->photos('Фото')->modal('Фото акта', function ($model) {
             $str = '';
                 $file = preg_replace('/photos\//','',$this->meter_photo);
@@ -58,7 +62,7 @@ class ActController extends AdminController
         $grid->column('type', __('Тип'));
         $grid->column('lat', __('Шир.'));
         $grid->column('lng', __('Дол.'));
-        $grid->column('updated_at', __('Дата'));
+
 
         return $grid;
     }
