@@ -99,7 +99,7 @@ class ProtokolController extends Controller
                     if ($act->id > 0) {
                         $this->addProtokol($act->id, $customer->id, $data);
                     }
-                    $this->exportPhoto($files);
+                    $this->exportPhoto($files, $data->act->date);
                 }
 
             return json_encode([
@@ -217,10 +217,10 @@ class ProtokolController extends Controller
 
     }
 
-    private function exportPhoto($files=[])
+    private function exportPhoto($files=[], $date)
     {
         foreach ($files as $file) {
-            $output = $this->protokol->uploadFile($file);
+            $output = $this->protokol->uploadFile($file, $date);
             $result = $output===true ? "Export files $file to Yandex.disk successfully" : "Don't export file $file. Error: $output";
             Log::channel($this->log)->info("Экспорт файла $file: $result");
         }

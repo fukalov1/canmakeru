@@ -22,7 +22,11 @@ class Protokol extends Model
         return $this->belongsTo(Act::class);
     }
 
-
+    /**
+     * @param $filename
+     * @param $path
+     * @return array
+     */
     public function uploadExistFile($filename, $path)
     {
 
@@ -81,29 +85,36 @@ class Protokol extends Model
 
     }
 
-    public function uploadFile($file)
+    /**
+     * функция загрузки файлов на Яндекс.Диск
+     * @param $file загружаемый файл
+     * @param $date дата акта (св-ва)
+     * @return bool
+     */
+    public function uploadFile($file, $date)
     {
         $error = '';
         $success = false;
 
-//        dd(public_path('photos/temp/').$dest1);
+        if (isset($date)) {
+            $path = date('Y-m', strtotime($date));
+        }
+        else {
+            $path = date('Y-m', time());
+        }
 
         try {
             $disk = new DiskClient();
-            //Устанавливаем полученный токен
 
+            //Устанавливаем полученный токен
             $disk->setAccessToken(config('YANDEX_TOKEN'));
 
             $files = $disk->directoryContents();
             $obj = collect($files);
 
-            $path = date('Y-m', time());
             $dirs = $obj->filter(function ($value, $key) use ($path) {
                 return $value['resourceType'] == 'dir' and $value['displayName'] == $path;
             });
-
-//            print_r($dirs->toArray());
-//            dd($path);
 
             // Создаем директорию текущей даты
             if (count($dirs->toArray()) == 0) {
@@ -112,12 +123,6 @@ class Protokol extends Model
 //                    echo 'Создана новая директория "' . $path . '"!';
                 }
             }
-//dd('start upload to yandex disk');
-
-//            dd(['path' => public_path('photos/temp/'),
-//                'size' => filesize(public_path('photos/temp/').$dest1),
-//                'name' => $dest1]);
-
             $disk->uploadFile(
                 "/$path/",
                 array(
