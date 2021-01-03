@@ -37,6 +37,7 @@ class CustomerChartController extends Controller
             $content->header($this->customer_name);
             $content->description($this->title);
 
+
             $data = ['dinamic' => $quest];
 
             $content->body(view('admin.charts.customer', $data));

@@ -19,6 +19,7 @@ class ActController extends AdminController
     protected $customer='';
     protected $title = 'Акты';
 
+
     /**
      * Make a grid builder.
      *
@@ -43,6 +44,8 @@ class ActController extends AdminController
             $name = $this->name ? "({$this->name})" : '';
             return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.' '.$name.'</a>';
         })->sortable();
+
+        $grid->column('miowner', __('Владелец'));
 
         $grid->column('date', __('Дата'));
 
@@ -99,6 +102,7 @@ class ActController extends AdminController
         $form->hidden('customer_id')->value(session('customer_id'));
         $form->text('number_act', __('Номер'));
         $form->text('name', __('Наименование'));
+        $form->text('miowner', __('Владелец'));
         $form->text('type', __('Тип'));
         $form->decimal('lat', __('Ширина'))->default(0);
         $form->decimal('lng', __('Долгота'))->default(0);

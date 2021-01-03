@@ -37,6 +37,7 @@ class ProtokolController extends Controller
             'act.number_act'=>'required|string',
             'act.pin'=>'required|numeric',
             'act.date'=>'required|date',
+            'act.miowner'=>'required|string',
             'act.type'=>'required|string',
 //            'meters'=>'required_if:act.type,value',
         ];
@@ -91,6 +92,7 @@ class ProtokolController extends Controller
                 ],
                 [
                     'date' => $data->act->date,
+                    'miowner' => $data->act->miowner,
                     'lat' => $lat,
                     'lng' => $lng,
                     'type' => $data->act->type,
