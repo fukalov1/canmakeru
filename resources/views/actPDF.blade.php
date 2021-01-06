@@ -17,7 +17,7 @@
                 </a>
             </td>
             <td width="75%" valign="top">
-                ACT<br/>
+                AКT<br/>
                 выполнения метрологической поверки<br/>
                 <p>№ <b>{{ $act->number_act }}</b> от <b>{{ $act->date }}</b></p>
                 <br/>
