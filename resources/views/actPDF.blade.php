@@ -35,7 +35,7 @@
                 @endif
             </td>
         </tr>
-        @if ($act->type=='испорчен')
+        @if ($act->type!='испорчен')
         <tr>
             <td colspan="2">
                 <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }} шт.</strong>
