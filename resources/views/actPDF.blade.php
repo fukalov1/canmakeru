@@ -26,13 +26,29 @@
                 <br/>
 
                 <p>Примечание:  {{ $act->address }}</p>
-                <p>Владелец: {{ $act->customer->name }}</p>
+                <p>Владелец: {{ $act->name }}</p>
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }} шт.</strong>
-                признаны <strong>{{ $act->type }}</strong> к дальнейшей эксплуатации.
+
+                    <strong>
+                        @if ($act->meters()->get()->count()>1)
+                            @if ($act->type=='пригодны')
+                                признаны пригодными
+                            @else
+                                признан пригодным
+                            @endif
+                        @else
+                            @if ($act->type=='непригодны')
+                                признаны непригодными
+                            @else
+                                признан непригодным
+                            @endif
+                        @endif
+                    </strong>
+                    к дальнейшей эксплуатации.
                 <p>
             </td>
         </tr>
@@ -41,7 +57,7 @@
         <tr>
             <td width="25%" valign="top">
                 <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" target="_blank">
-                    <img src="http://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" height="100%">
+                    <img src="http://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" height="80%">
                 </a>
             </td>
             <td width="75%" valign="top">
