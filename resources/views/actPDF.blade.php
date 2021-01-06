@@ -20,15 +20,22 @@
                 </a>
             </td>
             <td width="75%" valign="top">
-                <h3>AКT</h3>
-                выполнения метрологической поверки<br/>
+                @if ($act->type!='испорчен')
+                    <h3>AКT</h3>
+                    выполнения метрологической поверки<br/>
+                @else
+                    Бланк испорчен
+                @endif
                 <h3>№ {{ $act->number_act }} от {{ date('d-m-Y', strtotime($act->date)) }}</h3>
                 <br/>
 
-                <p>Примечание:  {{ $act->address }}</p>
-                <p>Владелец: {{ $act->name }}</p>
+                @if ($act->type!='испорчен')
+                    <p>Примечание:  {{ $act->address }}</p>
+                    <p>Владелец: {{ $act->name }}</p>
+                @endif
             </td>
         </tr>
+        @if ($act->type=='испорчен')
         <tr>
             <td colspan="2">
                 <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }} шт.</strong>
@@ -75,6 +82,7 @@
             </td>
         </tr>
         @endforeach
+        @endif
         @endif
     </table>
     </div>
