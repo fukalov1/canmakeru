@@ -16,7 +16,7 @@
         <tr>
             <td width="25%" valign="top">
                 <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" target="_blank">
-                    <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" height="250">
+                    <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" height="240">
                 </a>
             </td>
             <td width="75%" valign="top">
@@ -64,13 +64,13 @@
         <tr>
             <td width="25%" valign="top">
                 <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" target="_blank">
-                    <img src="http://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" height="250">
+                    <img src="http://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" height="240">
                 </a>
             </td>
             <td width="75%" valign="top">
                 <p>Модификация: {{ $meter->siType }}</p>
                 <p>Заводской номер: {{ $meter->serialNumber }}</p>
-                <p>Дата поверки: {{ $meter->protokol_dt }}</p>
+                <p>Дата поверки: {{ date('d-m-Y', strtotime($meter->protokol_dt)) }}</p>
                 <p>Номер в Госреестре: {{ $meter->regNumber }}</p>
                 <p>Методика поверки: {{ $meter->checkMethod }}</p>
                 <p>Вода: {{ $meter->waterType }}</p>
