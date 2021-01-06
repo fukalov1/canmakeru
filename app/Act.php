@@ -14,6 +14,11 @@ class Act extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function meters()
+    {
+        return $this->hasMany(Protokol::class, 'act_id', 'id');
+    }
+
     public function getNmbrActAttribute()
     {
 //        $year = $this->created_at ? date('yy', $this->created_at) : '20';

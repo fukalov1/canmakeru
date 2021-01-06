@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Act;
 use App\Protokol;
 use Intervention\Image\Facades\Image as Imagez;
 use Laravel\Passport\HasApiTokens;
@@ -20,7 +21,10 @@ use Yandex\OAuth\Exception\AuthRequestException;
 class MainController extends Controller
 {
 
-    public function __construct() {
+    private $acts;
+
+    public function __construct(Act $acts) {
+        $this->acts = $acts;
         // Log::useFiles(storage_path('/logs/').'poverka.log');
         // $logFile = 'poverka.log';
         // Log::getLogger(storage_path().'/logs/'.$logFile);
@@ -39,6 +43,10 @@ class MainController extends Controller
         return view('main');
     }
 
+    /**
+     * @return false|string
+     * получение информации о использовании яндекс диска
+     */
     public function getSpaceDisk() {
 
         $guzzle = new GuzzleHttp\Client;
@@ -156,9 +164,26 @@ class MainController extends Controller
     /**
      * @param Request $request
      */
-    public function addAct(Request $request)
+    public function showAct(Request $request)
     {
+        $id = $request->id;
+        $pin = $request->pin;
+        if (isset($id) and isset($pin)) {
+            $act = $this->acts
+                ->where('number_act', $id)
+                ->where('pin', $pin)
+                ->first();
 
+            if ($act) {
+                return view('actPDF', ['act' => $act]);
+            }
+            else {
+                return response('Акт не найден', 404);
+            }
+        }
+        else {
+            return response('Акт не найден', 404);
+        }
     }
 
 

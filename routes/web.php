@@ -27,6 +27,8 @@ Route::get('/photo4pdf/{year}/{month}/{file}', 'MainController@getPhoto4Pdf');
 
 
 
+Route::get('/up', 'MainController@showAct');
+
 Route::post('/uploads', 'MainController@saveResultMeter');
 
 

@@ -45,11 +45,14 @@ class ActController extends AdminController
             return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.' '.$name.'</a>';
         })->sortable();
 
+        $grid->column('pin', __('ПИН'));
+
         $grid->column('miowner', __('Владелец'));
 
         $grid->column('date', __('Дата'));
 
-        $grid->column('address', __('Адрес'));
+
+        $grid->column('address', __('Примечание'));
 
         $grid->photos('Фото')->modal('Фото акта', function ($model) {
             $str = '';
@@ -101,12 +104,13 @@ class ActController extends AdminController
 
         $form->hidden('customer_id')->value(session('customer_id'));
         $form->text('number_act', __('Номер'));
+        $form->text('pin', __('ПИН'));
         $form->text('name', __('Наименование'));
         $form->text('miowner', __('Владелец'));
         $form->text('type', __('Тип'));
         $form->decimal('lat', __('Ширина'))->default(0);
         $form->decimal('lng', __('Долгота'))->default(0);
-        $form->text('address', 'Адрес');
+        $form->text('address', 'Примечание');
 
         return $form;
     }
