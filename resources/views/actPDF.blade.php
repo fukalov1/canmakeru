@@ -5,13 +5,16 @@
     <title>МС-РЕСУРС</title>
     <style>
         body { font-family: DejaVu Sans, sans-serif; }
+        img {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <div align="center" style="margin: 0 auto; width: 640px; border: 1px #999999 solid;">
+    <div align="center" style="margin: 0 auto; width: 680px; border: 1px #999999 solid; padding-left: 20px;">
         <table width="100%" cellspacing="5" cellpadding="10">
         <tr>
-            <td width="25%" valign="bottom">
+            <td width="25%" valign="top">
                 <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" target="_blank">
                     <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" width="80%">
                 </a>
@@ -38,7 +41,7 @@
         <tr>
             <td width="25%" valign="top">
                 <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" target="_blank">
-                    <img src="http://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" width="80%">
+                    <img src="http://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" height="100%">
                 </a>
             </td>
             <td width="75%" valign="top">
