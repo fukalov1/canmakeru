@@ -12,7 +12,7 @@
         <table width="100%" cellspacing="5" cellpadding="10">
         <tr>
             <td width="25%" valign="bottom">
-                <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg">
+                <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" target="_blank">
                     <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" width="80%">
                 </a>
             </td>
@@ -28,7 +28,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }}</strong>  шт.
+                <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }} шт.</strong>
                 признаны <strong>{{ $act->type }}</strong> к дальнейшей эксплуатации.
                 <p>
             </td>
@@ -37,7 +37,7 @@
             @foreach($act->meters()->get() as $meter)
         <tr>
             <td width="25%" valign="top">
-                <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}">
+                <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" target="_blank">
                     <img src="http://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" width="80%">
                 </a>
             </td>
