@@ -8,8 +8,8 @@
     </style>
 </head>
 <body>
-    <div align="center">
-        <table width="60%" cellspacing="5" cellpadding="10">
+    <div align="center" style="width: 640px; border: 1px #999999 solid;">
+        <table width="100%" cellspacing="5" cellpadding="10">
         <tr>
             <td width="25%" valign="top">
                 <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg">
