@@ -89,7 +89,6 @@
       <change beforePath="$PROJECT_DIR$/../artisan" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/actPDF.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/actPDF.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Post/Slave.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" />
@@ -2515,7 +2514,7 @@
       <workItem from="1609262092341" duration="4465000" />
       <workItem from="1609565036034" duration="656000" />
       <workItem from="1609568333231" duration="2448000" />
-      <workItem from="1609654036599" duration="8525000" />
+      <workItem from="1609654036599" duration="8635000" />
     </task>
     <servers />
   </component>

@@ -8,16 +8,16 @@
     </style>
 </head>
 <body>
-    <div align="center" style="width: 640px; border: 1px #999999 solid;">
+    <div align="center" style="text-align: center; width: 640px; border: 1px #999999 solid;">
         <table width="100%" cellspacing="5" cellpadding="10">
         <tr>
-            <td width="25%" valign="top">
+            <td width="25%" valign="bottom">
                 <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg">
                     <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" width="70%">
                 </a>
             </td>
             <td width="75%" valign="top">
-                <h3>AКT</h3><br/>
+                <h3>AКT</h3>
                 выполнения метрологической поверки<br/>
                 <h3>№ {{ $act->number_act }} от {{ date('d-m-Y', strtotime($act->date)) }}</h3>
                 <br/>
