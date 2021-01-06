@@ -17,9 +17,9 @@
                 </a>
             </td>
             <td width="75%" valign="top">
-                AКT<br/>
+                <h3>AКT</h3><br/>
                 выполнения метрологической поверки<br/>
-                <p>№ <b>{{ $act->number_act }}</b> от <b>{{ $act->date }}</b></p>
+                <h3>№ {{ $act->number_act }} от {{ date('d-m-Y', strtotime($act->date)) }}</h3>
                 <br/>
 
                 <p>Примечание:  {{ $act->address }}</p>
@@ -28,7 +28,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }}</strong>
+                <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }}</strong>  шт.
                 признаны <strong>{{ $act->type }}</strong> к дальнейшей эксплуатации.
                 <p>
             </td>
