@@ -295,6 +295,7 @@ class MainController extends Controller
             'pin.required'  => 'ПИН-код должен быть заполнен',
         ]);
 
+
         $data['error'] = 'empty';
         // $nmbr = preg_replace('/\-/', '', request()->post('nmbr'));
         //dd((int)$nmbr);
@@ -303,34 +304,40 @@ class MainController extends Controller
         $id_3 = request()->post('id_3');
         // dd($post, $id_1,$id_2,$id_3);
 
-        $prot_id= floatval(str_pad($id_1, 3, "0", STR_PAD_LEFT).str_pad($id_2, 2, "0", STR_PAD_LEFT).str_pad($id_3, 5, "0", STR_PAD_LEFT));
+        if ($id_2==20) {
+            $prot_id = floatval(str_pad($id_1, 3, "0", STR_PAD_LEFT) . str_pad($id_2, 2, "0", STR_PAD_LEFT) . str_pad($id_3, 5, "0", STR_PAD_LEFT));
 
-        $pin = request()->post('pin');
+            $pin = request()->post('pin');
 
-        // dd((int)$prot_id);
+            // dd((int)$prot_id);
 //        dd($pin, (int)($nmbr1.$nmbr2.$nmbr3));
 
-        $protokol = Protokol::where('pin', $pin)
-            ->where('protokol_num', (int)$prot_id)
-            ->get();
-        foreach ($protokol as $item) {
-            preg_match('/(\d\d\d\d)\-(\d\d)/', $item->protokol_dt,$matches);
-            $file = preg_replace('/photos\//','',$item->protokol_photo);
-            $data['protokol_photo'] = $matches[1].'/'.$matches[2].'/'.$file;
-            $file = preg_replace('/photos\//','',$item->protokol_photo1);
-            $data['protokol_photo1'] = $matches[1].'/'.$matches[2].'/'.$file;
-            $file = preg_replace('/photos\//','',$item->meter_photo);
-            $data['meter_photo'] = $matches[1].'/'.$matches[2].'/'.$file;
-            $data['error'] = '';
-            $protokol_num = $item->protokol_num;
-            $protokol_formated_num = intval(substr($protokol_num, 0,-7)).'-'.intval(substr($protokol_num, -7,2)).'-'.intval(substr($protokol_num, -5));
+            $protokol = Protokol::where('pin', $pin)
+                ->where('protokol_num', (int)$prot_id)
+                ->get();
+            foreach ($protokol as $item) {
+                preg_match('/(\d\d\d\d)\-(\d\d)/', $item->protokol_dt, $matches);
+                $file = preg_replace('/photos\//', '', $item->protokol_photo);
+                $data['protokol_photo'] = $matches[1] . '/' . $matches[2] . '/' . $file;
+                $file = preg_replace('/photos\//', '', $item->protokol_photo1);
+                $data['protokol_photo1'] = $matches[1] . '/' . $matches[2] . '/' . $file;
+                $file = preg_replace('/photos\//', '', $item->meter_photo);
+                $data['meter_photo'] = $matches[1] . '/' . $matches[2] . '/' . $file;
+                $data['error'] = '';
+                $protokol_num = $item->protokol_num;
+                $protokol_formated_num = intval(substr($protokol_num, 0, -7)) . '-' . intval(substr($protokol_num, -7, 2)) . '-' . intval(substr($protokol_num, -5));
 
-            $data['number'] = $protokol_formated_num;
-            //request()->post('nmbr');
-        }
+                $data['number'] = $protokol_formated_num;
+                //request()->post('nmbr');
+            }
 //        dd($data);
 
-        return view('showResult', $data);
+            return view('showResult', $data);
+        }
+        else {
+            $request->id = "$id_1-$id_2-$id_3";
+            $this->showAct($request);
+        }
     }
 
 }

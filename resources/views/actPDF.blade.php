@@ -4,19 +4,22 @@
     <meta charset="utf-8">
     <title>МС-РЕСУРС</title>
     <style>
-        body { font-family: DejaVu Sans, sans-serif; }
+        body {
+            background-color: #999999;
+            font-family: DejaVu Sans, sans-serif;
+        }
         img {
             margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div align="center" style="margin: 0 auto; width: 680px; border: 1px #999999 solid; padding-left: 20px;">
+    <div align="center" style="margin: 0 auto; width: 680px; border: 1px #999999 solid; padding-left: 20px; background-color: #ffffff">
         <table width="100%" cellspacing="5" cellpadding="10">
         <tr>
             <td width="25%" valign="top">
                 <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" target="_blank">
-                    <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" height="240">
+                    <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" height="230">
                 </a>
             </td>
             <td width="75%" valign="top">
@@ -40,6 +43,7 @@
             <td colspan="2">
                 <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }} шт.</strong>
 
+
                     <strong>
                         @if ($act->meters()->get()->count()>1)
                             @if ($act->type=='пригодны')
@@ -57,6 +61,9 @@
                     </strong>
                     к дальнейшей эксплуатации.
                 <p>
+                <p style="color: #cc0000;">
+                    Внимание. Данные в Федеральный информационный фонд (ФИФ) могут передаваться до 40 дней.
+                </p>
             </td>
         </tr>
         @if($act->meters()->get()->count()>0)
@@ -64,7 +71,7 @@
         <tr>
             <td width="25%" valign="top">
                 <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" target="_blank">
-                    <img src="http://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" height="240">
+                    <img src="http://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/{{ $meter->meter_photo }}" height="230">
                 </a>
             </td>
             <td width="75%" valign="top">
