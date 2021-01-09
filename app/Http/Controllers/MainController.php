@@ -168,12 +168,12 @@ class MainController extends Controller
     {
         $id = $request->id;
         $pin = $request->pin;
+
         if (isset($id) and isset($pin)) {
             $act = $this->acts
                 ->where('number_act', $id)
                 ->where('pin', $pin)
                 ->first();
-
             if ($act) {
                 return view('actPDF', ['act' => $act]);
             }
@@ -335,8 +335,9 @@ class MainController extends Controller
             return view('showResult', $data);
         }
         else {
+
             $request->id = "$id_1-$id_2-$id_3";
-            $this->showAct($request);
+            return $this->showAct($request);
         }
     }
 
