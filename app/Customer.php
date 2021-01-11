@@ -57,6 +57,10 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
         return json_encode(['data' => $data, 'customer_id' => $customer_id]);
     }
 
+    public function acts() {
+        return $this->hasMany(Act::class)->orderBy('id', 'desc');
+    }
+
     public function protokols() {
         return $this->hasMany(Protokol::class)->orderBy('id', 'desc');
     }
