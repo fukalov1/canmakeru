@@ -34,7 +34,7 @@
 
                 @if ($act->type!='испорчен')
                     <p>Примечание:  {{ $act->address }}</p>
-                    <p>Владелец: {{ $act->name }}</p>
+                    <p>Владелец: {{ $act->miowner }}</p>
                 @endif
             </td>
         </tr>
@@ -42,10 +42,8 @@
         <tr>
             <td colspan="2">
                 <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }} шт.</strong>
-
-
                     <strong>
-                        @if ($act->meters()->get()->count()>1)
+                        @if ($act->meters()->get()->count()>0)
                             @if ($act->type=='пригодны')
                                 признаны пригодными
                             @else
