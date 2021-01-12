@@ -46,7 +46,7 @@ class ProtokolController extends Controller
         $validator = Validator::make(json_decode($request->input('data'), true), $rules);
 
 //        $validator->sometimes('meters', 'required', function($data){
-//            return $data->type !== 'брак';
+//            return $data->type !== 'испорчен';
 //        });
 
         if ($validator->fails()) {
@@ -67,23 +67,20 @@ class ProtokolController extends Controller
 
         if($customer) {
 
-            $uid = uniqid();
-            $uploaddir = 'photos/temp/';
-            $act_photo = 'act_'.$data->act->number_act.'.jpg';
-            $m_photo = 'meter_'.$uid.'.jpg';
-
-            $files = $this->checkLoadPhoto($request, $data->act->number_act);
-            if (count($files)==0) {
-                return json_encode([
-                    'result' => 2,
-                    'message' => 'Ошибка загрузки файлов! '
-                ]);
+            if ($data->act->type!=='испорчен') {
+                $uid = uniqid();
+                $files = $this->checkLoadPhoto($request, $data->act->number_act);
+                if (count($files) == 0) {
+                    return json_encode([
+                        'result' => 2,
+                        'message' => 'Ошибка загрузки файлов! '
+                    ]);
+                }
             }
 
             $lat = isset($data->act->lat) ? $data->act->lat : 0;
             $lng = isset($data->act->lng) ? $data->act->lng : 0;
             $address = isset($data->act->address) ? $data->act->address : 0;
-            $act = 0;
             if ($act = $this->act->updateOrCreate(
                 [
                     'customer_id' => $customer->id,
@@ -98,10 +95,12 @@ class ProtokolController extends Controller
                     'type' => $data->act->type,
                     'address' => $address,
                 ])) {
-                    if ($act->id > 0) {
+                    // удаление старых протоколов перед загрузкой
+                    $this->protokol->where('act_id', $act->id)->delete();
+                    if ($act->id > 0 and $data->act->type!=='испорчен') {
                         $this->addProtokol($act->id, $customer->id, $data);
+                        $this->exportPhoto($files, $data->act->date);
                     }
-                    $this->exportPhoto($files, $data->act->date);
                 }
 
             return json_encode([

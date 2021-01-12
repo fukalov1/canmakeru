@@ -46,6 +46,7 @@ class CustomerController extends AdminController
             $filter->like('name', 'ФИО');
             $filter->like('comment', 'Комментарий');
             $filter->like('code', 'Код клиента');
+            $filter->like('partner_code', 'Код партнера');
             $filter->like('email', 'E-mail');
             $filter->like('acts.number_act', 'Номер акта');
             $filter->like('protokols.protokol_num', 'Номер свидетельства');
@@ -80,7 +81,7 @@ class CustomerController extends AdminController
         }
 
         $grid->column('code', __('UID'));
-        $grid->column('partner_code', __('Код партнера'));
+        $grid->column('partner_code', __('Код партнера'))->sortable();
         $grid->name('ФИО')->display(function () {
             return '<a href="/admin/acts?set='.$this->id.'" title="Акты с поверками клиента '.$this->name.'">'.$this->name.'</a>';
         })->sortable();
@@ -325,6 +326,10 @@ class CustomerController extends AdminController
         else if ($type == 'exist')
             $new_protokols = $customer->protokols->where('exported', $package_number);
 
+        $temperature = rand(230,250)/10;
+        $hymidity = rand(31,40);
+        $pressure = rand(1008, 1019)/10;
+
         foreach ($new_protokols as $protokol) {
             if ($protokol->regNumber) {
 
@@ -349,8 +354,11 @@ class CustomerController extends AdminController
                 //dd($customer->hour_zone, $hour_zone);
 
                 $result .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
+                    <gost:miOwner>" .$protokol->act->miowner. "</gost:miOwner>
                     <gost:vrfDate>" .date("Y-m-d",strtotime($protokol->protokol_dt)) .$hour_zone. "</gost:vrfDate>
                     <gost:validDate>" . $nextTest .$hour_zone. "</gost:validDate>
+                    <gost:type>2</gost:type>
+                    <gost:calibration>false</gost:calibration>
                     <gost:applicable>
                             <gost:certNum>" . $this->getProtokolNumber($protokol->protokol_num) . "</gost:certNum>
                             <gost:signPass>false</gost:signPass>
@@ -394,6 +402,12 @@ class CustomerController extends AdminController
                 }
 
                 $result .= "\t\t</gost:means>\n";
+
+                $result .= "\t\t<gost:conditions>\n";
+                $result .= "\t\t\t<gost:temperature>$temperature</gost:temperature>\n";
+                $result .= "\t\t\t<gost:pressure>$pressure</gost:pressure>\n";
+                $result .= "\t\t\t<gost:hymidity>$hymidity</gost:hymidity>\n";
+                $result .= "\t\t</gost:conditions>\n";
 
                 if ($customer->notes) {
                     $result .= "<gost:additional_info>{$customer->notes}</gost:additional_info>";

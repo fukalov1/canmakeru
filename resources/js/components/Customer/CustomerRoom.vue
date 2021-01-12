@@ -20,6 +20,9 @@
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
+                <a class="nav-link" id="act-tab" data-toggle="tab" href="#act" role="tab" aria-controls="act" aria-selected="false">Акты</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Список поверок</a>
             </li>
             <li class="nav-item">
@@ -33,7 +36,17 @@
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="tab-pane fade show active" id="act" role="tabpanel" aria-labelledby="act-tab">
+                <div v-if="act_progress" class="row">
+                    <div class="col-12">
+                        <h3>
+                            Идет загрузка данных. Пожалуйста, ожидайте...
+                        </h3>
+                    </div>
+                </div>
+                <data-grid-act :customer_id="customer_id" :acts="this.acts" v-if="acts.length>0" v-else/>
+            </div>
+            <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div v-if="progress" class="row">
                     <div class="col-12">
                         <h3>
@@ -64,16 +77,19 @@
     import Statistic from "./Statistic";
     import StatisticDay from "../Report/StatisticDay";
     import ProfileUser from "./ProfileUser";
+    import DataGridAct from "./DataGridAct";
 
     export default {
         components: {
-            DataGrid, Statistic, StatisticDay, ProfileUser
+            DataGrid, DataGridAct, Statistic, StatisticDay, ProfileUser
         },
         data() {
             return {
                 customer_id: 0,
                 data: [],
+                acts: [],
                 protokols: [],
+                act_progress: false,
                 progress: false
             }
         },
@@ -84,6 +100,7 @@
         },
         watch: {
             customer_id: function (val) {
+                this.getActs();
                 this.getProtokols();
             }
         },
@@ -96,6 +113,7 @@
                     .then(response => {
                         this.customer_id = response.data.customer_id;
                         this.loadData();
+                        this.getActs();
                         this.getProtokols();
                     })
                     .catch(error => {
@@ -112,6 +130,21 @@
                     })
                     .catch(error => {
 
+                    });
+            },
+            getActs() {
+                this.act_progress = true;
+                axios({
+                    url: `/data/acts`,
+                    method: 'POST',
+                    data: {customer_id: this.customer_id}
+                })
+                    .then(response => {
+                        this.act_progress = false;
+                        this.acts = response.data;
+                    })
+                    .catch(error => {
+                        this.act_progress = false;
                     });
             },
             getProtokols() {

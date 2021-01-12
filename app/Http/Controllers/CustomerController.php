@@ -32,12 +32,24 @@ class CustomerController extends Controller
         return $this->customer->getWorkers();
     }
 
-    public function getDataProtokols()
+    public function getDataActs(Request $request)
     {
-        $customer_id = 0;
-        if (request()->customer_id)
-            $customer_id = request()->customer_id;
-        return $this->customer->getProtokols($customer_id);
+        $customer_id = $request->customer_id;
+        if ($customer_id) {
+            return $this->customer->find($customer_id)->acts()->get();
+        }
+            return [];
+    }
+
+    public function getDataProtokols(Request $request)
+    {
+        $customer_id = $request->customer_id;
+        if ($customer_id) {
+            return $this->customer->getProtokols($customer_id);
+        }
+        else {
+            return [];
+        }
     }
 
     public function getDataStatistic()
