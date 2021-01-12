@@ -20,10 +20,10 @@
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link" id="act-tab" data-toggle="tab" href="#act" role="tab" aria-controls="act" aria-selected="false">Акты</a>
+                <a class="nav-link active" id="act-tab" data-toggle="tab" href="#act" role="tab" aria-controls="act" aria-selected="false">Акты</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Список поверок</a>
+                <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Список поверок</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Профиль</a>
