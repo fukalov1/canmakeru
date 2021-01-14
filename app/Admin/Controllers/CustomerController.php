@@ -358,17 +358,23 @@ class CustomerController extends AdminController
                 $hour_zone = sprintf('+%02d:00', $customer->hour_zone);
                 //dd($customer->hour_zone, $hour_zone);
 
+                $result_test = "<gost:applicable>
+                    <gost:signPass>false</gost:signPass>
+                    <gost:signMi>false</gost:signMi>
+                    </gost:applicable>";
+                if ($protokol->act->type === 'непригодны') {
+                    $result_test = "<gost:inapplicable>
+                            <gost:reasons>Не соответствует метрологическим требованиям</gost:reasons>
+                        </gost:inapplicable>";
+                }
+
                 $result .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
                     <gost:miOwner>" .$protokol->act->miowner. "</gost:miOwner>
                     <gost:vrfDate>" .date("Y-m-d",strtotime($protokol->protokol_dt)) .$hour_zone. "</gost:vrfDate>
                     <gost:validDate>" . $nextTest .$hour_zone. "</gost:validDate>
                     <gost:type>2</gost:type>
                     <gost:calibration>false</gost:calibration>
-                    <gost:applicable>
-                            <gost:certNum>" . $this->getProtokolNumber($protokol->protokol_num) . "</gost:certNum>
-                            <gost:signPass>false</gost:signPass>
-                            <gost:signMi>false</gost:signMi>
-                    </gost:applicable>
+                    ".$result_test."
                     <gost:docTitle>" . $protokol->checkMethod . "</gost:docTitle>\n";
 
                 $result .= "\t\t<gost:means>\n";
