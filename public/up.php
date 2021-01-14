@@ -1,7 +1,9 @@
 <?php
 
-header('Location: https://pin.poverkadoma.ru/up?id='.$_REQUEST['id'].'&pin='.$_REQUEST['pin']);
-exit;
+if(preg_match("/\-/", $_REQUEST['id'])) {
+    header('Location: https://pin.poverkadoma.ru/up?id=' . $_REQUEST['id'] . '&pin=' . $_REQUEST['pin']);
+    exit;
+}
 
 
 ?>
@@ -73,13 +75,13 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die('Error : ('. $conn->connect_errno .') '. $mysqli->connect_error);
 }
+
 if (isset($_REQUEST['id'])) {
     $prot_id = floatval($_REQUEST['id']);
 } else {
     $prot_id= floatval(str_pad($_REQUEST['id_1'], 3, "0", STR_PAD_LEFT).str_pad($_REQUEST['id_2'], 2, "0", STR_PAD_LEFT).str_pad($_REQUEST['id_3'], 5, "0", STR_PAD_LEFT));
-
 }
-// echo $prot_id;
+
 
 $stmt = $conn->prepare("SELECT protokol_num, pin, protokol_photo, meter_photo, protokol_photo1, protokol_dt FROM protokols where protokol_num=? and pin=? order by updated_dt desc");
 $stmt->bind_param("ii", $prot_id, $_REQUEST['pin']);
