@@ -246,7 +246,7 @@ class CustomerController extends AdminController
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
 
-        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
 
         $customers = Customer::where('export_fgis',1)->get();
 
@@ -255,7 +255,7 @@ class CustomerController extends AdminController
             // подготовливаем xml по результатам поверок
             $protokols .= $this->prepareData($customer, $package_number);
         }
-        $protokols .= "</gost:application>";
+        $protokols .= "</application>";
 
         return response()->stream(function () use ($protokols)  {
             echo $protokols;
@@ -274,14 +274,14 @@ class CustomerController extends AdminController
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
 
-        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
 
         $customer = Customer::find($id);
 
         // подготовливаем xml по результатам поверок
         $protokols .= $this->prepareData($customer, $package_number);
 
-        $protokols .= "</gost:application>";
+        $protokols .= "</application>";
 
         return response()->stream(function () use ($protokols)  {
             echo $protokols;
@@ -300,7 +300,7 @@ class CustomerController extends AdminController
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
 
-        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
 
         $customers = Customer::where('export_fgis',1)->get();
 
@@ -308,7 +308,7 @@ class CustomerController extends AdminController
             // подготовливаем xml по результатам поверок
             $protokols .= $this->prepareData($customer, $package_number, 'exist');
         }
-        $protokols .= "</gost:application>";
+        $protokols .= "</application>";
 
 
         return response()->stream(function () use ($protokols)  {
@@ -338,15 +338,15 @@ class CustomerController extends AdminController
         foreach ($new_protokols as $protokol) {
             if ($protokol->regNumber) {
 
-                $result .= "\t<gost:result>\n";
+                $result .= "\t<result>\n";
 
-                $result .= "\t\t<gost:miInfo>
-                    <gost:singleMI>
-                            <gost:mitypeNumber>" . $protokol->regNumber . "</gost:mitypeNumber>
-                            <gost:manufactureNum>" . $protokol->serialNumber . "</gost:manufactureNum>
-                            <gost:modification>" . $protokol->siType . "</gost:modification>
-                    </gost:singleMI>
-                </gost:miInfo>\n";
+                $result .= "\t\t<miInfo>
+                    <singleMI>
+                            <mitypeNumber>" . $protokol->regNumber . "</mitypeNumber>
+                            <manufactureNum>" . $protokol->serialNumber . "</manufactureNum>
+                            <modification>" . $protokol->siType . "</modification>
+                    </singleMI>
+                </miInfo>\n";
 
                 $nextTest = null;
                 if ((int)$protokol->checkInterval > 0) {
@@ -358,79 +358,79 @@ class CustomerController extends AdminController
                 $hour_zone = sprintf('+%02d:00', $customer->hour_zone);
                 //dd($customer->hour_zone, $hour_zone);
 
-                $result_test = "<gost:applicable>
-                    <gost:signPass>false</gost:signPass>
-                    <gost:signMi>false</gost:signMi>
-                    </gost:applicable>";
+                $result_test = "<applicable>
+                    <signPass>false</signPass>
+                    <signMi>false</signMi>
+                    </applicable>";
                 if ($protokol->act->type === 'непригодны') {
-                    $result_test = "<gost:inapplicable>
-                            <gost:reasons>Не соответствует метрологическим требованиям</gost:reasons>
-                        </gost:inapplicable>";
+                    $result_test = "<inapplicable>
+                            <reasons>Не соответствует метрологическим требованиям</reasons>
+                        </inapplicable>";
                 }
 
-                $result .= "\t\t<gost:signCipher>" . config('signCipher', 'ГСЧ') . "</gost:signCipher>
-                    <gost:miOwner>" .$protokol->act->miowner. "</gost:miOwner>
-                    <gost:vrfDate>" .date("Y-m-d",strtotime($protokol->protokol_dt)) .$hour_zone. "</gost:vrfDate>
-                    <gost:validDate>" . $nextTest .$hour_zone. "</gost:validDate>
-                    <gost:type>2</gost:type>
-                    <gost:calibration>false</gost:calibration>
+                $result .= "\t\t<signCipher>" . config('signCipher', 'ГСЧ') . "</signCipher>
+                    <miOwner>" .$protokol->act->miowner. "</miOwner>
+                    <vrfDate>" .date("Y-m-d",strtotime($protokol->protokol_dt)) .$hour_zone. "</vrfDate>
+                    <validDate>" . $nextTest .$hour_zone. "</validDate>
+                    <type>2</type>
+                    <calibration>false</calibration>
                     ".$result_test."
-                    <gost:docTitle>" . $protokol->checkMethod . "</gost:docTitle>\n";
+                    <docTitle>" . $protokol->checkMethod . "</docTitle>\n";
 
-                $result .= "\t\t<gost:means>\n";
+                $result .= "\t\t<means>\n";
 
                 if ($customer->ideal) {
                     $ideal = $customer->ideal ? $customer->ideal : '3.2.ВЮМ.0023.2019';
-                    $result .= "\t\t\t<gost:uve>
-                                <gost:number>$ideal</gost:number>
-                        </gost:uve>\n";
+                    $result .= "\t\t\t<uve>
+                                <number>$ideal</number>
+                        </uve>\n";
                 }
                 else if ($customer->ci_as_ideal) {
-                    $result .= "\t\t\t<gost:mieta>
-                                <gost:number>{$customer->ci_as_ideal}</gost:number>
-                        </gost:mieta>\n";
+                    $result .= "\t\t\t<mieta>
+                                <number>{$customer->ci_as_ideal}</number>
+                        </mieta>\n";
                 }
                 else if ($customer->ci_as_ideal_fake) {
-                    $result .= "\t\t\t<gost:mieta>
-                                <gost:number>{$customer->ci_as_ideal_fake}</gost:number>
-                        </gost:mieta>\n";
+                    $result .= "\t\t\t<mieta>
+                                <number>{$customer->ci_as_ideal_fake}</number>
+                        </mieta>\n";
                 }
                 else if ($customer->get) {
-                    $result .= "\t\t\t<gost:npe>
-                                <gost:number>{$customer->get}</gost:number>
-                        </gost:npe>\n";
+                    $result .= "\t\t\t<npe>
+                                <number>{$customer->get}</number>
+                        </npe>\n";
                 }
                 if(!$customer->customer_tools) {
-                    $result .= "\t\t\t<gost:mis>\n";
+                    $result .= "\t\t\t<mis>\n";
                     foreach ($customer->customer_tools as $customer_tool) {
 
-                        $result .= "\t\t\t\t<gost:mi>
-                                <gost:typeNum>{$customer_tool->typeNum}</gost:typeNum>
-                                <gost:manufactureNum>{$customer_tool->manufactureNum}</gost:manufactureNum>
-                            </gost:mi>\n";
+                        $result .= "\t\t\t\t<mi>
+                                <typeNum>{$customer_tool->typeNum}</typeNum>
+                                <manufactureNum>{$customer_tool->manufactureNum}</manufactureNum>
+                            </mi>\n";
                     }
-                    $result .= "\t\t\t</gost:mis>\n";
+                    $result .= "\t\t\t</mis>\n";
                 }
 
-                $result .= "\t\t</gost:means>\n";
+                $result .= "\t\t</means>\n";
 
-                $result .= "\t\t<gost:conditions>\n";
-                $result .= "\t\t\t<gost:temperature>$temperature</gost:temperature>\n";
-                $result .= "\t\t\t<gost:pressure>$pressure</gost:pressure>\n";
-                $result .= "\t\t\t<gost:hymidity>$hymidity</gost:hymidity>\n";
+                $result .= "\t\t<conditions>\n";
+                $result .= "\t\t\t<temperature>$temperature</temperature>\n";
+                $result .= "\t\t\t<pressure>$pressure</pressure>\n";
+                $result .= "\t\t\t<hymidity>$hymidity</hymidity>\n";
 //                if ($protokol->type_water=='XB') {
-//                    $result .= "\t\t\t<gost:cold_water>$cold_water</gost:cold_water>\n";
+//                    $result .= "\t\t\t<cold_water>$cold_water</cold_water>\n";
 //                }
 //                else {
-//                    $result .= "\t\t\t<gost:hot_water>$hot_water</gost:hot_water>\n";
+//                    $result .= "\t\t\t<hot_water>$hot_water</hot_water>\n";
 //                }
-                $result .= "\t\t</gost:conditions>\n";
+                $result .= "\t\t</conditions>\n";
 
                 if ($customer->notes) {
-                    $result .= "<gost:additional_info>{$customer->notes}</gost:additional_info>";
+                    $result .= "<additional_info>{$customer->notes}</additional_info>";
                 }
 
-                $result .= "\t</gost:result>\n";
+                $result .= "\t</result>\n";
 
                 if ($type == 'new') {
                     Protokol::find($protokol->id)
@@ -450,7 +450,7 @@ class CustomerController extends AdminController
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
 
-        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<gost:application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
 
 
 
@@ -479,48 +479,48 @@ class CustomerController extends AdminController
             foreach ($data as $protokol) {
                 if ($protokol[0]) {
 
-                    $protokols .= "\t<gost:result>\n";
+                    $protokols .= "\t<result>\n";
 
-                    $protokols .= "\t\t<gost:miInfo>
-                    <gost:singleMI>
-                            <gost:mitypeNumber>" . $protokol[0] . "</gost:mitypeNumber>
-                            <gost:manufactureNum>" . $protokol[2] . "</gost:manufactureNum>
-                            <gost:modification>" . $protokol[1] . "</gost:modification>
-                    </gost:singleMI>
-                </gost:miInfo>\n";
+                    $protokols .= "\t\t<miInfo>
+                    <singleMI>
+                            <mitypeNumber>" . $protokol[0] . "</mitypeNumber>
+                            <manufactureNum>" . $protokol[2] . "</manufactureNum>
+                            <modification>" . $protokol[1] . "</modification>
+                    </singleMI>
+                </miInfo>\n";
 
 
                     $hour_zone = sprintf('+0%d:00', $protokol[13]);
 //dd($protokol[3], strtotime($protokol[3]));
-                    $protokols .= "\t\t<gost:signCipher>" . $protokol[14] . "</gost:signCipher>
-                    <gost:vrfDate>" .date("Y-m-d",strtotime($protokol[3])).$hour_zone. "</gost:vrfDate>
-                    <gost:validDate>" . date("Y-m-d",strtotime($protokol[4])) .$hour_zone. "</gost:validDate>
-                    <gost:applicable>
-                            <gost:certNum>" . $protokol[7] . "</gost:certNum>
-                            <gost:signPass>false</gost:signPass>
-                            <gost:signMi>false</gost:signMi>
-                    </gost:applicable>
-                    <gost:docTitle>" . $protokol[5] . "</gost:docTitle>\n";
+                    $protokols .= "\t\t<signCipher>" . $protokol[14] . "</signCipher>
+                    <vrfDate>" .date("Y-m-d",strtotime($protokol[3])).$hour_zone. "</vrfDate>
+                    <validDate>" . date("Y-m-d",strtotime($protokol[4])) .$hour_zone. "</validDate>
+                    <applicable>
+                            <certNum>" . $protokol[7] . "</certNum>
+                            <signPass>false</signPass>
+                            <signMi>false</signMi>
+                    </applicable>
+                    <docTitle>" . $protokol[5] . "</docTitle>\n";
 
-                    $protokols .= "\t\t<gost:means>\n";
+                    $protokols .= "\t\t<means>\n";
 
                     if ($protokol[8]) {
-                        $protokols .= "\t\t\t<gost:npe>
-                                <gost:number>$protokol[8]</gost:number>
-                        </gost:npe>\n";
+                        $protokols .= "\t\t\t<npe>
+                                <number>$protokol[8]</number>
+                        </npe>\n";
                     }
                     else if ($protokol[9]) {
-                        $protokols .= "\t\t\t<gost:uve>
-                                <gost:number>$protokol[9]</gost:number>
-                        </gost:uve>\n";
+                        $protokols .= "\t\t\t<uve>
+                                <number>$protokol[9]</number>
+                        </uve>\n";
                     }
                     else if ($protokol[10]) {
-                        $protokols .= "\t\t\t<gost:mieta>
-                                <gost:number>{$protokol[10]}</gost:number>
-                        </gost:mieta>\n";
+                        $protokols .= "\t\t\t<mieta>
+                                <number>{$protokol[10]}</number>
+                        </mieta>\n";
                     }
 
-                    $protokols .= "\t\t\t<gost:mis>\n";
+                    $protokols .= "\t\t\t<mis>\n";
                     $customer_tools = explode('|', $protokol[11]);
                     foreach ($customer_tools as $customer_tool) {
 //                        dd($customer_tool);
@@ -528,26 +528,26 @@ class CustomerController extends AdminController
 //                        dd($item);
                         if (is_array($item)) {
                             if (count($item)==2) {
-                                $protokols .= "\t\t\t\t<gost:mi>
-                                <gost:typeNum>{$item[0]}</gost:typeNum>
-                                <gost:manufactureNum>{$item[1]}</gost:manufactureNum>
-                            </gost:mi>\n";
+                                $protokols .= "\t\t\t\t<mi>
+                                <typeNum>{$item[0]}</typeNum>
+                                <manufactureNum>{$item[1]}</manufactureNum>
+                            </mi>\n";
                             }
                         }
                     }
-                    $protokols .= "\t\t\t</gost:mis>\n";
+                    $protokols .= "\t\t\t</mis>\n";
 
-                    $protokols .= "\t\t</gost:means>\n";
+                    $protokols .= "\t\t</means>\n";
 
                     if ($protokol[12]) {
-                        $protokols .= "<gost:additional_info>{$protokol[12]}</gost:additional_info>";
+                        $protokols .= "<additional_info>{$protokol[12]}</additional_info>";
                     }
 
-                    $protokols .= "\t</gost:result>\n";
+                    $protokols .= "\t</result>\n";
                 }
             }
 
-            $protokols .= "</gost:application>";
+            $protokols .= "</application>";
 //dd($protokols);
 
             return response()->stream(function () use ($protokols)  {
