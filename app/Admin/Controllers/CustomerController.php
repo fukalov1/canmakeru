@@ -418,12 +418,12 @@ class CustomerController extends AdminController
                 $result .= "\t\t\t<gost:temperature>$temperature</gost:temperature>\n";
                 $result .= "\t\t\t<gost:pressure>$pressure</gost:pressure>\n";
                 $result .= "\t\t\t<gost:hymidity>$hymidity</gost:hymidity>\n";
-                if ($protokol->type_water=='XB') {
-                    $result .= "\t\t\t<gost:cold_water>$cold_water</gost:cold_water>\n";
-                }
-                else {
-                    $result .= "\t\t\t<gost:hot_water>$hot_water</gost:hot_water>\n";
-                }
+//                if ($protokol->type_water=='XB') {
+//                    $result .= "\t\t\t<gost:cold_water>$cold_water</gost:cold_water>\n";
+//                }
+//                else {
+//                    $result .= "\t\t\t<gost:hot_water>$hot_water</gost:hot_water>\n";
+//                }
                 $result .= "\t\t</gost:conditions>\n";
 
                 if ($customer->notes) {
