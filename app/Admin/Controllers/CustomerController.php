@@ -293,6 +293,8 @@ class CustomerController extends AdminController
     {
 
         $package_number = \request()->package_number;
+        $date1 = \request()->date1;
+        $date2 = \request()->date2;
 
         $date = date('Y-m-d', time());
         $headers = array(
@@ -306,7 +308,7 @@ class CustomerController extends AdminController
 
         foreach ($customers as $customer) {
             // подготовливаем xml по результатам поверок
-            $protokols .= $this->prepareData($customer, $package_number, 'exist');
+            $protokols .= $this->prepareData($customer, $package_number, 'exist', $date1 , $date2);
         }
         $protokols .= "</application>";
 
@@ -317,15 +319,25 @@ class CustomerController extends AdminController
 
     }
 
-    private function prepareData($customer, $package_number, $type = 'new')
+    private function prepareData($customer, $package_number, $type = 'new', $date1 = null, $date2 = null)
     {
         $result = '';
 
         // выбираем поверки клиента либо новые, либо из пакета
         if ($type == 'new')
             $new_protokols = $customer->new_protokols;
-        else if ($type == 'exist')
-            $new_protokols = $customer->protokols->where('exported', $package_number);
+        else if ($type == 'exist') {
+            $new_protokols = $customer->protokols
+                ->where('exported', $package_number);
+
+            if ($date1 and $date2) {
+                $new_protokols = $new_protokols->where('protokol_dt', '>', "$date1 00:00:00")
+                    ->where('protokol_dt', '<=', "$date2 23:59:59");
+            }
+
+//            dd($new_protokols, $date1, $date2);
+
+        }
 
         $new_protokols = $new_protokols;
 

@@ -45,6 +45,11 @@
         <div class="col-lg-12">
             <label>Номер пакета</label>
             <input type="text" name="package_number" value="{{ config('package_number', 1) }}" placeholder="номер пакета"><br/>
+            <label>Дата1</label>
+            <input type="text" name="date1" value="" placeholder="yyyy-mm-dd"><br/>
+            <label>Дата2</label>
+            <input type="text" name="date2" value="" placeholder="yyyy-mm-dd">
+            <br/>
             <button type="reset" class="btn btn-default">сбросить</button>
             <button type="submit" class="btn btn-info" id="convertXlsToXML">старт</button>
         </div>
