@@ -310,6 +310,7 @@ class CustomerController extends AdminController
         }
         $protokols .= "</gost:application>";
 
+
         return response()->stream(function () use ($protokols)  {
             echo $protokols;
         }, 200, $headers);
@@ -326,9 +327,13 @@ class CustomerController extends AdminController
         else if ($type == 'exist')
             $new_protokols = $customer->protokols->where('exported', $package_number);
 
+        $new_protokols = $new_protokols;
+
         $temperature = rand(230,250)/10;
         $hymidity = rand(31,40);
         $pressure = rand(1008, 1019)/10;
+        $cold_water = rand(60, 100)/10;
+        $hot_water = rand(500, 700)/10;
 
         foreach ($new_protokols as $protokol) {
             if ($protokol->regNumber) {
@@ -407,6 +412,12 @@ class CustomerController extends AdminController
                 $result .= "\t\t\t<gost:temperature>$temperature</gost:temperature>\n";
                 $result .= "\t\t\t<gost:pressure>$pressure</gost:pressure>\n";
                 $result .= "\t\t\t<gost:hymidity>$hymidity</gost:hymidity>\n";
+                if ($protokol->type_water=='XB') {
+                    $result .= "\t\t\t<gost:cold_water>$cold_water</gost:cold_water>\n";
+                }
+                else {
+                    $result .= "\t\t\t<gost:hot_water>$hot_water</gost:hot_water>\n";
+                }
                 $result .= "\t\t</gost:conditions>\n";
 
                 if ($customer->notes) {

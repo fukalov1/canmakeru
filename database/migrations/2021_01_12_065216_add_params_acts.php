@@ -14,10 +14,10 @@ class AddParamsActs extends Migration
     public function up()
     {
         Schema::table('acts', function (Blueprint $table) {
-            $table->string('temperature')->default('24');
-            $table->string('hymidity')->default('32');
-            $table->string('cold_water')->default('10');
-            $table->string('hot_water')->default('60');
+            $table->string('temperature')->default('24,2');
+            $table->string('hymidity')->default('36');
+            $table->string('cold_water')->default('7,9');
+            $table->string('hot_water')->default('62,7');
         });
     }
 
@@ -29,7 +29,10 @@ class AddParamsActs extends Migration
     public function down()
     {
         Schema::table('acts', function (Blueprint $table) {
-            //
+            $table->dropColumn('temperature');
+            $table->dropColumn('hymidity');
+            $table->dropColumn('cold_water');
+            $table->dropColumn('hot_water');
         });
     }
 }
