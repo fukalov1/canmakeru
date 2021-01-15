@@ -49,8 +49,8 @@ class CustomerController extends AdminController
             $filter->like('partner_code', 'Код партнера');
             $filter->like('email', 'E-mail');
             $filter->like('acts.number_act', 'Номер акта');
-            $filter->like('protokols.serialNumber', 'Номер свидетельства');
             $filter->like('protokols.protokol_num', 'Номер свидетельства');
+            $filter->like('protokols.serialNumber', 'Заводской номер');
             $filter->equal('enabled')->radio([
                 ''   => 'Все',
                 0    => 'Не активны',
