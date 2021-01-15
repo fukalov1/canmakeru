@@ -49,6 +49,7 @@ class CustomerController extends AdminController
             $filter->like('partner_code', 'Код партнера');
             $filter->like('email', 'E-mail');
             $filter->like('acts.number_act', 'Номер акта');
+            $filter->like('protokols.serialNumber', 'Номер свидетельства');
             $filter->like('protokols.protokol_num', 'Номер свидетельства');
             $filter->equal('enabled')->radio([
                 ''   => 'Все',
@@ -246,7 +247,7 @@ class CustomerController extends AdminController
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
 
-        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-06-19\">\n";
 
         $customers = Customer::where('export_fgis',1)->get();
 
@@ -274,7 +275,7 @@ class CustomerController extends AdminController
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
 
-        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns:gost=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-06-19\">\n";
 
         $customer = Customer::find($id);
 
@@ -302,7 +303,7 @@ class CustomerController extends AdminController
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
 
-        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-04-14\">\n";
+        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-06-19\">\n";
 
         $customers = Customer::where('export_fgis',1)->get();
 
@@ -322,10 +323,13 @@ class CustomerController extends AdminController
     private function prepareData($customer, $package_number, $type = 'new', $date1 = null, $date2 = null)
     {
         $result = '';
+        $package_update = false;
 
         // выбираем поверки клиента либо новые, либо из пакета
-        if ($type == 'new')
+        if ($type == 'new') {
             $new_protokols = $customer->new_protokols;
+            $package_update = true;
+        }
         else if ($type == 'exist') {
             $new_protokols = $customer->protokols
                 ->where('exported', $package_number);
@@ -333,10 +337,8 @@ class CustomerController extends AdminController
             if ($date1 and $date2) {
                 $new_protokols = $new_protokols->where('protokol_dt', '>', "$date1 00:00:00")
                     ->where('protokol_dt', '<=', "$date2 23:59:59");
+                $package_update = true;
             }
-
-//            dd($new_protokols, $date1, $date2);
-
         }
 
         $new_protokols = $new_protokols;
@@ -444,7 +446,7 @@ class CustomerController extends AdminController
 
                 $result .= "\t</result>\n";
 
-                if ($type == 'new') {
+                if ($package_update) {
                     Protokol::find($protokol->id)
                         ->update(['exported' => $package_number]);
                 }
