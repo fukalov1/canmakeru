@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Http\Requests\ActDataRequest;
 use App\Act;
+use App\Pressure;
 use App\Protokol;
 use Illuminate\Http\Request;
 use App\Http\Requests\ActRequest;
@@ -81,6 +82,13 @@ class ProtokolController extends Controller
             $lat = isset($data->act->lat) ? $data->act->lat : 0;
             $lng = isset($data->act->lng) ? $data->act->lng : 0;
             $address = isset($data->act->address) ? $data->act->address : 0;
+
+            $temperature = rand(230,250)/10;
+            $hymidity = rand(31,40);
+            $pressure = $this->getPressure($customer->id);
+            $cold_water = rand(60, 100)/10;
+            $hot_water = rand(500, 700)/10;
+
             if ($act = $this->act->updateOrCreate(
                 [
                     'customer_id' => $customer->id,
@@ -94,6 +102,10 @@ class ProtokolController extends Controller
                     'lng' => $lng,
                     'type' => $data->act->type,
                     'address' => $address,
+                    'temperature' => $temperature,
+                    'hymidity' => $hymidity,
+                    'cold_water' => $cold_water,
+                    'hot_water' => $hot_water,
                 ])) {
                     // удаление старых протоколов перед загрузкой
                     $this->protokol->where('act_id', $act->id)->delete();
@@ -225,6 +237,30 @@ class ProtokolController extends Controller
             $result = $output===true ? "Export files $file to Yandex.disk successfully" : "Don't export file $file. Error: $output";
             Log::channel($this->log)->info("Экспорт файла $file: $result");
         }
+    }
+
+    private function getPressure($customer_id, $date=null)
+    {
+        $result = rand(1008, 1019)/10;
+        if (!isset($date)) {
+            $date = date('Y-m-d', time());
+        }
+        $pressures = new Pressure();
+        $pressure = $pressures
+            ->where('customer_id', $customer_id)
+            ->where('date', $date)->first();
+        if ($customer_id and $pressure) {
+            $result = $pressure->value;
+        }
+        elseif ($customer_id) {
+            $pressures->customer_id = $customer_id;
+            $pressures->date = $date;
+            $pressures->value = $result;
+            $pressures->save();
+        }
+
+        return $result;
+
     }
 
 }

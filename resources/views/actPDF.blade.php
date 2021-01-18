@@ -43,14 +43,15 @@
             <td colspan="2">
                 <p>На основании результатов метрологической поверки ИПУ, в количестве <strong>{{ $act->meters()->get()->count() }} шт.</strong>
                     <strong>
-                        @if ($act->meters()->get()->count()>0)
-                            @if ($act->type=='пригодны')
+                        @if ($act->type=='пригодны')
+
+                            @if ($act->meters()->get()->count()>1)
                                 признаны пригодными
                             @else
                                 признан пригодным
                             @endif
                         @else
-                            @if ($act->type=='непригодны')
+                            @if ($act->meters()->get()->count()>1)
                                 признаны непригодными
                             @else
                                 признан непригодным

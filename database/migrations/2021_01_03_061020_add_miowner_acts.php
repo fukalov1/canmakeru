@@ -14,7 +14,7 @@ class AddMiownerActs extends Migration
     public function up()
     {
         Schema::table('acts', function (Blueprint $table) {
-            $table->string('miowner')->nullable();
+            $table->string('miowner')->nullable()->default('физ. лицо');
         });
     }
 

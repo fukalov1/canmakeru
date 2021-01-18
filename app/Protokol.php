@@ -22,6 +22,11 @@ class Protokol extends Model
         return $this->belongsTo(Act::class);
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
     /**
      * @param $filename
      * @param $path

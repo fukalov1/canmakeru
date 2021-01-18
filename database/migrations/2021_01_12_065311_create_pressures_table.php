@@ -17,7 +17,7 @@ class CreatePressuresTable extends Migration
             $table->id();
             $table->integer('customer_id')->unsigned();
             $table->datetime('date');
-            $table->string('value');
+            $table->string('value')->default('101,2');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
         });

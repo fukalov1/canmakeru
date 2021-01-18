@@ -39,6 +39,10 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
         return $this->hasMany(CustomerTool::class, 'customer_id');
     }
 
+    public function pressures() {
+        return $this->hasMany(Pressure::class);
+    }
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);

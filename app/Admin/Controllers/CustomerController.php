@@ -6,6 +6,7 @@ use App\Admin\Actions\Post\ExportOneFgis;
 use App\Admin\Actions\Post\Slave;
 use App\AdminConfig;
 use App\Customer;
+use App\Pressure;
 use App\Protokol;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
@@ -343,14 +344,16 @@ class CustomerController extends AdminController
 
         $new_protokols = $new_protokols;
 
-        $temperature = rand(230,250)/10;
-        $hymidity = rand(31,40);
-        $pressure = rand(1008, 1019)/10;
-        $cold_water = rand(60, 100)/10;
-        $hot_water = rand(500, 700)/10;
+//        $temperature = rand(230,250)/10;
+//        $hymidity = rand(31,40);
+//        $pressure = rand(1008, 1019)/10;
+//        $cold_water = rand(60, 100)/10;
+//        $hot_water = rand(500, 700)/10;
 
         foreach ($new_protokols as $protokol) {
             if ($protokol->regNumber) {
+
+                $pressure = $this->getPressure($customer->id, date('Y-m-d', strtotime($protokol->protokol_dt)));
 
                 $result .= "\t<result>\n";
 
@@ -429,9 +432,9 @@ class CustomerController extends AdminController
                 $result .= "\t\t</means>\n";
 
                 $result .= "\t\t<conditions>\n";
-                $result .= "\t\t\t<temperature>$temperature</temperature>\n";
+                $result .= "\t\t\t<temperature>".$protokol->act->temperature."</temperature>\n";
                 $result .= "\t\t\t<pressure>$pressure</pressure>\n";
-                $result .= "\t\t\t<hymidity>$hymidity</hymidity>\n";
+                $result .= "\t\t\t<hymidity>".$protokol->act->hymidity."</hymidity>\n";
 //                if ($protokol->type_water=='XB') {
 //                    $result .= "\t\t\t<cold_water>$cold_water</cold_water>\n";
 //                }
@@ -592,6 +595,17 @@ class CustomerController extends AdminController
         $admin_config = AdminConfig::where('name', 'package_number')->update(['value' => $package_number]);
 
         return $package_number;
+    }
+
+    private function getPressure($customer_id, $date)
+    {
+        $result = rand(1008, 1019)/10;
+        $pressure = Pressure::where('customer_id', $customer_id)
+            ->where('date', $date )->first();
+        if ($pressure) {
+            $result = $pressure->value();
+        }
+        return $result;
     }
 
 }

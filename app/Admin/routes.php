@@ -20,6 +20,10 @@ Route::group([
     $router->resource('acts', ActController::class)->middleware('set_customer');
     $router->resource('protokols', ProtokolController::class)->middleware('set_act');
 
+    $router->resource('all-acts', AllActController::class);
+    $router->resource('all-protokols', AllProtokolController::class);
+
+
     $router->resource('transactions', TrancactionControler::class)->middleware('set_customer');
     $router->resource('checks', CheckController::class)->middleware('set_customer');
 
