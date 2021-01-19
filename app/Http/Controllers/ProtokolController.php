@@ -28,6 +28,12 @@ class ProtokolController extends Controller
         $this->log = self::LOG_CHANNEL;
     }
 
+    /***
+     * @param ActRequest $request
+     * @return false|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|string
+     *  Загрузка актов о поверках со
+     *   свидетельствами
+     */
     public function uploadData(ActRequest $request)
     {
         $request->validated();
@@ -160,8 +166,6 @@ class ProtokolController extends Controller
 
     public function exportXml2Fgis(Request $request)
     {
-
-
         $date = date('Y-m-d', time());
 //        $headers = array(
 //            'Content-Type' => 'text/xml',

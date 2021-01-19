@@ -291,9 +291,13 @@ class CustomerController extends AdminController
 
     }
 
+    /***
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     * повторная пакетная выгрузка данных о поверках
+     * во ФГИС Аршин по номеру пакета за указанный период
+     */
     public function exportPackageXmlToFGIS()
     {
-
         $package_number = \request()->package_number;
         $date1 = \request()->date1;
         $date2 = \request()->date2;
@@ -339,16 +343,15 @@ class CustomerController extends AdminController
                 $new_protokols = $new_protokols->where('protokol_dt', '>', "$date1 00:00:00")
                     ->where('protokol_dt', '<=', "$date2 23:59:59");
                 $package_update = true;
+
+                // получаем новый номер пакета для выгрузки нулевых св-в при повторной загрузке за период
+                if ($package_number==0) {
+                    $package_number = $this->updatePackageNumber();
+                }
             }
         }
 
         $new_protokols = $new_protokols;
-
-//        $temperature = rand(230,250)/10;
-//        $hymidity = rand(31,40);
-//        $pressure = rand(1008, 1019)/10;
-//        $cold_water = rand(60, 100)/10;
-//        $hot_water = rand(500, 700)/10;
 
         foreach ($new_protokols as $protokol) {
             if ($protokol->regNumber) {
