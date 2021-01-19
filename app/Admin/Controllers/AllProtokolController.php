@@ -80,6 +80,7 @@ class AllProtokolController extends AdminController
         }
         $grid->model()->orderBy('protokol_dt', 'desc');
 
+        $grid->column('customer.name', __('Поверитель'))->sortable();
         $grid->column('protokol_num', __('№ свид-ва'))->sortable();
         $grid->column('protokol_dt', __('Дата свид-ва'))->sortable();
         $grid->column('pin', __('Pin'));

@@ -59,6 +59,8 @@ class AllActController extends AdminController
 
         $grid->model()->orderBy('created_at', 'desc');
 
+        $grid->column('customer.name', __('Поверитель'))->sortable();
+
         $grid->column('number_act', __('Номер акта'))->display(function () {
             $name = $this->name ? "({$this->name})" : '';
             return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.' '.$name.'</a>';
