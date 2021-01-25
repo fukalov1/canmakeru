@@ -50,8 +50,6 @@ if (empty($siType)||empty($waterType)||empty($regNumber)||empty($serialNumber)||
 $stmt->close();
 
 $uid = uniqid();
-$uid1 = uniqid();
-$uid2 = uniqid();
 
 $uploaddir = 'photos/temp/';
 $p_photo = 'protokol_'.$uid.'.jpg';

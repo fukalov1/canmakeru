@@ -151,6 +151,7 @@ class Protokol extends Model
 
     }
 
+
     private function getFileSize($filename) {
         return filesize($filename);
     }

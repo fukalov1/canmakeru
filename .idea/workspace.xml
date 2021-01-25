@@ -135,6 +135,7 @@
       <change beforePath="$PROJECT_DIR$/resources/js/components/Customer/DataGrid.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer/DataGrid.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Customer/ProfileUser.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer/ProfileUser.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/passwords.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/passwords.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/actPDF.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/actPDF.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/serviceDashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/serviceDashboard.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/showResult.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/showResult.blade.php" afterDir="false" />
@@ -2570,7 +2571,8 @@
       <workItem from="1610342297026" duration="17836000" />
       <workItem from="1610629939674" duration="10179000" />
       <workItem from="1610960800985" duration="11819000" />
-      <workItem from="1611044487138" duration="163000" />
+      <workItem from="1611044487138" duration="816000" />
+      <workItem from="1611594699422" duration="8761000" />
     </task>
     <servers />
   </component>

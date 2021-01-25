@@ -17,12 +17,12 @@
     <div align="center" style="margin: 0 auto; width: 680px; border: 1px #999999 solid; padding-left: 20px; background-color: #ffffff">
         <table width="100%" cellspacing="5" cellpadding="10">
         <tr>
-            <td width="25%" valign="top">
-                <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" target="_blank">
-                    <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" height="230">
-                </a>
-            </td>
-            <td width="75%" valign="top">
+{{--            <td width="25%" valign="top">--}}
+{{--                <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" target="_blank">--}}
+{{--                    <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" height="230">--}}
+{{--                </a>--}}
+{{--            </td>--}}
+            <td colspan="2" valign="top" align="center">
                 @if ($act->type!='испорчен')
                     <h3>AКT</h3>
                     выполнения метрологической поверки<br/>
@@ -32,10 +32,10 @@
                 <h3>№ {{ $act->number_act }} от {{ date('d-m-Y', strtotime($act->date)) }}</h3>
                 <br/>
 
-                @if ($act->type!='испорчен')
-                    <p>Примечание:  {{ $act->address }}</p>
-                    <p>Владелец: {{ $act->miowner }}</p>
-                @endif
+{{--                @if ($act->type!='испорчен')--}}
+{{--                    <p>Примечание:  {{ $act->address }}</p>--}}
+{{--                    <p>Владелец: {{ $act->miowner }}</p>--}}
+{{--                @endif--}}
             </td>
         </tr>
         @if ($act->type!='испорчен')

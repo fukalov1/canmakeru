@@ -72,11 +72,12 @@ class ProtokolController extends Controller
             ->where('enabled',1)
             ->first();
 
+        $uid = uniqid();
         if($customer) {
 
             if ($data->act->type!=='испорчен') {
-                $uid = uniqid();
-                $files = $this->checkLoadPhoto($request, $data->act->number_act);
+
+                $files = $this->checkLoadPhoto($request, $uid);
                 if (count($files) == 0) {
                     return json_encode([
                         'result' => 2,
@@ -116,7 +117,7 @@ class ProtokolController extends Controller
                     // удаление старых протоколов перед загрузкой
                     $this->protokol->where('act_id', $act->id)->delete();
                     if ($act->id > 0 and $data->act->type!=='испорчен') {
-                        $this->addProtokol($act->id, $customer->id, $data);
+                        $this->addProtokol($act->id, $customer->id, $data, $uid);
                         $this->exportPhoto($files, $data->act->date);
                     }
                 }
@@ -136,9 +137,10 @@ class ProtokolController extends Controller
         }
     }
 
-    private function addProtokol($act_id, $customer_id, $data)
+    private function addProtokol($act_id, $customer_id, $data, $uid)
     {
         $i=1;
+
         foreach ($data->meters as $meter) {
 
             $this->protokol->updateOrCreate(
@@ -150,7 +152,7 @@ class ProtokolController extends Controller
                 ],
                 [
                     'protokol_dt' => $data->act->date,
-                    'meter_photo' => 'meter_'.$data->act->number_act."-$i.jpg",
+                    'meter_photo' => 'meter_'.$uid."-$i.jpg",
                     'siType' => $meter->siType,
                     'waterType' => $meter->waterType,
                     'regNumber' => $meter->regNumber,
