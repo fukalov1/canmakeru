@@ -42,7 +42,7 @@ class ActController extends AdminController
 
         $grid->column('number_act', __('Номер акта'))->display(function () {
             $name = $this->name ? "({$this->name})" : '';
-            return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.' '.$name.'</a>';
+            return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.'</a>';
         })->sortable();
 
         $grid->column('pin', __('ПИН'));
@@ -60,7 +60,7 @@ class ActController extends AdminController
             $matches = [];
             preg_match('/(\d\d\d\d)\-(\d\d)/', $this->date,$matches);
             if (count($matches) > 0) {
-                $str .= '<div class="row"><div class="col-lg-4"><label>Акт</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/act_' . $this->number_act . '.jpg"><img src="/preview/'.$matches[1].'/'.$matches[2].'/act_' . $this->number_act . '.jpg"></a></div></div>';
+                $str .= '<div class="row"><div class="col-lg-4"><label>Акт</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/act_' . $this->name . '.jpg"><img src="/preview/'.$matches[1].'/'.$matches[2].'/act_' . $this->name . '.jpg"></a></div></div>';
             }
             return $str;
         });

@@ -63,7 +63,7 @@ class AllActController extends AdminController
 
         $grid->column('number_act', __('Номер акта'))->display(function () {
             $name = $this->name ? "({$this->name})" : '';
-            return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.' '.$name.'</a>';
+            return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.'</a>';
         })->sortable();
 
         $grid->column('pin', __('ПИН'));
