@@ -31,18 +31,17 @@ class UpdateMeterSeeder extends Seeder
                 try {
                     preg_match('/meter\_(.*)\-(.*)\.jpg/',$protokol->meter_photo, $matches);
 
-
                     $nmbr = $matches[2];
                     $result = $this->moveYandexDiskFile($path.$protokol->meter_photo, $path."meter_$uid-".$nmbr.".jpg");
 
                     if ($result['success']) {
                         Protokol::find($protokol->id)->update(['meter_photo' => "meter_$uid-$nmbr.jpg"]);
                     }
-                    echo "$path : {$protokol->act->number_act} - {$result['success']} - {$result['message']}\n";
+                    echo "$path : {$act->number_act} - {$result['success']} - {$result['message']}\n";
 
                 }
                 catch (\Throwable $exception) {
-
+                    echo "Error update meters for act {$act->number_act}: {$exception->getMessage()}\n";
                 }
             }
 
