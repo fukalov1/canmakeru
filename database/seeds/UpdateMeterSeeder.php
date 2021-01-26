@@ -27,7 +27,7 @@ class UpdateMeterSeeder extends Seeder
             }
             echo "$path : {$act->number_act} - {$result['success']} - {$result['message']}\n";
 
-            foreach ($act->meters as $protokol) {
+            foreach ($act->meters() as $protokol) {
                 try {
                     preg_match('/meter\_(.*)\-(.*)\.jpg/',$protokol->meter_photo, $matches);
 
