@@ -14,6 +14,10 @@ class UpdateMeterSeeder extends Seeder
      */
     public function run()
     {
+
+        $result = $this->moveYandexDiskFile('sweb1.png', 'sweb_test.png');
+        dd($result);
+
         $protokols = Protokol::whereRaw('year(protokol_dt)', 2021)
             ->whereRaw("protokol_photo = ''")
 #            ->skip(6)
@@ -45,12 +49,15 @@ class UpdateMeterSeeder extends Seeder
         $success = false;
 
         try {
-            $disk = new DiskClient();
-            //Устанавливаем полученный токен
 
-            $disk->setAccessToken(env('YANDEX_TOKEN'));
+            $diskClient = new DiskClient('AgAAAAA3ol63AAXdp2N7x58wMEIMnzayK025AEE');
+            $diskClient->setServiceScheme(DiskClient::HTTPS_SCHEME);
 
-            if ($disk->move($old_file, $new_file)) {
+            $diskSpace = $diskClient->diskSpaceInfo();
+
+//            dd($diskSpace['availableBytes'], $old_file, $new_file);
+
+            if ($diskClient->copy($old_file, $new_file)) {
                 echo 'Файл "' . $old_file . '" перемещен в "' . $new_file. '"';
                 $success = true;
             }

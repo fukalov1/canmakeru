@@ -81,7 +81,7 @@ class AllActController extends AdminController
             $matches = [];
             preg_match('/(\d\d\d\d)\-(\d\d)/', $this->date,$matches);
             if (count($matches) > 0) {
-                $str .= '<div class="row"><div class="col-lg-4"><label>Акт</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/act_' . $this->number_act . '.jpg"><img src="/preview/'.$matches[1].'/'.$matches[2].'/act_' . $this->number_act . '.jpg"></a></div></div>';
+                $str .= '<div class="row"><div class="col-lg-4"><label>Акт</label><a target="_blank" href="/photo/'.$matches[1].'/'.$matches[2].'/act_' . $this->name . '.jpg"><img src="/preview/'.$matches[1].'/'.$matches[2].'/act_' . $this->name . '.jpg"></a></div></div>';
             }
             return $str;
         });
