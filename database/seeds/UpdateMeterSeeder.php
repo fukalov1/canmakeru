@@ -27,13 +27,16 @@ class UpdateMeterSeeder extends Seeder
                preg_match('/meter\_(.*)\-(.*)\.jpg/',$protokol->meter_photo, $matches);
                $uid = uniqid();
                $path = '/'.date('Y', strtotime($protokol->protokol_dt)).'-'.date('m', strtotime($protokol->protokol_dt)).'/';
-               $result = $this->moveYandexDiskFile($path.$protokol->meter_photo, $path."meter_$uid-".$matches[2].".jpg");
+               $this->moveYandexDiskFile($path.'act_'.$protokol->act->number_act.'.jpg', $path."act_$uid.jpg");
+
+               $nmbr = $matches[2];
+               $result = $this->moveYandexDiskFile($path.$protokol->meter_photo, $path."meter_$uid-".$nmbr.".jpg");
 
                if ($result['success']) {
                    Act::find($protokol->act_id)->update(['name' => $uid]);
-                   Protokol::find($protokol->id)->update(['meter_photo' => "meter_$uid.jpg"]);
+                   Protokol::find($protokol->id)->update(['meter_photo' => "meter_$uid-$nmbr.jpg"]);
                }
-               echo "$path : {$protokol->act->number_act} - {$protokol->meter_photo}$ - meter_$uid.jpg - {$result['success']} - {$result['message']}\n";
+               echo "$path : {$protokol->act->number_act} - {$result['success']} - {$result['message']}\n";
 
            }
            catch (\Throwable $exception) {
@@ -61,7 +64,7 @@ class UpdateMeterSeeder extends Seeder
 
 
             if ($diskClient->move($old_file, $new_file)) {
-                echo 'Файл "' . $old_file . '" перемещен в "' . $new_file. '"';
+                $error =  'Файл "' . $old_file . '" перемещен в "' . $new_file. '"';
                 $success = true;
             }
         }
