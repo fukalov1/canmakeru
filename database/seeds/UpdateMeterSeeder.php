@@ -16,7 +16,7 @@ class UpdateMeterSeeder extends Seeder
     public function run()
     {
 
-        $acts = Act::where('name', null)->take(1)->get();
+        $acts = Act::where('name', null)->where('customer_id','<>', 1)->take(1)->get();
 
         foreach ($acts as $act) {
             $uid = uniqid();
@@ -27,8 +27,9 @@ class UpdateMeterSeeder extends Seeder
             }
             echo "$path : {$act->number_act} - {$result['success']} - {$result['message']}\n";
 
-            foreach ($act->meters() as $protokol) {
+            foreach ($act->meters as $protokol) {
                 try {
+//                    dd($act->number_act, $protokol->meter_photo);
                     preg_match('/meter\_(.*)\-(.*)\.jpg/',$protokol->meter_photo, $matches);
 
                     $nmbr = $matches[2];
