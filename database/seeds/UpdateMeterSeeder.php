@@ -16,33 +16,37 @@ class UpdateMeterSeeder extends Seeder
     public function run()
     {
 
-        $protokols = Protokol::whereRaw('year(protokol_dt)', 2021)
-            ->whereRaw("protokol_photo = ''")
-            ->skip(16)
-            ->take(1)
-            ->get();
+        $acts = Act::where('name', null)->take(1)->get();
 
-       foreach ($protokols as $protokol) {
-           try {
-               preg_match('/meter\_(.*)\-(.*)\.jpg/',$protokol->meter_photo, $matches);
-               $uid = uniqid();
-               $path = '/'.date('Y', strtotime($protokol->protokol_dt)).'-'.date('m', strtotime($protokol->protokol_dt)).'/';
-               $this->moveYandexDiskFile($path.'act_'.$protokol->act->number_act.'.jpg', $path."act_$uid.jpg");
+        foreach ($acts as $act) {
+            $uid = uniqid();
+            $path = '/'.date('Y', strtotime($act->date)).'-'.date('m', strtotime($act->date)).'/';
+            $result = $this->moveYandexDiskFile($path.'act_'.$act->number_act.'.jpg', $path."act_$uid.jpg");
+            if ($result['success']) {
+                Act::find($act->id)->update(['name' => $uid]);
+            }
+            echo "$path : {$act->number_act} - {$result['success']} - {$result['message']}\n";
 
-               $nmbr = $matches[2];
-               $result = $this->moveYandexDiskFile($path.$protokol->meter_photo, $path."meter_$uid-".$nmbr.".jpg");
+            foreach ($act->protokols as $protokol) {
+                try {
+                    preg_match('/meter\_(.*)\-(.*)\.jpg/',$protokol->meter_photo, $matches);
 
-               if ($result['success']) {
-                   Act::find($protokol->act_id)->update(['name' => $uid]);
-                   Protokol::find($protokol->id)->update(['meter_photo' => "meter_$uid-$nmbr.jpg"]);
-               }
-               echo "$path : {$protokol->act->number_act} - {$result['success']} - {$result['message']}\n";
 
-           }
-           catch (\Throwable $exception) {
+                    $nmbr = $matches[2];
+                    $result = $this->moveYandexDiskFile($path.$protokol->meter_photo, $path."meter_$uid-".$nmbr.".jpg");
 
-           }
-       }
+                    if ($result['success']) {
+                        Protokol::find($protokol->id)->update(['meter_photo' => "meter_$uid-$nmbr.jpg"]);
+                    }
+                    echo "$path : {$protokol->act->number_act} - {$result['success']} - {$result['message']}\n";
+
+                }
+                catch (\Throwable $exception) {
+
+                }
+            }
+
+        }
 
     }
 
