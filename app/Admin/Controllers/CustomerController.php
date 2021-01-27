@@ -606,7 +606,7 @@ class CustomerController extends AdminController
         $pressure = Pressure::where('customer_id', $customer_id)
             ->where('date', $date )->first();
         if ($pressure) {
-            $result = $pressure->value();
+            $result = $pressure->value;
         }
         return $result;
     }
