@@ -56,7 +56,9 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
     {
         $data = [];
         if ($customer_id!=0) {
-            $data =  $this->find($customer_id)->protokols;
+//            $data =  $this->find($customer_id)->protokols->with('act');
+//            $data =  Protokol::with('act')->where('customer_id', $customer_id)->get();
+            $data =  Protokol::join('acts', 'acts.id', 'protokols.act_id')->where('protokols.customer_id', $customer_id)->get();
         }
         return json_encode(['data' => $data, 'customer_id' => $customer_id]);
     }

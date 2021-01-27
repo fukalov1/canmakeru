@@ -66,11 +66,12 @@ class AllActController extends AdminController
             return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.'</a>';
         })->sortable();
 
+        $grid->column('date', __('Дата'));
         $grid->column('pin', __('ПИН'));
 
         $grid->column('miowner', __('Владелец'));
 
-        $grid->column('date', __('Дата'));
+        $grid->column('type', __('Тип'));
 
 
         $grid->column('address', __('Примечание'));
@@ -86,7 +87,7 @@ class AllActController extends AdminController
             return $str;
         });
 
-        $grid->column('type', __('Тип'));
+
         $grid->column('lat', __('Шир.'));
         $grid->column('lng', __('Дол.'));
 

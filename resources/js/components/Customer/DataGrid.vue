@@ -225,8 +225,8 @@
         },
         data() {
             return {
-                columns: ['protokol_num','protokol_dt','pin','siType','waterType','regNumber','serialNumber','checkMethod','protokol_photo'],
-                column_names: ['Номер св-ва','Дата поверки','Пин-код', 'Тип СИ', 'Тип воды', 'Регистр. номер', 'Заводской номер', 'Методика поверки', 'Фото поверки'],
+                columns: ['protokol_num','protokol_dt','pin','siType','waterType','regNumber','serialNumber','checkMethod','miowner','nextTest','type','protokol_photo'],
+                column_names: ['Номер св-ва','Дата поверки','Пин-код', 'Тип СИ', 'Тип воды', 'Регистр. номер', 'Заводской номер', 'Методика поверки', 'Владелец','МПИ','Результат', 'Фото поверки'],
                 sort_columns: {fld: null, type: ''},
                 data: [],
                 page: 1,
@@ -297,7 +297,7 @@
         methods: {
             getProtokols() {
                 this.protokols_ = this.protokols.filter((item, index) =>  {
-                    return index>=(this.page*this.perPage-this.perPage) && index <=this.page*this.perPage;
+                    return index>=(this.page*this.perPage-this.perPage) && index <=this.page*this.perPage-1;
                 });
             },
             setSortProtokols() {

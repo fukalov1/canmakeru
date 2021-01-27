@@ -9,6 +9,10 @@ class Act extends Model
     protected $fillable = ['number_act','name','customer_id','date','miowner','pin','address','lat','lng', 'type'];
     protected $appends = ['nmbr_act'];
 
+    protected $casts = [
+        'date' => 'datetime:Y-m-d'
+    ];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
@@ -26,5 +30,9 @@ class Act extends Model
         return $this->customer->partner_code."-".$year."-".$this->id;
     }
 
+    protected function getTimeActAttribute()
+    {
+        return date('H:i:s', strtotime($this->created_at));
+    }
 
 }

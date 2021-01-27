@@ -44,12 +44,14 @@ class ActController extends AdminController
             $name = $this->name ? "({$this->name})" : '';
             return '<a href="/admin/protokols?set='.$this->id.'" title="Акты с поверками клиента '.$this->number_act.'">'.$this->number_act.'</a>';
         })->sortable();
+        $grid->column('date', __('Дата'));
 
         $grid->column('pin', __('ПИН'));
 
         $grid->column('miowner', __('Владелец'));
 
-        $grid->column('date', __('Дата'));
+        $grid->column('type', __('Тип'));
+//        $grid->column('time_act', __('Время'));
 
 
         $grid->column('address', __('Примечание'));
@@ -65,7 +67,7 @@ class ActController extends AdminController
             return $str;
         });
 
-        $grid->column('type', __('Тип'));
+
         $grid->column('lat', __('Шир.'));
         $grid->column('lng', __('Дол.'));
 

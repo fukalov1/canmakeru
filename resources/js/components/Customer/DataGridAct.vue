@@ -211,8 +211,8 @@
         },
         data() {
             return {
-                columns: ['number_act','date','miowner','type','act_photo'],
-                column_names: ['Номер акта','Дата', 'Владелец', 'Тип', ''],
+                columns: ['number_act','date','miowner','type', 'address', 'act_photo'],
+                column_names: ['Номер акта','Дата', 'Владелец', 'Тип', 'Примечание', ''],
                 sort_columns: {fld: null, type: ''},
                 data: [],
                 page: 1,
@@ -283,7 +283,7 @@
         methods: {
             getActs() {
                 this.acts_ = this.acts.filter((item, index) =>  {
-                    return index>=(this.page*this.perPage-this.perPage) && index <=this.page*this.perPage;
+                    return index>=(this.page*this.perPage-this.perPage) && index <=this.page*this.perPage-1;
                 });
             },
             setSortActs() {
@@ -351,7 +351,7 @@
             showAct(item) {
                 this.showModal = true;
                 this.photo_title = 'Акт № '+item.number_act+' от '+ item.date;
-                let str = 'act_'+item.number_act + '.jpg';
+                let str = 'act_'+item.name + '.jpg';
                 let date = item.date;
                 date = date.slice(0,7);
                 date = date.replace('-', '/');
@@ -360,7 +360,7 @@
                 this.photo = str;
             },
             exportPDF(item) {
-                document.location = `/up?id=${item.number_act}&pin=${item.pin}`
+                document.location = `/up?id=${item.name}&pin=${item.pin}`
             },
             setPage(page) {
                 this.page = page;
