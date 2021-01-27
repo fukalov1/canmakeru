@@ -100,10 +100,10 @@ class ProtokolController extends Controller
                 [
                     'customer_id' => $customer->id,
                     'number_act' => $data->act->number_act,
-                    'name' => $uid,
                     'pin' => $data->act->pin
                 ],
                 [
+                    'name' => $uid,
                     'date' => $data->act->date,
                     'miowner' => $data->act->miowner,
                     'lat' => $lat,
