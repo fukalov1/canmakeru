@@ -262,7 +262,7 @@ class ProtokolController extends Controller
         elseif ($customer_id) {
             $pressures->customer_id = $customer_id;
             $pressures->date = $date;
-            $pressures->value = $result;
+            $pressures->value = preg_replace("/\./",",",$result);
             $pressures->save();
         }
 
