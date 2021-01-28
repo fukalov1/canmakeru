@@ -108,10 +108,11 @@ class CustomerController extends Controller
 //            ->where('customer_id', Auth::id())
             ->first();
 
+        $template = 'protokolPDF';
         preg_match('/(\d\d\d\d)\-(\d\d)/', $data->protokol_dt,$matches);
         $filename = $data->protokol_num;
-        if ($matches[2]>20) {
-
+        if ($matches[1]>2020) {
+            $template = 'newProtokolPDF';
             $file = preg_replace('/photos\//','',$data->meter_photo);
             $data->meter_photo = $matches[1].'/'.$matches[2].'/'.$file;
 
@@ -135,9 +136,10 @@ class CustomerController extends Controller
             $date =  Carbon::createFromFormat('Y-m-d H:i:s', $data['protokol_dt']);
             $data->protokol_dt = $date->format('d.m.Y');
         }
+
         $data = $data->toArray();
         $data[] = ['title' => 'Poverkadoma.ru'];
-        $pdf = PDF::loadView('protokolPDF', $data)->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView($template, $data)->setPaper('a4', 'landscape');
 
         return $pdf->download("svid$filename.pdf");
     }
