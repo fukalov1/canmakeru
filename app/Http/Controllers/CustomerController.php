@@ -110,7 +110,6 @@ class CustomerController extends Controller
 
         preg_match('/(\d\d\d\d)\-(\d\d)/', $data->protokol_dt,$matches);
         $filename = $data->protokol_num;
-        dd('test', $id, $matches[2]);
         if ($matches[2]>20) {
 
             $file = preg_replace('/photos\//','',$data->meter_photo);
