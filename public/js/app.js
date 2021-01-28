@@ -15481,20 +15481,20 @@ Vue.prototype.moment = moment__WEBPACK_IMPORTED_MODULE_2___default.a;
 
       this.acts_ = this.acts.filter(function (item, index) {
         var result = false;
-        var word = item.protokol_num + '';
+        var word = item.number_act + '';
 
         if (word.includes(_this2.word) && _this2.word != '') {
           result = true;
         }
 
-        word = item.protokol_dt + '';
+        word = item.date + '';
 
         if (word.includes(_this2.word) && _this2.word != '') {
           result = true;
         }
 
         if (_this2.startDate && _this2.endDate) {
-          word = item.protokol_dt + '';
+          word = item.date + '';
           word = word.slice(0, 10); // word = word.replace('-','');
 
           if (word >= _this2.startDate && word <= _this2.endDate) {

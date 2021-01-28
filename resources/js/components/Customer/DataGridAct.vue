@@ -304,16 +304,16 @@
             getFilterActs() {
                 this.acts_ = this.acts.filter((item, index) =>  {
                     let result = false;
-                    let word = item.protokol_num+'';
+                    let word = item.number_act+'';
                     if (word.includes(this.word) && this.word!='') {
                         result = true;
                     }
-                    word = item.protokol_dt+'';
+                    word = item.date+'';
                     if (word.includes(this.word) && this.word!='') {
                         result = true;
                     }
                     if (this.startDate && this.endDate) {
-                        word = item.protokol_dt+'';
+                        word = item.date+'';
                         word = word.slice(0,10);
                         // word = word.replace('-','');
                         if (word>=this.startDate && word<=this.endDate) {
@@ -402,6 +402,7 @@
                 else
                     return null;
             },
+
 
         }
     }
