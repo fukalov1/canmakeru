@@ -135,7 +135,6 @@ class CustomerController extends Controller
             $date =  Carbon::createFromFormat('Y-m-d H:i:s', $data['protokol_dt']);
             $data->protokol_dt = $date->format('d.m.Y');
         }
-dd($data);
         $data = $data->toArray();
         $data[] = ['title' => 'Poverkadoma.ru'];
         $pdf = PDF::loadView('protokolPDF', $data)->setPaper('a4', 'landscape');
