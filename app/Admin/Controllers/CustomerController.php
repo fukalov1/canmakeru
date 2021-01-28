@@ -188,7 +188,7 @@ class CustomerController extends AdminController
             $form->text('ideal', __('Эталон'));
             $form->text('ci_as_ideal', __('СИ, как эталон'));
             $form->text('notes', __('Примечание'));
-            $form->hidden('password')->default('123456');
+            $form->hidden('password');
 
         })->tab('Работники', function ($form) {
             $form->hasMany('slave_customers', 'Работники', function (Form\NestedForm $form) {

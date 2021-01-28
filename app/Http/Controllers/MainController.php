@@ -171,7 +171,7 @@ class MainController extends Controller
 
         if (isset($id) and isset($pin)) {
             $act = $this->acts
-                ->where('number_act', $id)
+                ->where('name', $id)
                 ->where('pin', $pin)
                 ->first();
             if ($act) {
