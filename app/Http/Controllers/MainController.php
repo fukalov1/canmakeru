@@ -304,10 +304,12 @@ class MainController extends Controller
         $id_3 = request()->post('id_3');
         // dd($post, $id_1,$id_2,$id_3);
 
+        $pin = request()->post('pin');
+
         if ($id_2==20) {
             $prot_id = floatval(str_pad($id_1, 3, "0", STR_PAD_LEFT) . str_pad($id_2, 2, "0", STR_PAD_LEFT) . str_pad($id_3, 5, "0", STR_PAD_LEFT));
 
-            $pin = request()->post('pin');
+
 
             // dd((int)$prot_id);
 //        dd($pin, (int)($nmbr1.$nmbr2.$nmbr3));
@@ -335,8 +337,15 @@ class MainController extends Controller
             return view('showResult', $data);
         }
         else {
+            $acts = Act::where('number_act', "$id_1-$id_2-$id_3")
+                ->where('pin', $pin)
+                ->first();
 
-            $request->id = "$id_1-$id_2-$id_3";
+            $uid = '';
+            if ($acts)
+                $uid = $acts->name;
+
+            $request->id = $uid;
             return $this->showAct($request);
         }
     }
