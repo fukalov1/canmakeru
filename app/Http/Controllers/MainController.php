@@ -171,7 +171,7 @@ class MainController extends Controller
 
         if (isset($id) and isset($pin)) {
             $act = $this->acts
-                ->where('name', $id)
+                ->where('number_act', $id)
                 ->where('pin', $pin)
                 ->first();
             if ($act) {
@@ -337,13 +337,14 @@ class MainController extends Controller
             return view('showResult', $data);
         }
         else {
-            $acts = Act::where('number_act', "$id_1-$id_2-$id_3")
-                ->where('pin', $pin)
-                ->first();
-
-            $uid = '';
-            if ($acts)
-                $uid = $acts->name;
+            $uid =  "$id_1-$id_2-$id_3";
+//            $acts = Act::where('number_act', "$id_1-$id_2-$id_3")
+//                ->where('pin', $pin)
+//                ->first();
+//
+//            $uid = '';
+//            if ($acts)
+//                $uid = $acts->name;
 
             $request->id = $uid;
             return $this->showAct($request);
