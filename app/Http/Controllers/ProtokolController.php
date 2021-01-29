@@ -122,6 +122,7 @@ class ProtokolController extends Controller
                         $this->exportPhoto($files, $data->act->date);
                     }
                 }
+                Log::channel($this->log)->info("Create act {$data->act->number_act} ($uid) type: {$data->act->type} for  {$data->act->partnerKey} not found!");
 
             return json_encode([
                 'result' => 0,
