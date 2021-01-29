@@ -46,7 +46,7 @@ return [
             'level' => 'debug',
         ],
         'customlog' => [
-            'driver' => 'single',
+            'driver' => 'daily',
             'path' => storage_path('logs/meters.log'),
             'level' => 'info',
         ],
