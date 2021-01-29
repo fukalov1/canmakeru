@@ -360,7 +360,7 @@
                 this.photo = str;
             },
             exportPDF(item) {
-                document.location = `/up?id=${item.name}&pin=${item.pin}`
+                document.location = `/up?id=${item.number_act}&pin=${item.pin}`
             },
             setPage(page) {
                 this.page = page;
