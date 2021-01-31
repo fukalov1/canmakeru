@@ -13,9 +13,12 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
 use PHPExcel;
 use PHPExcel_IOFactory;
+use Illuminate\Support\Facades\Storage;
+use Zip;
 
 class CustomerController extends AdminController
 {
@@ -310,21 +313,62 @@ class CustomerController extends AdminController
             'Content-Type' => 'text/xml',
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
-
-        $protokols = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-06-19\">\n";
+        $file_name = "poverka$date";
+        $protokol_head = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-06-19\">\n";
+        $protokol_footer = "</application>";
 
         $customers = Customer::where('export_fgis',1)->get();
 
-        foreach ($customers as $customer) {
-            // подготовливаем xml по результатам поверок
-            $protokols .= $this->prepareData($customer, $package_number, 'exist', $date1 , $date2);
+        if ($customers->count()>4300) {
+
+            $customers->chunk(4300)->all();
+
+            $i = 1;
+            foreach ($customers as $items) {
+                $protokols = $protokol_head;
+                foreach ($items as $customer) {
+                    // подготовливаем xml по результатам поверок
+                    $protokols .= $this->prepareData($customer, $package_number, 'exist', $date1, $date2);
+                }
+                $protokols .= $protokol_footer;
+                ++$i;
+                Storage::disk('local')->put('/temp/' . $package_number . '/' . $file_name . "-$i.xml", $protokols);
+            };
+
+            if ($i > 1) {
+                $zip = Zip::create(storage_path('app/temp/') . "$file_name.zip");
+                echo "create zip " . storage_path('app/temp/') . "$file_name.zip\n";
+                echo "add folder " . storage_path("app/temp/$package_number") . "\n";
+                $zip->add(storage_path("app/temp/$package_number"), true);
+                $zip->close();
+            }
+
+            $fileurl = storage_path('app/temp/')."$file_name.zip";
+
+//        dd($fileurl);
+            if (file_exists($fileurl)) {
+                return response()->download($fileurl, "$file_name.zip", array('Content-Type: application/octet-stream','Content-Length: '. filesize($fileurl)));
+//                ->deleteFileAfterSend(true);
+            } else {
+                return ['status'=>'zip file does not exist'];
+            }
+
         }
-        $protokols .= "</application>";
+        else {
+            $protokols = $protokol_head;
+            foreach ($customers as $customer) {
+                // подготовливаем xml по результатам поверок
+                $protokols .= $this->prepareData($customer, $package_number, 'exist', $date1, $date2);
+            }
+            $protokols .= $protokol_footer;
+            Storage::disk('local')->put('/temp/' . $file_name . ".xml", $protokols);
+
+            return response()->download(storage_path('app/temp/')."$file_name.xml", "$file_name.xml", $headers);
+
+        }
 
 
-        return response()->stream(function () use ($protokols)  {
-            echo $protokols;
-        }, 200, $headers);
+
 
     }
 
