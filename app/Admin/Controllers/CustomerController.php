@@ -338,24 +338,14 @@ class CustomerController extends AdminController
 
             if ($i > 1) {
                 $zip = Zip::create(storage_path('app/temp/') . "$file_name.zip");
-//                echo "create zip " . storage_path('app/temp/') . "$file_name.zip\n";
-//                echo "add folder " . storage_path("app/temp/$package_number") . "\n";
                 $zip->add(storage_path("app/temp/$package_number"), true);
                 $zip->close();
             }
 
             $fileurl = storage_path('app/temp/')."$file_name.zip";
 
-//        dd($fileurl);
             if (file_exists($fileurl)) {
-
-                $headers = array(
-                    'Content-Type' => 'application/octet-stream',
-                    'Content-Disposition' => 'attachment; filename="$file_name.zip"',
-                    'Content-Length' => filesize($fileurl)
-                );
-                return response()->download(storage_path('app/temp/'), "$file_name.zip", $headers);
-//                ->deleteFileAfterSend(true);
+                return response()->file($fileurl)->deleteFileAfterSend(true);
             } else {
                 return ['status'=>'zip file does not exist'];
             }
