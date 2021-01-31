@@ -325,16 +325,16 @@ class CustomerController extends AdminController
             $customers = $customers->chunk($xml_records)->all();
 
             $i = 1;
-            foreach ($customers as $items) {
+            $customers->chunk($xml_records, function ($item) use ($i, $protokol_head, $protokol_footer, $package_number, $file_name, $date1, $date2) {
                 $protokols = $protokol_head;
-                foreach ($items as $customer) {
+                foreach ($item as $customer) {
                     // подготовливаем xml по результатам поверок
                     $protokols .= $this->prepareData($customer, $package_number, 'exist', $date1, $date2);
                 }
                 $protokols .= $protokol_footer;
                 Storage::disk('local')->put('/temp/' . $package_number . '/' . $file_name . "-$i.xml", $protokols);
                 $i++;
-            };
+            });
 
             if ($i > 1) {
                 $zip = Zip::create(storage_path('app/temp/') . "$file_name.zip");
