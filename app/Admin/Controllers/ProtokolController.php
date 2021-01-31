@@ -23,7 +23,7 @@ class ProtokolController extends AdminController
     protected $customer='';
     protected $customer_id=0;
     protected $act=null;
-    protected $title = 'Свидетельсва поверок';
+    protected $title = 'Свидетельства поверок';
 
 
     /**
@@ -44,7 +44,7 @@ class ProtokolController extends AdminController
 
         $grid->header(function ($query) {
             return "<div style='padding: 10px;'>Клиент: <b><a href=\"/admin/customers\" title='вернуться к списку клиентов'>".$this->customer.
-                "</a> / <a href=\"/admin/acts?set={$this->customer_id}\" title='вернуться к списку актов клиента'> Номер акта: {$this->act->number_act} от {$this->act->date}</b></div>";
+                "</a> / <a href=\"/admin/all-acts\" title='вернуться к списку актов клиента'> Номер акта: {$this->act->number_act} от {$this->act->date}</b></div>";
         });
 
 //        $grid->tools(function ($tools) {
@@ -124,6 +124,7 @@ class ProtokolController extends AdminController
         $show->field('lat', __('Lat'));
         $show->field('lng', __('Lng'));
         $show->field('protokol_dt', __('Protokol dt'));
+        $show->field('nextTest', __('След. поверка'));
 
         return $show;
     }
@@ -155,19 +156,41 @@ class ProtokolController extends AdminController
         $form->number('checkInterval', 'Интервал поверки');
         $form->text('checkMethod', 'Методика поверки');
 
+        $form->saving(function (Form $form) {
+            $form->nextTest = $this->setNextTest($form->protokol_dt, $form->checkInterval);
+        });
+
         return $form;
     }
 
+    private function setNextTest($date, $interval)
+    {
+        $result = strtotime($date)+$interval*3600*24*364;
+        return date('Y-m-d H:i:s', $result);
+    }
     public function getHeader()
     {
-        $act = Act::where('customer_id', session('customer_id'))->first();
-        $customers = $act->customer;
-//        dd($customers->name);
-        $this->act = $act;
-        $this->customer = $customers->name;
-        $this->customer_id = $act->customer_id;
-        $this->title .= ' - '.$customers->name;
-//            dd($this->title);
+        try {
+            if (request()->set) {
+                $protokol_id = request()->set;
+                $protokol = Protokol::find($protokol_id);
+                $this->act = $protokol->act;
+                $this->customer = $protokol->customer->name;
+                $this->customer_id = $protokol->customer_id;
+                $this->title .= ' - ' . $protokol->customer->name;
+            }
+            else {
+                $act = Act::find(session('customer_id'));
+                $customers = $act->customer;
+                $this->act = $act;
+                $this->customer = $customers->name;
+                $this->customer_id = $act->customer_id;
+                $this->title .= ' - '.$customers->name;
+            }
+        }
+        catch (\Throwable $exception) {
+
+        }
     }
 
     public function show($id, Content $content)

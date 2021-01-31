@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Act extends Model
 {
     protected $fillable = ['number_act','name','customer_id','date','miowner','pin','address','lat','lng', 'type'];
-    protected $appends = ['nmbr_act'];
+    protected $appends = ['date1'];
 
     protected $casts = [
         'date' => 'datetime:Y-m-d'
     ];
+
 
     public function customer()
     {
@@ -30,9 +31,9 @@ class Act extends Model
         return $this->customer->partner_code."-".$year."-".$this->id;
     }
 
-    protected function getTimeActAttribute()
+    protected function getDate1Attribute()
     {
-        return date('H:i:s', strtotime($this->created_at));
+        return date('H:i:s', strtotime($this->date));
     }
 
 }

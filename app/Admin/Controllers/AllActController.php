@@ -67,6 +67,7 @@ class AllActController extends AdminController
         })->sortable();
 
         $grid->column('date', __('Дата'));
+        $grid->column('date1', __('Время'));
         $grid->column('pin', __('ПИН'));
 
         $grid->column('miowner', __('Владелец'));
