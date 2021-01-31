@@ -345,7 +345,7 @@ class CustomerController extends AdminController
             $fileurl = storage_path('app/temp/')."$file_name.zip";
 
             if (file_exists($fileurl)) {
-                return response()->file($fileurl)->deleteFileAfterSend(true);
+                return response()->file($fileurl, "$file_name.zip")->deleteFileAfterSend(true);
             } else {
                 return ['status'=>'zip file does not exist'];
             }
