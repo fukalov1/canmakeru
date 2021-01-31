@@ -332,8 +332,8 @@ class CustomerController extends AdminController
                     $protokols .= $this->prepareData($customer, $package_number, 'exist', $date1, $date2);
                 }
                 $protokols .= $protokol_footer;
-                ++$i;
                 Storage::disk('local')->put('/temp/' . $package_number . '/' . $file_name . "-$i.xml", $protokols);
+                ++$i;
             };
 
             if ($i > 1) {
