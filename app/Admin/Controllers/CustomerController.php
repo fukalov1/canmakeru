@@ -322,7 +322,7 @@ class CustomerController extends AdminController
         $xml_records = config('xml_records', 4300);
         if ($customers->count()>$xml_records) {
 
-            $customers->chunk($xml_records)->all();
+            $customers = $customers->chunk($xml_records)->all();
 
             $i = 1;
             foreach ($customers as $items) {
@@ -348,7 +348,8 @@ class CustomerController extends AdminController
 
 //        dd($fileurl);
             if (file_exists($fileurl)) {
-                return response()->download($fileurl, "$file_name.zip", array('Content-Type: application/octet-stream','Content-Length: '. filesize($fileurl)));
+                return response()->download($fileurl);
+//                return response()->download($fileurl, "$file_name.zip", array('Content-Type: application/octet-stream','Content-Length: '. filesize($fileurl)));
 //                ->deleteFileAfterSend(true);
             } else {
                 return ['status'=>'zip file does not exist'];
