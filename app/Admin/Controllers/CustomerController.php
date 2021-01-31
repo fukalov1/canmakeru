@@ -354,8 +354,7 @@ class CustomerController extends AdminController
                     'Content-Disposition' => 'attachment; filename="$file_name.zip"',
                     'Content-Length' => filesize($fileurl)
                 );
-dd(filesize($fileurl), $fileurl);
-                return response()->download($fileurl, "$file_name.zip", $headers);
+                return response()->download(storage_path('app/temp/'), "$file_name.zip", $headers);
 //                ->deleteFileAfterSend(true);
             } else {
                 return ['status'=>'zip file does not exist'];
