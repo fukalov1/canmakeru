@@ -145,6 +145,13 @@ class ProtokolController extends Controller
 
         foreach ($data->meters as $meter) {
 
+            $waterType = $meter->waterType;
+            if ($waterType == 'HOT')
+                $waterType = 'ГВ';
+            elseif ($waterType == 'COLD')
+                $waterType = 'ХВ';
+
+
             $this->protokol->updateOrCreate(
                 [
                     'customer_id' => $customer_id,
@@ -156,7 +163,7 @@ class ProtokolController extends Controller
                     'protokol_dt' => $data->act->date,
                     'meter_photo' => 'meter_'.$uid."-$i.jpg",
                     'siType' => $meter->siType,
-                    'waterType' => $meter->waterType,
+                    'waterType' => $waterType,
                     'regNumber' => $meter->regNumber,
                     'serialNumber' => $meter->serialNumber,
                     'checkInterval' => $meter->checkInterval,
