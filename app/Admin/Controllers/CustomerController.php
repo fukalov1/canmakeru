@@ -348,7 +348,14 @@ class CustomerController extends AdminController
 
 //        dd($fileurl);
             if (file_exists($fileurl)) {
-                return response()->download($fileurl, "$file_name.zip", ['Content-Type' => 'application/octet-stream','Content-Length' => filesize($fileurl)]);
+
+                $headers = array(
+                    'Content-Type' => 'application/octet-stream',
+                    'Content-Disposition' => 'attachment; filename="$file_name.zip"',
+                    'Content-Length' => filesize($fileurl)
+                );
+dd(filesize($fileurl), $fileurl);
+                return response()->download($fileurl, "$file_name.zip", $headers);
 //                ->deleteFileAfterSend(true);
             } else {
                 return ['status'=>'zip file does not exist'];
