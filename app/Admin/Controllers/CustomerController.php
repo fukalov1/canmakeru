@@ -319,9 +319,10 @@ class CustomerController extends AdminController
 
         $customers = Customer::where('export_fgis',1)->get();
 
-        if ($customers->count()>4300) {
+        $xml_records = conf('xml_records', 4300);
+        if ($customers->count()>$xml_records) {
 
-            $customers->chunk(4300)->all();
+            $customers->chunk($xml_records)->all();
 
             $i = 1;
             foreach ($customers as $items) {
