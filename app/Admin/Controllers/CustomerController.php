@@ -320,7 +320,7 @@ class CustomerController extends AdminController
         $customers = Customer::where('export_fgis',1)->get();
 
         $xml_records = config('xml_records', 4300);
-        if ($customers->count()>$xml_records) {
+        if ($customers->count()>=$xml_records) {
 
             $customers = $customers->chunk($xml_records)->all();
 
@@ -333,7 +333,7 @@ class CustomerController extends AdminController
                 }
                 $protokols .= $protokol_footer;
                 Storage::disk('local')->put('/temp/' . $package_number . '/' . $file_name . "-$i.xml", $protokols);
-                ++$i;
+                $i++;
             };
 
             if ($i > 1) {
