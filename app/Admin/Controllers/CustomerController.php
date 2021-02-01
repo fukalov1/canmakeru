@@ -320,25 +320,45 @@ class CustomerController extends AdminController
         $protokol_head = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-06-19\">\n";
         $protokol_footer = "</application>";
 
-        $customers = Customer::where('export_fgis',1)->get();
+        $protokols = Protokol::join('customers', 'customers.id', 'protokols.customer_id')
+            ->where('customers.export_fgis',1)
+            ->where('protokols.exported', $package_number);
+
+        if ($date1 and $date2) {
+            $protokols = $protokols
+                ->where('protokol_dt', '>', "$date1 00:00:00")
+                ->where('protokol_dt', '<=', "$date2 23:59:59");
+        }
+
+        $protokols = $protokols->get();
+        // получаем новый номер пакета для выгрузки нулевых св-в при повторной загрузке за период
+        $package_update = false;
+        if ($package_number==0) {
+            $package_update = true;
+            $package_number = $this->updatePackageNumber();
+        }
 
         $xml_records = config('xml_records', 4300);
-        if ($customers->count()>=$xml_records) {
+        if ($protokols->count()>=$xml_records) {
 
-            $customers = $customers->chunk($xml_records)->all();
+            $this->refreshDir(storage_path('app/temp/'.$package_number));
+
+            $protokols = $protokols->chunk($xml_records)->all();
 
             $i = 1;
-            foreach ($customers as $items) {
-                $protokols = $protokol_head . " === " . $items->count();
-                foreach ($items as $customer) {
-                    // подготовливаем xml по результатам поверок
-                    $protokols .= $this->prepareData($customer, $package_number, 'exist', $date1, $date2);
-                }
-
-                $protokols .= $protokol_footer;
-                Storage::disk('local')->put('/temp/' . $package_number . '/' . $file_name . "-$i.xml", $protokols);
+            $result = '';
+            foreach ($protokols as $items) {
+                $result .= $protokol_head." ===".$items->count();
+                // подготовливаем xml по результатам поверок
+                $result .= $this->getXml2Fgis($items, $package_number, $package_update);
+                $result .= $protokol_footer;
+                Storage::disk('local')->put('/temp/' . $package_number . '/' . $file_name . "-$i.xml", $result);
                 $i++;
             };
+
+            if (file_exists(storage_path('app/temp/') . "$file_name.zip")) {
+                unlink(storage_path('app/temp/') . "$file_name.zip");
+            }
 
             if ($i > 1) {
                 $zip = Zip::create(storage_path('app/temp/') . "$file_name.zip");
@@ -349,10 +369,6 @@ class CustomerController extends AdminController
             $fileurl = storage_path('app/temp/')."$file_name.zip";
 
             if (file_exists($fileurl)) {
-//                $headers = array(
-//                    'Content-Type' => 'application/octet-stream',
-//                    'Content-Disposition' => 'attachment; filename="$file_name.zip"',
-//                );
                 return response()->file($fileurl)->deleteFileAfterSend(true);
             } else {
                 return ['status'=>'zip file does not exist'];
@@ -360,21 +376,28 @@ class CustomerController extends AdminController
 
         }
         else {
-            $protokols = $protokol_head;
-            foreach ($customers as $customer) {
-                // подготовливаем xml по результатам поверок
-                $protokols .= $this->prepareData($customer, $package_number, 'exist', $date1, $date2);
-            }
-            $protokols .= $protokol_footer;
-            Storage::disk('local')->put('/temp/' . $file_name . ".xml", $protokols);
+            $result = $protokol_head;
+            // подготовливаем xml по результатам поверок
+            $result .= $this->getXml2Fgis($protokols, $package_number, $package_update);
+            $result .= $protokol_footer;
+            Storage::disk('local')->put('/temp/' . $file_name . ".xml", $result);
 
             return response()->download(storage_path('app/temp/')."$file_name.xml", "$file_name.xml", $headers);
-
         }
 
+    }
 
-
-
+    private function refreshDir($dir) {
+        if (is_dir($dir)) {
+            $files = array_diff(scandir($dir), array('.', '..'));
+            foreach ($files as $file) {
+                (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+            }
+            rmdir($dir);
+            dd('create dir', $dir);
+            return mkdir($dir);
+        }
+        return false;
     }
 
     private function prepareData($customer, $package_number, $type = 'new', $date1 = null, $date2 = null)
@@ -405,10 +428,18 @@ class CustomerController extends AdminController
 
         $new_protokols = $new_protokols;
 
-        foreach ($new_protokols as $protokol) {
+        $this->getXml2Fgis($new_protokols, $package_number, $package_update);
+
+        return $result;
+    }
+
+    private function getXml2Fgis($protokols, $package_number, $package_update = false)
+    {
+        $result = '';
+        foreach ($protokols as $protokol) {
             if ($protokol->regNumber) {
 
-                $pressure = $this->getPressure($customer->id, date('Y-m-d', strtotime($protokol->protokol_dt)));
+                $pressure = $this->getPressure($protokol->customer->id, date('Y-m-d', strtotime($protokol->protokol_dt)));
 
                 $result .= "\t<result>\n";
 
@@ -427,7 +458,7 @@ class CustomerController extends AdminController
                     $nextTest = date("Y-m-d", $nextTest);
                 }
 
-                $hour_zone = sprintf('+%02d:00', $customer->hour_zone);
+                $hour_zone = sprintf('+%02d:00', $protokol->customer->hour_zone);
                 //dd($customer->hour_zone, $hour_zone);
 
                 $result_test = "<applicable>
@@ -451,30 +482,30 @@ class CustomerController extends AdminController
 
                 $result .= "\t\t<means>\n";
 
-                if ($customer->ideal) {
-                    $ideal = $customer->ideal ? $customer->ideal : '3.2.ВЮМ.0023.2019';
+                if ($protokol->customer->ideal) {
+                    $ideal = $protokol->customer->ideal ? $protokol->customer->ideal : '3.2.ВЮМ.0023.2019';
                     $result .= "\t\t\t<uve>
                                 <number>$ideal</number>
                         </uve>\n";
                 }
-                else if ($customer->ci_as_ideal) {
+                else if ($protokol->customer->ci_as_ideal) {
                     $result .= "\t\t\t<mieta>
-                                <number>{$customer->ci_as_ideal}</number>
+                                <number>{$protokol->customer->ci_as_ideal}</number>
                         </mieta>\n";
                 }
-                else if ($customer->ci_as_ideal_fake) {
+                else if ($protokol->customer->ci_as_ideal_fake) {
                     $result .= "\t\t\t<mieta>
-                                <number>{$customer->ci_as_ideal_fake}</number>
+                                <number>{$protokol->customer->ci_as_ideal_fake}</number>
                         </mieta>\n";
                 }
-                else if ($customer->get) {
+                else if ($protokol->customer->get) {
                     $result .= "\t\t\t<npe>
-                                <number>{$customer->get}</number>
+                                <number>{$protokol->customer->get}</number>
                         </npe>\n";
                 }
-                if(!$customer->customer_tools) {
+                if(!$protokol->customer->customer_tools) {
                     $result .= "\t\t\t<mis>\n";
-                    foreach ($customer->customer_tools as $customer_tool) {
+                    foreach ($protokol->customer->customer_tools as $customer_tool) {
 
                         $result .= "\t\t\t\t<mi>
                                 <typeNum>{$customer_tool->typeNum}</typeNum>
@@ -498,8 +529,8 @@ class CustomerController extends AdminController
 //                }
                 $result .= "\t\t</conditions>\n";
 
-                if ($customer->notes) {
-                    $result .= "<additional_info>{$customer->notes}</additional_info>";
+                if ($protokol->customer->notes) {
+                    $result .= "<additional_info>{$protokol->customer->notes}</additional_info>";
                 }
 
                 $result .= "\t</result>\n";
@@ -510,7 +541,6 @@ class CustomerController extends AdminController
                 }
             }
         }
-
         return $result;
     }
 
