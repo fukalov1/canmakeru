@@ -316,7 +316,7 @@ class CustomerController extends AdminController
             'Content-Type' => 'text/xml',
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
-        $file_name = "poverka{$package_number}";
+        $file_name = "poverka{$package_number}-$date";
         $protokol_head = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-06-19\">\n";
         $protokol_footer = "</application>";
 
