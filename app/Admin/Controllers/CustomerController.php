@@ -391,12 +391,12 @@ class CustomerController extends AdminController
             if ($date1 and $date2) {
                 $new_protokols = $new_protokols->where('protokol_dt', '>', "$date1 00:00:00")
                     ->where('protokol_dt', '<=', "$date2 23:59:59");
-                $package_update = true;
+            }
 
-                // получаем новый номер пакета для выгрузки нулевых св-в при повторной загрузке за период
-                if ($package_number==0) {
-                    $package_number = $this->updatePackageNumber();
-                }
+            // получаем новый номер пакета для выгрузки нулевых св-в при повторной загрузке за период
+            if ($package_number==0) {
+                $package_update = true;
+                $package_number = $this->updatePackageNumber();
             }
         }
 
