@@ -25,9 +25,9 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
         'name', 'email', 'password', 'amount', 'limit', 'frozen_limit',
     ];
 
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+//    protected $hidden = [
+//        'password', 'remember_token',
+//    ];
 
     protected $dates = ['deleted_at'];
 
