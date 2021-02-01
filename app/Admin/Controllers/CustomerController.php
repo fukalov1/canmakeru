@@ -348,7 +348,7 @@ class CustomerController extends AdminController
             $i = 1;
             $result = '';
             foreach ($protokols as $items) {
-                $result .= $protokol_head." ===".$items->count();
+                $result .= $protokol_head;
                 // подготовливаем xml по результатам поверок
                 $result .= $this->getXml2Fgis($items, $package_number, $package_update);
                 $result .= $protokol_footer;
