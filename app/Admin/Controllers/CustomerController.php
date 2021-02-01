@@ -316,7 +316,7 @@ class CustomerController extends AdminController
             'Content-Type' => 'text/xml',
             'Content-Disposition' => 'attachment; filename="poverka'.$date.'.xml"',
         );
-        $file_name = "poverka-{$package_number}-$date";
+        $file_name = "poverka{$package_number}";
         $protokol_head = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<application xmlns=\"urn://fgis-arshin.gost.ru/module-verifications/import/2020-06-19\">\n";
         $protokol_footer = "</application>";
 
@@ -379,7 +379,11 @@ class CustomerController extends AdminController
             $fileurl = storage_path('app/temp/')."$file_name.zip";
 
             if (file_exists($fileurl)) {
-                return response()->file($fileurl)->deleteFileAfterSend(true);
+                $headers = array(
+                    'Content-Type' => 'application/octet-stream',
+                    'Content-Disposition' => 'attachment; filename="'.$file_name.'"',
+                );
+                return response()->file($fileurl, $headers)->deleteFileAfterSend(true);
             } else {
                 return ['status'=>'empty set'];
             }
