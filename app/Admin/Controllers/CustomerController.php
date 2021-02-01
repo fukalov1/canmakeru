@@ -330,7 +330,7 @@ class CustomerController extends AdminController
                 ->where('protokol_dt', '<=', "$date2 23:59:59");
         }
 
-        $protokols = $protokols->get();
+
         // получаем новый номер пакета для выгрузки нулевых св-в при повторной загрузке за период
         $package_update = false;
         if ($package_number==0) {
@@ -338,47 +338,59 @@ class CustomerController extends AdminController
             $package_number = $this->updatePackageNumber();
         }
 
+        $protokols = $protokols->get();
+
         $xml_records = config('xml_records', 4300);
-        if ($protokols->count()>=$xml_records) {
+        if ($protokols->count() >= $xml_records) {
 
             $this->refreshDir(storage_path('app/temp/'.$package_number));
 
-            $protokols = $protokols->chunk($xml_records)->all();
+//            $protokols = $protokols->chunk($xml_records)->all();
 
             $i = 1;
             $result = '';
-            foreach ($protokols as $items) {
-                $result .= $protokol_head;
+            $data = $protokols->chunk($xml_records);
+//            $protokols->chunk($xml_records, function ($items) use ($package_number, $package_update, $result, $protokol_head, $protokol_footer, $file_name, $i) {
+            foreach ($data as $items) {
+                $result = $protokol_head;
                 // подготовливаем xml по результатам поверок
-                $result .= $this->getXml2Fgis($items, $package_number, $package_update);
+                foreach ($items as $item) {
+                    if ($item->regNumber) {
+//                        echo "$i = {$item->protokol_num}<br>\n";
+                        $result .= $this->getXml2Fgis($item, $package_number, $package_update);
+                    }
+                }
                 $result .= $protokol_footer;
                 Storage::disk('local')->put('/temp/' . $package_number . '/' . $file_name . "-$i.xml", $result);
-                $i++;
+                ++$i;
             };
+//            dd($i);
 
             if (file_exists(storage_path('app/temp/') . "$file_name.zip")) {
                 unlink(storage_path('app/temp/') . "$file_name.zip");
             }
 
-            if ($i > 1) {
+//            if ($i > 1) {
                 $zip = Zip::create(storage_path('app/temp/') . "$file_name.zip");
                 $zip->add(storage_path("app/temp/$package_number"), true);
                 $zip->close();
-            }
+//            }
 
             $fileurl = storage_path('app/temp/')."$file_name.zip";
 
             if (file_exists($fileurl)) {
                 return response()->file($fileurl)->deleteFileAfterSend(true);
             } else {
-                return ['status'=>'zip file does not exist'];
+                return ['status'=>'empty set'];
             }
 
         }
         else {
             $result = $protokol_head;
             // подготовливаем xml по результатам поверок
-            $result .= $this->getXml2Fgis($protokols, $package_number, $package_update);
+            foreach ($protokols as $protokol) {
+                $result .= $this->getXml2Fgis($protokol, $package_number, $package_update);
+            }
             $result .= $protokol_footer;
             Storage::disk('local')->put('/temp/' . $file_name . ".xml", $result);
 
@@ -394,10 +406,9 @@ class CustomerController extends AdminController
                 (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
             }
             rmdir($dir);
-            dd('create dir', $dir);
-            return mkdir($dir);
         }
-        return false;
+        mkdir($dir);
+        return true;
     }
 
     private function prepareData($customer, $package_number, $type = 'new', $date1 = null, $date2 = null)
@@ -428,16 +439,16 @@ class CustomerController extends AdminController
 
         $new_protokols = $new_protokols;
 
-        $this->getXml2Fgis($new_protokols, $package_number, $package_update);
+        foreach ($new_protokols as $protokol) {
+            $result = $this->getXml2Fgis($protokol, $package_number, $package_update);
+        }
 
         return $result;
     }
 
-    private function getXml2Fgis($protokols, $package_number, $package_update = false)
+    private function getXml2Fgis($protokol, $package_number, $package_update = false)
     {
         $result = '';
-        foreach ($protokols as $protokol) {
-            if ($protokol->regNumber) {
 
                 $pressure = $this->getPressure($protokol->customer->id, date('Y-m-d', strtotime($protokol->protokol_dt)));
 
@@ -538,8 +549,6 @@ class CustomerController extends AdminController
                 if ($package_update) {
                     Protokol::find($protokol->id)
                         ->update(['exported' => $package_number]);
-                }
-            }
         }
         return $result;
     }
