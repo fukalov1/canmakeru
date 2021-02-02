@@ -19,7 +19,7 @@ class CustomerReport1Controller extends AdminController
      *
      * @var string
      */
-    protected $title = 'Партнеры с поверками за период';
+    protected $title = 'Экспорт в XLS за период';
 
     /**
      * Make a grid builder.
