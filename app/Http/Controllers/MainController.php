@@ -176,7 +176,7 @@ class MainController extends Controller
                 ->where('pin', $pin)
                 ->first();
             if ($act) {
-                return view('actPDF', ['act' => $act, 'hide_link' => false]);
+                return view('act', ['act' => $act]);
             }
             else {
                 return response('Акт не найден', 404);
@@ -198,7 +198,7 @@ class MainController extends Controller
                 ->where('pin', $pin)
                 ->first();
             if ($act) {
-                $pdf = PDF::loadView('actPDF', ['act' => $act, 'hide_link' => true]);
+                $pdf = PDF::loadView('actPDF', ['act' => $act]);
 
                 return $pdf->download("act$id.pdf");
             }

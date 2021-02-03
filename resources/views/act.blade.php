@@ -15,16 +15,13 @@
 </head>
 <body>
     <div align="center" style="margin: 0 auto; width: 680px; border: 1px #999999 solid; padding-left: 20px; background-color: #ffffff">
-{{--        <table width="100%" cellspacing="5" cellpadding="10">--}}
-{{--            <tr>--}}
-{{--                <td width="100%" valign="top">--}}
-{{--                    <img src="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->name }}.jpg">--}}
-{{--                </td>--}}
-{{--            </tr>--}}
-{{--        </table>--}}
-        <img src="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->name }}.jpg">
         <table width="100%" cellspacing="5" cellpadding="10">
         <tr>
+{{--            <td width="25%" valign="top">--}}
+{{--                <a href="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" target="_blank">--}}
+{{--                    <img src="https://pin.poverkadoma.ru/preview/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->number_act }}.jpg" height="230">--}}
+{{--                </a>--}}
+{{--            </td>--}}
             <td colspan="2" valign="top" align="center">
                 @if ($act->type!='испорчен')
                     <h3>AКT</h3>
@@ -84,7 +81,11 @@
                 <p>Номер в Госреестре: {{ $meter->regNumber }}</p>
                 <p>Методика поверки: {{ $meter->checkMethod }}</p>
                 <p>Вода: {{ $meter->waterType }}</p>
-
+                <p>
+                    <a href="https://fgis.gost.ru/fundmetrology/cm/results?filter_org_title=%D0%9E%D0%9E%D0%9E%20%22%D0%9C%D0%A1-%D0%A0%D0%95%D0%A1%D0%A3%D0%A0%D0%A1%22&filter_mi_number={{ $meter->serialNumber }}" target="_blank">
+                        Проверить в ФИФ
+                    </a> (в электронном реестре)<br/>
+                </p>
             </td>
         </tr>
         @endforeach
