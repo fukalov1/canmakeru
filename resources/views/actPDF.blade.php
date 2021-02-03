@@ -18,7 +18,7 @@
 </head>
 <body>
     <img src="https://pin.poverkadoma.ru/photo/{{ date('Y', strtotime($act->date)) }}/{{ date('m', strtotime($act->date)) }}/act_{{ $act->name }}.jpg" width="600">
-{{--<div class="page-break"></div>--}}
+<div class="page-break"></div>
 <div align="center" style="margin: 0 auto; width: 680px; border: 1px #999999 solid; padding-left: 20px; background-color: #ffffff">
 
     <table width="100%" cellspacing="5" cellpadding="10">
