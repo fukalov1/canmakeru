@@ -44,7 +44,7 @@ class ProtokolController extends AdminController
 
         $grid->header(function ($query) {
             return "<div style='padding: 10px;'>Клиент: <b><a href=\"/admin/customers\" title='вернуться к списку клиентов'>".$this->customer.
-                "</a> / <a href=\"/admin/all-acts\" title='вернуться к списку актов клиента'> Номер акта: {$this->act->number_act} от {$this->act->date}</b></div>";
+                "</a> / <a href=\"/admin/all-acts\" title='вернуться к списку актов клиента'></b></div>";
         });
 
 //        $grid->tools(function ($tools) {
