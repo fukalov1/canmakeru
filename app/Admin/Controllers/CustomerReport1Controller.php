@@ -11,6 +11,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Maatwebsite\Excel\Facades\Excel;
+use Encore\Admin\Grid\Exporters\ExcelExporter;
 
 class CustomerReport1Controller extends AdminController
 {
@@ -29,6 +30,11 @@ class CustomerReport1Controller extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Customer);
+
+        $grid->export(function ($export) {
+            $export->filename('Filename.csv');
+            $export->originalValue(['name', 'partner_code', 'protokols']);
+        });
 
         $grid->filter(function($filter){
             // Remove the default id filter

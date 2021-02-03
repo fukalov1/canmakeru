@@ -80,11 +80,13 @@
                 <p>Номер в Госреестре: {{ $meter->regNumber }}</p>
                 <p>Методика поверки: {{ $meter->checkMethod }}</p>
                 <p>Вода: {{ $meter->waterType }}</p>
+                @if(!$hide_link)
                 <p>
                     <a href="https://fgis.gost.ru/fundmetrology/cm/results?filter_org_title=%D0%9E%D0%9E%D0%9E%20%22%D0%9C%D0%A1-%D0%A0%D0%95%D0%A1%D0%A3%D0%A0%D0%A1%22&filter_mi_number={{ $meter->serialNumber }}" target="_blank">
                         Проверить в ФИФ
                     </a> (в электронном реестре)<br/>
                 </p>
+                @endif
             </td>
         </tr>
         @endforeach

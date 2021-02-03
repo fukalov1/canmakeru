@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth:customer']], function () {
     Route::group(['prefix' => 'data'], function() {
         Route::post('/acts', 'CustomerController@getDataActs');
         Route::post('/protokols', 'CustomerController@getDataProtokols');
+        Route::get('/act/pdf', 'MainController@showActPDF');
         Route::get('/pdf/{id}', 'CustomerController@getPDF');
         Route::get('/profile', 'CustomerController@getProfile');
         Route::post('/statistic', 'CustomerController@getDataStatistic');

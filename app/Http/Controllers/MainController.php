@@ -14,6 +14,7 @@ use Yandex\OAuth\OAuthClient;
 use App\Customer;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
+use PDF;
 
 use Yandex\OAuth\Exception\AuthRequestException;
 
@@ -175,7 +176,31 @@ class MainController extends Controller
                 ->where('pin', $pin)
                 ->first();
             if ($act) {
-                return view('actPDF', ['act' => $act]);
+                return view('actPDF', ['act' => $act, 'hide_link' => false]);
+            }
+            else {
+                return response('Акт не найден', 404);
+            }
+        }
+        else {
+            return response('Акт не найден', 404);
+        }
+    }
+
+    public function showActPdf(Request $request)
+    {
+        $id = $request->id;
+        $pin = $request->pin;
+
+        if (isset($id) and isset($pin)) {
+            $act = $this->acts
+                ->where('number_act', $id)
+                ->where('pin', $pin)
+                ->first();
+            if ($act) {
+                $pdf = PDF::loadView('actPDF', ['act' => $act, 'hide_link' => true]);
+
+                return $pdf->download("act$id.pdf");
             }
             else {
                 return response('Акт не найден', 404);

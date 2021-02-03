@@ -152,9 +152,15 @@
                         <font-awesome-icon
                             class="pointer"
                             icon="file-image"
-                            @click="showAct(item)"
+                            @click="showActPhoto(item)"
                             title="фото акта"
                         />
+                            <font-awesome-icon
+                                class="pointer"
+                                icon="file"
+                                @click="showAct(item)"
+                                title="акт"
+                            />
                             <font-awesome-icon
                                 @click="exportPDF(item)"
                                 class="pointer"
@@ -348,7 +354,7 @@
                 this.photo = str;
                 this.current_protokol = item.protokol_num;
             },
-            showAct(item) {
+            showActPhoto(item) {
                 this.showModal = true;
                 this.photo_title = 'Акт № '+item.number_act+' от '+ item.date;
                 let str = 'act_'+item.name + '.jpg';
@@ -359,8 +365,11 @@
                 str = '/photo/'+ date+ '/' + str;
                 this.photo = str;
             },
-            exportPDF(item) {
+            showAct(item) {
                 document.location = `/up?id=${item.number_act}&pin=${item.pin}`
+            },
+            exportPDF(item) {
+                document.location = `/data/act/pdf?id=${item.number_act}&pin=${item.pin}`
             },
             setPage(page) {
                 this.page = page;
