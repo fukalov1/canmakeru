@@ -11,8 +11,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Admin\Extensions\ExcelExpoter;
+//use Maatwebsite\Excel\Facades\Excel;
+//use App\Admin\Extensions\ExcelExpoter;
 
 
 class CustomerReport1Controller extends AdminController
@@ -38,7 +38,13 @@ class CustomerReport1Controller extends AdminController
 //            $export->originalValue(['name', 'partner_code', 'protokols']);
 //        });
 
-        $grid->exporter(new ExcelExpoter());
+//        $grid->exporter(new ExcelExpoter());
+        $grid->export(function ($export) {
+
+            $export->filename('Filename.csv');
+            $export->only(['name', 'protokols', 'act_count', 'act_good', 'act_bad', 'act_brak']);
+
+        });
 
         $grid->filter(function($filter){
             // Remove the default id filter
