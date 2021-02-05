@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Protokol\ReportExport;
 use App\Customer;
 use App\Exports\CustomerExport;
 use App\Exports\CustomerExportXml;
@@ -11,7 +12,8 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Maatwebsite\Excel\Facades\Excel;
-use Encore\Admin\Grid\Exporters\ExcelExporter;
+use App\Admin\Extensions\ExcelExpoter;
+
 
 class CustomerReport1Controller extends AdminController
 {
@@ -31,10 +33,12 @@ class CustomerReport1Controller extends AdminController
     {
         $grid = new Grid(new Customer);
 
-        $grid->export(function ($export) {
-            $export->filename('Filename.csv');
-            $export->originalValue(['name', 'partner_code', 'protokols']);
-        });
+//        $grid->export(function ($export) {
+//            $export->filename('Filename.csv');
+//            $export->originalValue(['name', 'partner_code', 'protokols']);
+//        });
+
+        $grid->exporter(new ExcelExpoter());
 
         $grid->filter(function($filter){
             // Remove the default id filter
@@ -48,7 +52,6 @@ class CustomerReport1Controller extends AdminController
         });
 
         $grid->disableActions();
-
 
 
         $grid->column('partner_code', __('Код партнера'));

@@ -381,7 +381,7 @@ class CustomerController extends AdminController
             if (file_exists($fileurl)) {
                 $headers = array(
                     'Content-Type' => 'application/octet-stream',
-                    'Content-Disposition' => 'attachment; filename="'.$file_name.'"',
+                    'Content-Disposition' => 'attachment; filename="'.$file_name.'.zip"',
                 );
                 return response()->file($fileurl, $headers)->deleteFileAfterSend(true);
             } else {
