@@ -170,7 +170,7 @@ class CustomerReport1Controller extends AdminController
                         ->get();
                     $protokols = 0;
                     foreach ($acts as $act) {
-                        $protokols =+ $act->meters->count();
+                        $protokols += $act->meters->count();
                     }
 
                     $good = Act::where('customer_id', $item->id)
