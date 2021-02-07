@@ -30,6 +30,7 @@ Route::group([
     $router->get('customer_chart', 'CustomerChartController@index')->middleware('set_customer');
     $router->get('customer_report', 'CustomerReportController@index');
     $router->get('customer_report1', 'CustomerReport1Controller@index');
+    $router->get('customer_report1/export', 'CustomerReport1Controller@export');
 
     $router->get('export-fgis', 'CustomerController@exportXmlToFGIS');
     $router->post('export-package-fgis', 'CustomerController@exportPackageXmlToFGIS');

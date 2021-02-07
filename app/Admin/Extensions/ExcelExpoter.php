@@ -3,10 +3,18 @@
 namespace App\Admin\Extensions;
 
 use App\Customer;
+use Encore\Admin\Grid;
 use Encore\Admin\Grid\Exporters\ExcelExporter;
 
 class ExcelExpoter extends ExcelExporter
 {
+
+    public function __construct(Grid $grid = null)
+    {
+        parent::__construct($grid);
+    }
+
+ 
     public function export()
     {
 
@@ -15,6 +23,7 @@ class ExcelExpoter extends ExcelExporter
         $end = $params['protokol_dt']['end'];
 
         $filename = time().'.csv';
+        $output = '';
         try {
             if ($fh = fopen(storage_path('admin') . $filename, "w+")) {
                 $data = $this->getCollection();
@@ -33,9 +42,10 @@ class ExcelExpoter extends ExcelExporter
                     $bad = $acts->where('type', 'непригодны')->count();
                     $brak = $acts->where('type', 'испорчен')->count();
 
-                    fwrite($fh, "{$item['partner_code']};{$item['name']};$protokols;{$acts->count()};$good;$bad;$brak;\n");
-                }
+                    $output .= "{$item['partner_code']};{$item['name']};$protokols;{$acts->count()};$good;$bad;$brak;\n";
 
+                }
+                fwrite($fh, $output);
                 // This logic get the columns that need to be exported from the table data
 //                $rows = collect($this->getData())->map(function ($item) {
 //                    return $item;
@@ -44,8 +54,13 @@ class ExcelExpoter extends ExcelExporter
             }
         }
         catch (\Throwable $exception) {
-            dd($exception->getMessage());
         }
+        $headers = [
+            'Content-Encoding'    => 'UTF-8',
+            'Content-Type'        => 'text/csv;charset=UTF-8',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+        ];
+//        response(rtrim($output, "\n"), 200, $headers)->send();
 
 
     }
