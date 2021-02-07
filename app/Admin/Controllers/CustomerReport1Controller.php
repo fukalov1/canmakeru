@@ -37,8 +37,10 @@ class CustomerReport1Controller extends AdminController
         $grid = new Grid(new Customer);
 
         $grid->header(function ($query) {
-            $url = $_SERVER['QUERY_STRING'];
-            return "<div style='padding: 10px;'><a href=\"/admin/customer_report1/export?$url\" title='экспорт в Excel' target='_blank'>Экспорт в Excel</a> </div>";
+            if (isset($_SERVER['QUERY_STRING'])) {
+                $url = $_SERVER['QUERY_STRING'];
+                return "<div style='padding: 10px;'><a href=\"/admin/customer_report1/export?$url\" title='экспорт в Excel' target='_blank'>Экспорт в Excel</a> </div>";
+            }
         });
 
 //        $grid->export(function ($export) {
@@ -61,7 +63,7 @@ class CustomerReport1Controller extends AdminController
             // Add a column filter
             $filter->like('name', 'ФИО');
             $filter->like('code', 'Код клиента');
-            $filter->between('protokols.protokol_dt', 'Период')->date();
+            $filter->between('acts.date', 'Период')->date();
 
         });
 
@@ -72,8 +74,8 @@ class CustomerReport1Controller extends AdminController
         $grid->column('name', 'ФИО');
         $grid->protokols('Кол-во поверок')->display(function ($protokols) {
             if (!!request('protokols')) {
-                $start = (request('protokols')['protokol_dt']['start']);
-                $end = (request('protokols')['protokol_dt']['end']);
+                $start = (request('acts')['date']['start']);
+                $end = (request('acts')['dare']['end']);
                 $protokols = collect($protokols);
                 $protokols = $protokols->filter(function ($item) use ($start,$end) {
                     return $item['protokol_dt']>=$start and $item['protokol_dt']<=$end ;
@@ -144,9 +146,9 @@ class CustomerReport1Controller extends AdminController
     public function export()
     {
 
-        $params = request()->input('protokols');
-        $start = $params['protokol_dt']['start'];
-        $end = $params['protokol_dt']['end'];
+        $params = request()->input('acts');
+        $start = $params['date']['start'];
+        $end = $params['date']['end'];
 
         $filename = time().'.csv';
         $output = '';
@@ -156,16 +158,14 @@ class CustomerReport1Controller extends AdminController
                 $customers = DB::table('customers')
                     ->join('acts', 'customers.id', 'acts.customer_id')
                     ->select('customers.id', 'partner_code', 'customers.name',  DB::raw('count(*) as count'))
-                    ->where('acts.name', '<>', 'Нулевой')
-                    ->whereBetween('date', [$start." 00:00:00", $end." 23:59:59"])
+                    ->whereBetween('date', [$start, $end])
                     ->groupBy('customers.id')->get();
 
-//                dd($acts, $start." 00:00:00", $end." 23:59:59");
+//                dd($customers, $start." 00:00:00", $end." 23:59:59");
                 foreach ($customers as $item) {
 
                     $acts = Act::where('customer_id', $item->id)
-                        ->where('name', '<>', 'Нулевой')
-                        ->whereBetween('date', [$start." 00:00:00", $end." 23:59:59"])
+                        ->whereBetween('date', [$start, $end])
                         ->with('meters')
                         ->get();
                     $protokols = 0;
@@ -174,18 +174,15 @@ class CustomerReport1Controller extends AdminController
                     }
 
                     $good = Act::where('customer_id', $item->id)
-                        ->where('acts.name', '<>', 'Нулевой')
-                        ->whereBetween('date', [$start." 00:00:00", $end." 23:59:59"])
+                        ->whereBetween('date', [$start, $end])
                         ->where('type', 'пригодны')
                         ->get()->count();
                     $bad = Act::where('customer_id', $item->id)
-                        ->where('acts.name', '<>', 'Нулевой')
-                        ->whereBetween('date', [$start." 00:00:00", $end." 23:59:59"])
+                        ->whereBetween('date', [$start, $end])
                         ->where('type', 'непригодны')
                         ->get()->count();
                     $brak = Act::where('customer_id', $item->id)
-                        ->where('acts.name', '<>', 'Нулевой')
-                        ->whereBetween('date', [$start." 00:00:00", $end." 23:59:59"])
+                        ->whereBetween('date', [$start, $end])
                         ->where('type', 'испорчен')
                         ->get()->count();
 
