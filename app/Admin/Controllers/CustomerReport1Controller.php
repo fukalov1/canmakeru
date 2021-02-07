@@ -38,7 +38,7 @@ class CustomerReport1Controller extends AdminController
 
         $grid->header(function ($query) {
             $url = $_SERVER['QUERY_STRING'];
-            return "<div style='padding: 10px;'><a href=\"/admin/customer_report1/export?$url\" title='экспорт в Excel'>Экспорт в Excel</a> </div>";
+            return "<div style='padding: 10px;'><a href=\"/admin/customer_report1/export?$url\" title='экспорт в Excel' target='_blank'>Экспорт в Excel</a> </div>";
         });
 
 //        $grid->export(function ($export) {
