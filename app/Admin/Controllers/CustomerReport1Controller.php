@@ -63,7 +63,7 @@ class CustomerReport1Controller extends AdminController
             // Add a column filter
             $filter->like('name', 'ФИО');
             $filter->like('code', 'Код клиента');
-            $filter->between('acts.date', 'Период')->date();
+            $filter->between('acts.date', 'Период')->datetime();
 
         });
 
@@ -72,17 +72,17 @@ class CustomerReport1Controller extends AdminController
 
         $grid->column('partner_code', __('Код партнера'));
         $grid->column('name', 'ФИО');
-        $grid->protokols('Кол-во поверок')->display(function ($protokols) {
-            if (!!request('protokols')) {
-                $start = (request('acts')['date']['start']);
-                $end = (request('acts')['dare']['end']);
-                $protokols = collect($protokols);
-                $protokols = $protokols->filter(function ($item) use ($start,$end) {
-                    return $item['protokol_dt']>=$start and $item['protokol_dt']<=$end ;
-                });
-            }
-            return count($protokols);
-        });
+//        $grid->protokols('Кол-во поверок')->display(function ($protokols) {
+//            if (!!request('protokols')) {
+//                $start = (request('acts')['date']['start']);
+//                $end = (request('acts')['dare']['end']);
+//                $protokols = collect($protokols);
+//                $protokols = $protokols->filter(function ($item) use ($start,$end) {
+//                    return $item['protokol_dt']>=$start and $item['protokol_dt']<=$end ;
+//                });
+//            }
+//            return count($protokols);
+//        });
         $grid->act_count('Кол-во актов')->display(function ($id) {
             return Customer::find($this->id)->acts()->count();
         });
