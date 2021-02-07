@@ -158,7 +158,7 @@ class CustomerReport1Controller extends AdminController
                 $customers = DB::table('customers')
                     ->join('acts', 'customers.id', 'acts.customer_id')
                     ->select('customers.id', 'partner_code', 'customers.name',  DB::raw('count(*) as count'))
-                    ->whereBetween('date', [$start, $end])
+                    ->whereBetween('date', [$start." 00:00:00", $end." 23:59:59"])
                     ->groupBy('customers.id')->get();
 
 //                dd($customers, $start." 00:00:00", $end." 23:59:59");
