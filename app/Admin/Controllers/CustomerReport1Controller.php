@@ -151,7 +151,7 @@ class CustomerReport1Controller extends AdminController
         $filename = time().'.csv';
         $output = '';
         try {
-            if ($fh = fopen(storage_path('admin') . $filename, "w+")) {
+//            if ($fh = fopen(storage_path('admin') . $filename, "w+")) {
 //                $acts = \DB::select("select customers.name, (select count(id) from acts where customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_count, (select count(id) from acts where type='пригодны' and customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_good, (select count(id) from acts where type='непригодны' and customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_bad, (select count(id) from acts where type='испорчен' and customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_brak from customers, acts where customers.id=acts.customer_id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой' group by 'customers.id'");
                 $customers = DB::table('customers')
                     ->join('acts', 'customers.id', 'acts.customer_id')
@@ -192,13 +192,13 @@ class CustomerReport1Controller extends AdminController
                     $output .= "{$item->partner_code};{$item->name};$protokols;{$item->count};{$good};{$bad};{$brak}\n";
 
                 }
-                fwrite($fh, $output);
+//                fwrite($fh, $output);
                 // This logic get the columns that need to be exported from the table data
 //                $rows = collect($this->getData())->map(function ($item) {
 //                    return $item;
 //                });
-                fclose($fh);
-            }
+//                fclose($fh);
+//            }
         }
         catch (\Throwable $exception) {
             dd($exception->getMessage());
