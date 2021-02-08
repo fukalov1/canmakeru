@@ -560,6 +560,7 @@ class CustomerController extends AdminController
                     try {
                         Protokol::find($protokol->id)
                             ->update(['exported' => $package_number]);
+                        Log::info("Export fgis. Update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
                     }
                     catch (\Throwable $exception) {
                         Log::error("Export fgis. Error update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
