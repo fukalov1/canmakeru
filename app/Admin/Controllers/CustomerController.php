@@ -464,11 +464,12 @@ class CustomerController extends AdminController
     private function getXml2Fgis($protokol, $package_number, $package_update = false)
     {
         $result = '';
-                $pressure = $this->getPressure($protokol->customer->id, date('Y-m-d', strtotime($protokol->protokol_dt)));
+        if ($protokol->customer) {
+            $pressure = $this->getPressure($protokol->customer->id, date('Y-m-d', strtotime($protokol->protokol_dt)));
 
-                $result .= "\t<result>\n";
+            $result .= "\t<result>\n";
 
-                $result .= "\t\t<miInfo>
+            $result .= "\t\t<miInfo>
                     <singleMI>
                             <mitypeNumber>" . $protokol->regNumber . "</mitypeNumber>
                             <manufactureNum>" . $protokol->serialNumber . "</manufactureNum>
@@ -476,99 +477,96 @@ class CustomerController extends AdminController
                     </singleMI>
                 </miInfo>\n";
 
-                $nextTest = null;
-                if ((int)$protokol->checkInterval > 0) {
-                    $nextTest = strtotime("+$protokol->checkInterval YEAR", strtotime($protokol->protokol_dt));
-                    $nextTest = strtotime('-1 DAYS', $nextTest);
-                    $nextTest = date("Y-m-d", $nextTest);
-                }
+            $nextTest = null;
+            if ((int)$protokol->checkInterval > 0) {
+                $nextTest = strtotime("+$protokol->checkInterval YEAR", strtotime($protokol->protokol_dt));
+                $nextTest = strtotime('-1 DAYS', $nextTest);
+                $nextTest = date("Y-m-d", $nextTest);
+            }
 
-                $hour_zone = sprintf('+%02d:00', $protokol->customer->hour_zone);
-                //dd($customer->hour_zone, $hour_zone);
+            $hour_zone = sprintf('+%02d:00', $protokol->customer->hour_zone);
+            //dd($customer->hour_zone, $hour_zone);
 
-                $result_test = "<applicable>
+            $result_test = "<applicable>
                     <signPass>false</signPass>
                     <signMi>false</signMi>
                     </applicable>";
-                if ($protokol->act->type === 'непригодны') {
-                    $result_test = "<inapplicable>
+            if ($protokol->act->type === 'непригодны') {
+                $result_test = "<inapplicable>
                             <reasons>Не соответствует метрологическим требованиям</reasons>
                         </inapplicable>";
-                }
+            }
 
-                $result .= "\t\t<signCipher>" . config('signCipher', 'ГСЧ') . "</signCipher>
-                    <miOwner>" .$protokol->act->miowner. "</miOwner>
-                    <vrfDate>" .date("Y-m-d",strtotime($protokol->protokol_dt)) .$hour_zone. "</vrfDate>
-                    <validDate>" . $nextTest .$hour_zone. "</validDate>
+            $result .= "\t\t<signCipher>" . config('signCipher', 'ГСЧ') . "</signCipher>
+                    <miOwner>" . $protokol->act->miowner . "</miOwner>
+                    <vrfDate>" . date("Y-m-d", strtotime($protokol->protokol_dt)) . $hour_zone . "</vrfDate>
+                    <validDate>" . $nextTest . $hour_zone . "</validDate>
                     <type>2</type>
                     <calibration>false</calibration>
-                    ".$result_test."
+                    " . $result_test . "
                     <docTitle>" . $protokol->checkMethod . "</docTitle>\n";
 
-                $result .= "\t\t<means>\n";
+            $result .= "\t\t<means>\n";
 
-                if ($protokol->customer->ideal) {
-                    $ideal = $protokol->customer->ideal ? $protokol->customer->ideal : '3.2.ВЮМ.0023.2019';
-                    $result .= "\t\t\t<uve>
+            if ($protokol->customer->ideal) {
+                $ideal = $protokol->customer->ideal ? $protokol->customer->ideal : '3.2.ВЮМ.0023.2019';
+                $result .= "\t\t\t<uve>
                                 <number>$ideal</number>
                         </uve>\n";
-                }
-                else if ($protokol->customer->ci_as_ideal) {
-                    $result .= "\t\t\t<mieta>
+            } else if ($protokol->customer->ci_as_ideal) {
+                $result .= "\t\t\t<mieta>
                                 <number>{$protokol->customer->ci_as_ideal}</number>
                         </mieta>\n";
-                }
-                else if ($protokol->customer->ci_as_ideal_fake) {
-                    $result .= "\t\t\t<mieta>
+            } else if ($protokol->customer->ci_as_ideal_fake) {
+                $result .= "\t\t\t<mieta>
                                 <number>{$protokol->customer->ci_as_ideal_fake}</number>
                         </mieta>\n";
-                }
-                else if ($protokol->customer->get) {
-                    $result .= "\t\t\t<npe>
+            } else if ($protokol->customer->get) {
+                $result .= "\t\t\t<npe>
                                 <number>{$protokol->customer->get}</number>
                         </npe>\n";
-                }
-                if(!$protokol->customer->customer_tools) {
-                    $result .= "\t\t\t<mis>\n";
-                    foreach ($protokol->customer->customer_tools as $customer_tool) {
+            }
+            if (!$protokol->customer->customer_tools) {
+                $result .= "\t\t\t<mis>\n";
+                foreach ($protokol->customer->customer_tools as $customer_tool) {
 
-                        $result .= "\t\t\t\t<mi>
+                    $result .= "\t\t\t\t<mi>
                                 <typeNum>{$customer_tool->typeNum}</typeNum>
                                 <manufactureNum>{$customer_tool->manufactureNum}</manufactureNum>
                             </mi>\n";
-                    }
-                    $result .= "\t\t\t</mis>\n";
                 }
+                $result .= "\t\t\t</mis>\n";
+            }
 
-                $result .= "\t\t</means>\n";
+            $result .= "\t\t</means>\n";
 
-                $result .= "\t\t<conditions>\n";
-                $result .= "\t\t\t<temperature>".$protokol->act->temperature."</temperature>\n";
-                $result .= "\t\t\t<pressure>$pressure</pressure>\n";
-                $result .= "\t\t\t<hymidity>".$protokol->act->hymidity."</hymidity>\n";
+            $result .= "\t\t<conditions>\n";
+            $result .= "\t\t\t<temperature>" . $protokol->act->temperature . "</temperature>\n";
+            $result .= "\t\t\t<pressure>$pressure</pressure>\n";
+            $result .= "\t\t\t<hymidity>" . $protokol->act->hymidity . "</hymidity>\n";
 //                if ($protokol->type_water=='XB') {
 //                    $result .= "\t\t\t<cold_water>$cold_water</cold_water>\n";
 //                }
 //                else {
 //                    $result .= "\t\t\t<hot_water>$hot_water</hot_water>\n";
 //                }
-                $result .= "\t\t</conditions>\n";
+            $result .= "\t\t</conditions>\n";
 
-                if ($protokol->customer->notes) {
-                    $result .= "<additional_info>{$protokol->customer->notes}</additional_info>";
+            if ($protokol->customer->notes) {
+                $result .= "<additional_info>{$protokol->customer->notes}</additional_info>";
+            }
+
+            $result .= "\t</result>\n";
+
+            if ($package_update) {
+                try {
+                    Protokol::find($protokol->id)
+                        ->update(['exported' => $package_number]);
+                    Log::info("Export fgis. Update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
+                } catch (\Throwable $exception) {
+                    Log::error("Export fgis. Error update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
                 }
-
-                $result .= "\t</result>\n";
-
-                if ($package_update) {
-                    try {
-                        Protokol::find($protokol->id)
-                            ->update(['exported' => $package_number]);
-                        Log::info("Export fgis. Update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
-                    }
-                    catch (\Throwable $exception) {
-                        Log::error("Export fgis. Error update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
-                    }
+            }
         }
         return $result;
     }
