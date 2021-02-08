@@ -19,6 +19,7 @@ use PHPExcel;
 use PHPExcel_IOFactory;
 use Illuminate\Support\Facades\Storage;
 use Zip;
+use Illuminate\Support\Facades\Log;
 
 class CustomerController extends AdminController
 {
@@ -326,7 +327,7 @@ class CustomerController extends AdminController
 
         if ($date1 and $date2) {
             $protokols = $protokols
-                ->where('protokol_dt', '>', "$date1 00:00:00")
+                ->where('protokol_dt', '>=', "$date1 00:00:00")
                 ->where('protokol_dt', '<=', "$date2 23:59:59");
         }
 
@@ -339,6 +340,8 @@ class CustomerController extends AdminController
         }
 
         $protokols = $protokols->get();
+
+        Log::info('Export fgis. Select records: '. $protokols->count());
 
         $xml_records = config('xml_records', 4300);
         if ($protokols->count() >= $xml_records) {
@@ -362,11 +365,13 @@ class CustomerController extends AdminController
                 }
                 $result .= $protokol_footer;
                 Storage::disk('local')->put('/temp/' . $package_number . '/' . $file_name . "-$i.xml", $result);
+                Log::info('Export fgis. Fill file: '. $file_name . "-$i.xml");
                 ++$i;
             };
 //            dd($i);
 
             if (file_exists(storage_path('app/temp/') . "$file_name.zip")) {
+                Log::info('Export fgis. Unlink file: '. $file_name . "zip");
                 unlink(storage_path('app/temp/') . "$file_name.zip");
             }
 
@@ -374,6 +379,7 @@ class CustomerController extends AdminController
                 $zip = Zip::create(storage_path('app/temp/') . "$file_name.zip");
                 $zip->add(storage_path("app/temp/$package_number"), true);
                 $zip->close();
+                Log::info('Export fgis. Create file: '. $file_name . ".zip");
 //            }
 
             $fileurl = storage_path('app/temp/')."$file_name.zip";
@@ -551,8 +557,13 @@ class CustomerController extends AdminController
                 $result .= "\t</result>\n";
 
                 if ($package_update) {
-                    Protokol::find($protokol->id)
-                        ->update(['exported' => $package_number]);
+                    try {
+                        Protokol::find($protokol->id)
+                            ->update(['exported' => $package_number]);
+                    }
+                    catch (\Throwable $exception) {
+                        Log::error("Export fgis. Error update protokol: {$protokol->id} with $package_number number.");
+                    }
         }
         return $result;
     }
