@@ -355,6 +355,7 @@ class CustomerController extends AdminController
 
 //            $protokols = $protokols->chunk($xml_records)->all();
 
+            $ids = [];
             $i = 1;
             $result = '';
             $data = $protokols->chunk($xml_records);
@@ -366,6 +367,9 @@ class CustomerController extends AdminController
                     if ($item->regNumber) {
 //                        echo "$i = {$item->protokol_num}<br>\n";
                         $result .= $this->getXml2Fgis($item, $package_number, $package_update);
+                        if ($result) {
+                            $ids[] = $item->id;
+                        }
                     }
                 }
                 $result .= $protokol_footer;
@@ -373,6 +377,17 @@ class CustomerController extends AdminController
                 Log::info('Export fgis. Fill file: '. $file_name . "-$i.xml");
                 ++$i;
             };
+
+            if ($package_update) {
+                try {
+                    Protokol::whereIn($ids)
+                        ->update(['exported' => $package_number]);
+//                    Log::info("Export fgis. Update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
+                } catch (\Throwable $exception) {
+                    Log::error("Export fgis. Error update protokols for $package_number number.");
+                }
+            }
+
 //            dd($i);
 
             if (file_exists(storage_path('app/temp/') . "$file_name.zip")) {
@@ -558,15 +573,7 @@ class CustomerController extends AdminController
 
             $result .= "\t</result>\n";
 
-            if ($package_update) {
-                try {
-                    Protokol::find($protokol->id)
-                        ->update(['exported' => $package_number]);
-//                    Log::info("Export fgis. Update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
-                } catch (\Throwable $exception) {
-                    Log::error("Export fgis. Error update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
-                }
-            }
+
         }
         return $result;
     }
