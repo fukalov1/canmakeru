@@ -69,6 +69,17 @@ class CustomerReport1Controller extends AdminController
 
         $grid->disableActions();
 
+//        if (isset($_SERVER['QUERY_STRING'])) {
+//
+//            $params = request()->input('acts');
+//            $start = $params['date']['start'];
+//            $end = $params['date']['end'];
+//
+//
+//            $grid->model()->join('acts', 'customers.id', 'acts.customer_id')
+//                ->whereBetween('date', [$start." 00:00:00", $end." 23:59:59"]);
+//        }
+
 
         $grid->column('partner_code', __('Код партнера'));
         $grid->column('name', 'ФИО');
@@ -151,7 +162,7 @@ class CustomerReport1Controller extends AdminController
         $end = $params['date']['end'];
 
         $filename = time().'.csv';
-        $output = '';
+        $output = "Код партнера;Поверитель;Кол-во поверок;Всего актов;Пригодных;Непригодных;Испорченных\n";
         try {
 //            if ($fh = fopen(storage_path('admin') . $filename, "w+")) {
 //                $acts = \DB::select("select customers.name, (select count(id) from acts where customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_count, (select count(id) from acts where type='пригодны' and customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_good, (select count(id) from acts where type='непригодны' and customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_bad, (select count(id) from acts where type='испорчен' and customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_brak from customers, acts where customers.id=acts.customer_id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой' group by 'customers.id'");
