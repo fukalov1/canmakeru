@@ -459,6 +459,7 @@ class CustomerController extends AdminController
     private function getXml2Fgis($protokol, $package_number, $package_update = false)
     {
         $result = '';
+        Log::info("Export fgis. Package number: $package_number Protokol num: {$protokol->protokol_num} Data: ".json_encode($protokol->toArray()));
 
                 $pressure = $this->getPressure($protokol->customer->id, date('Y-m-d', strtotime($protokol->protokol_dt)));
 
