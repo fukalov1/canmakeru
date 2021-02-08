@@ -325,6 +325,11 @@ class CustomerController extends AdminController
             ->where('customers.export_fgis',1)
             ->where('protokols.exported', $package_number);
 
+        $protokols = Protokol::with(['customer' => function($q) {
+            $q->where('customers.export_fgis', 1);
+            }])
+            ->where('protokols.exported', $package_number);
+
         if ($date1 and $date2) {
             $protokols = $protokols
                 ->where('protokol_dt', '>=', "$date1 00:00:00")
@@ -459,7 +464,8 @@ class CustomerController extends AdminController
     private function getXml2Fgis($protokol, $package_number, $package_update = false)
     {
         $result = '';
-        Log::info("Export fgis. Package number: $package_number Protokol num: {$protokol->protokol_num} Data: ".json_encode($protokol->toArray()));
+        dd(json_encode($protokol->toArray()));
+//        Log::info("Export fgis. Package number: $package_number Protokol num: {$protokol->protokol_num} Data: ".json_encode($protokol->toArray()));
 
                 $pressure = $this->getPressure($protokol->customer->id, date('Y-m-d', strtotime($protokol->protokol_dt)));
 
