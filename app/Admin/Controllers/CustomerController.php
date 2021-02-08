@@ -562,7 +562,7 @@ class CustomerController extends AdminController
                             ->update(['exported' => $package_number]);
                     }
                     catch (\Throwable $exception) {
-                        Log::error("Export fgis. Error update protokol: {$protokol->id} with $package_number number.");
+                        Log::error("Export fgis. Error update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
                     }
         }
         return $result;
