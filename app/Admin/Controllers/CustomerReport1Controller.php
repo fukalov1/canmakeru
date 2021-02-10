@@ -236,7 +236,7 @@ class CustomerReport1Controller extends AdminController
             'Content-Type' => 'application/vnd.ms-excel',
             'Content-Disposition' => "attachment; filename='$filename'"
         ];
-        return response()->download(storage_path($filename), $filename, $headers);
+        return response()->download(storage_path($filename), $filename, $headers)->deleteFileAfterSend();
 
 
     }
