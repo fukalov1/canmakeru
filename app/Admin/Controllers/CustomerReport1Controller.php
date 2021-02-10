@@ -16,7 +16,8 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 //use Maatwebsite\Excel\Facades\Excel;
 use App\Admin\Extensions\ExcelExpoter;
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class CustomerReport1Controller extends AdminController
 {
@@ -161,9 +162,19 @@ class CustomerReport1Controller extends AdminController
         $start = $params['date']['start'];
         $end = $params['date']['end'];
 
-        $filename = time().'.csv';
-        $output = "Код партнера;Поверитель;Кол-во поверок;Всего актов;Пригодных;Непригодных;Испорченных\n";
+        $filename = time().'.xlsx';
+//        $output = "Код партнера;Поверитель;Кол-во поверок;Всего актов;Пригодных;Непригодных;Испорченных\n";
         try {
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            $sheet->setCellValue('A1', 'Код партнера');
+            $sheet->setCellValue('B1', 'Поверитель');
+            $sheet->setCellValue('C1', 'Кол-во поверок');
+            $sheet->setCellValue('D1', 'Всего актов');
+            $sheet->setCellValue('E1', 'Пригодных');
+            $sheet->setCellValue('F1', 'Непригодных');
+            $sheet->setCellValue('G1', 'Испорченных');
+
 //            if ($fh = fopen(storage_path('admin') . $filename, "w+")) {
 //                $acts = \DB::select("select customers.name, (select count(id) from acts where customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_count, (select count(id) from acts where type='пригодны' and customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_good, (select count(id) from acts where type='непригодны' and customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_bad, (select count(id) from acts where type='испорчен' and customer_id=customers.id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой') act_brak from customers, acts where customers.id=acts.customer_id and acts.date>=\"2021-01-01 00:00:00\" and acts.date<=\"2021-01-03 23:59:59\" and acts.name<>'Нулевой' group by 'customers.id'");
                 $customers = DB::table('customers')
@@ -172,6 +183,7 @@ class CustomerReport1Controller extends AdminController
                     ->whereBetween('date', [$start." 00:00:00", $end." 23:59:59"])
                     ->groupBy('customers.id')->get();
 
+                $i=2;
 //                dd($customers, $start." 00:00:00", $end." 23:59:59");
                 foreach ($customers as $item) {
 
@@ -199,16 +211,21 @@ class CustomerReport1Controller extends AdminController
                         ->where('type', 'испорчен')
                         ->get()->count();
 
-                    $output .= "{$item->partner_code};{$item->name};$protokols;{$item->count};{$good};{$bad};{$brak}\n";
+                    $sheet->setCellValue('A'.$i, $item->partner_code);
+                    $sheet->setCellValue('B'.$i, $item->name);
+                    $sheet->setCellValue('C'.$i, $protokols);
+                    $sheet->setCellValue('D'.$i, $item->count);
+                    $sheet->setCellValue('E'.$i, $good);
+                    $sheet->setCellValue('F'.$i, $bad);
+                    $sheet->setCellValue('G'.$i, $brak);
 
+//                    $output .= "{$item->partner_code};{$item->name};$protokols;{$item->count};{$good};{$bad};{$brak}\n";
+                    $i++;
                 }
-//                fwrite($fh, $output);
-                // This logic get the columns that need to be exported from the table data
-//                $rows = collect($this->getData())->map(function ($item) {
-//                    return $item;
-//                });
-//                fclose($fh);
-//            }
+
+            $writer = new Xlsx($spreadsheet);
+            $writer->save(storage_path($filename));
+
         }
         catch (\Throwable $exception) {
             dd($exception->getMessage());
@@ -216,11 +233,10 @@ class CustomerReport1Controller extends AdminController
 //        dd($output. 'test');
 
         $headers = [
-            'Content-Encoding'    => 'UTF-8',
-            'Content-Type'        => 'text/csv;charset=UTF-8',
-            'Content-Disposition' => "attachment; filename=\"$filename\"",
+            'Content-Type' => 'application/vnd.ms-excel',
+            'Content-Disposition' => "attachment; filename='$filename'"
         ];
-        response(rtrim($output, "\n"), 200, $headers)->send();
+        return response()->download(storage_path($filename), $filename, $headers);
 
 
     }
