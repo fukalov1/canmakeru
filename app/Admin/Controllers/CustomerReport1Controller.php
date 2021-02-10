@@ -40,12 +40,7 @@ class CustomerReport1Controller extends AdminController
         else {
             $grid = new Grid(new Customer);
 
-            $grid->header(function ($query) {
-                if (isset($_SERVER['QUERY_STRING'])) {
-                    $url = $_SERVER['QUERY_STRING'];
-                    return "<div style='padding: 10px;'><a href=\"/admin/customer_report1/export?$url\" title='экспорт в Excel' target='_blank'>Экспорт в Excel</a> </div>";
-                }
-            });
+
 
 //        $grid->export(function ($export) {
 //            $export->filename('Filename.csv');
