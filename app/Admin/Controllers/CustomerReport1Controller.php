@@ -35,21 +35,24 @@ class CustomerReport1Controller extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new Customer);
+        if ( request()->input('acts'))
+            return $this->export();
+        else {
+            $grid = new Grid(new Customer);
 
-        $grid->header(function ($query) {
-            if (isset($_SERVER['QUERY_STRING'])) {
-                $url = $_SERVER['QUERY_STRING'];
-                return "<div style='padding: 10px;'><a href=\"/admin/customer_report1/export?$url\" title='экспорт в Excel' target='_blank'>Экспорт в Excel</a> </div>";
-            }
-        });
+            $grid->header(function ($query) {
+                if (isset($_SERVER['QUERY_STRING'])) {
+                    $url = $_SERVER['QUERY_STRING'];
+                    return "<div style='padding: 10px;'><a href=\"/admin/customer_report1/export?$url\" title='экспорт в Excel' target='_blank'>Экспорт в Excel</a> </div>";
+                }
+            });
 
 //        $grid->export(function ($export) {
 //            $export->filename('Filename.csv');
 //            $export->originalValue(['name', 'partner_code', 'protokols']);
 //        });
 
-        $grid->exporter(new ExcelExpoter());
+            $grid->exporter(new ExcelExpoter());
 //        $grid->export(function ($export) {
 //
 //            $export->filename('Filename.csv');
@@ -57,18 +60,18 @@ class CustomerReport1Controller extends AdminController
 //
 //        });
 
-        $grid->filter(function($filter){
-            // Remove the default id filter
-            $filter->disableIdFilter();
+            $grid->filter(function ($filter) {
+                // Remove the default id filter
+                $filter->disableIdFilter();
 
-            // Add a column filter
-            $filter->like('name', 'ФИО');
-            $filter->like('code', 'Код клиента');
-            $filter->between('acts.date', 'Период')->datetime();
+                // Add a column filter
+                $filter->like('name', 'ФИО');
+                $filter->like('code', 'Код клиента');
+                $filter->between('acts.date', 'Период')->datetime();
 
-        });
+            });
 
-        $grid->disableActions();
+            $grid->disableActions();
 
 //        if (isset($_SERVER['QUERY_STRING'])) {
 //
@@ -82,8 +85,8 @@ class CustomerReport1Controller extends AdminController
 //        }
 
 
-        $grid->column('partner_code', __('Код партнера'));
-        $grid->column('name', 'ФИО');
+            $grid->column('partner_code', __('Код партнера'));
+            $grid->column('name', 'ФИО');
 //        $grid->protokols('Кол-во поверок')->display(function ($protokols) {
 //            if (!!request('protokols')) {
 //                $start = (request('acts')['date']['start']);
@@ -95,21 +98,22 @@ class CustomerReport1Controller extends AdminController
 //            }
 //            return count($protokols);
 //        });
-        $grid->act_count('Кол-во актов')->display(function ($id) {
-            return Customer::find($this->id)->acts()->count();
-        });
-        $grid->act_good('Пригодных')->display(function () {
-            return  Customer::find($this->id)->acts()->where('type', 'пригодны')->count();
-        });
-        $grid->act_bad('Непригодных')->display(function () {
-            return Customer::find($this->id)->acts()->where('type', 'непригодны')->count();
-        });
-        $grid->act_brak('Испорченных')->display(function () {
-            return Customer::find($this->id)->acts()->where('type', 'испорчен')->count();
-        });
+            $grid->act_count('Кол-во актов')->display(function ($id) {
+                return Customer::find($this->id)->acts()->count();
+            });
+            $grid->act_good('Пригодных')->display(function () {
+                return Customer::find($this->id)->acts()->where('type', 'пригодны')->count();
+            });
+            $grid->act_bad('Непригодных')->display(function () {
+                return Customer::find($this->id)->acts()->where('type', 'непригодны')->count();
+            });
+            $grid->act_brak('Испорченных')->display(function () {
+                return Customer::find($this->id)->acts()->where('type', 'испорчен')->count();
+            });
 
 
-        return $grid;
+            return $grid;
+        }
     }
 
     /**
@@ -157,7 +161,6 @@ class CustomerReport1Controller extends AdminController
 
     public function export()
     {
-
         $params = request()->input('acts');
         $start = $params['date']['start'];
         $end = $params['date']['end'];
@@ -224,7 +227,7 @@ class CustomerReport1Controller extends AdminController
                 }
 
             $writer = new Xlsx($spreadsheet);
-            $writer->save(storage_path($filename));
+            $writer->save(public_path('temp/'.$filename));
 
         }
         catch (\Throwable $exception) {
@@ -236,7 +239,8 @@ class CustomerReport1Controller extends AdminController
             'Content-Type' => 'application/vnd.ms-excel',
             'Content-Disposition' => "attachment; filename='$filename'"
         ];
-        return response()->download(storage_path($filename), $filename, $headers)->deleteFileAfterSend();
+        return "<a href='/temp/$filename' target='_blank'>Скачать файл Excel</a> / <a href='/admin/customer_report1'>назад</a>";
+//        return response()->download(storage_path($filename), $filename, $headers)->deleteFileAfterSend();
 
 
     }

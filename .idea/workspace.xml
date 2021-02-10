@@ -93,7 +93,9 @@
       <change beforePath="$PROJECT_DIR$/../artisan" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerReport1Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerReport1Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/storage" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Post/Slave.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/CustomerChartController.php" beforeDir="false" />
