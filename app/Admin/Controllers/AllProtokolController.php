@@ -42,7 +42,7 @@ class AllProtokolController extends AdminController
             // Add a column filter
             $filter->like('customer.name', 'ФИО');
             $filter->like('address', 'Комментарий');
-            $filter->like('customer.code', 'Код клиента');
+            $filter->like('customer.code', 'ID поверителя');
             $filter->like('customer.partner_code', 'Код партнера');
             $filter->like('customer.email', 'E-mail');
             $filter->like('act.number_act', 'Номер акта');

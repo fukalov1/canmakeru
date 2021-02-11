@@ -36,7 +36,7 @@ class CustomerReportController extends AdminController
 
             // Add a column filter
             $filter->like('name', 'ФИО');
-            $filter->like('code', 'Код клиента');
+            $filter->like('code', 'ID поверителя');
             $filter->between('protokols.protokol_dt', 'Период')->date();
 
         });
