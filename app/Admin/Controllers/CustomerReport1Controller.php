@@ -66,7 +66,8 @@ class CustomerReport1Controller extends AdminController
 
             });
 
-            $grid->disableActions();
+
+                $grid->disableActions();
 
 //        if (isset($_SERVER['QUERY_STRING'])) {
 //
