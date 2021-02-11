@@ -50,7 +50,7 @@ class CustomerController extends AdminController
             // Add a column filter
             $filter->like('name', 'ФИО');
             $filter->like('comment', 'Комментарий');
-            $filter->like('code', 'Код клиента');
+            $filter->like('code', 'ID поверителя');
             $filter->like('partner_code', 'Код партнера');
             $filter->like('email', 'E-mail');
             $filter->like('acts.number_act', 'Номер акта');
@@ -86,7 +86,7 @@ class CustomerController extends AdminController
             });
         }
 
-        $grid->column('code', __('UID'));
+        $grid->column('code', __('ID поверителя'));
         $grid->column('partner_code', __('Код партнера'))->sortable();
         $grid->name('ФИО')->display(function () {
             return '<a href="/admin/acts?set='.$this->id.'" title="Акты с поверками клиента '.$this->name.'">'.$this->name.'</a>';
@@ -130,7 +130,7 @@ class CustomerController extends AdminController
         $show = new Show(Customer::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('code', __('Код'));
+        $show->field('code', __('ID поверителя'));
         $show->field('name', __('ФИО'));
         $show->field('comment', __('Комментарий'));
         $show->field('enabled', __('Активен'));
@@ -163,7 +163,7 @@ class CustomerController extends AdminController
         $form = new Form(new Customer());
 
         $form->tab('Данные партнера', function ($form) {
-            $form->text('code', __('Код'))->rules(function ($form) {
+            $form->text('code', __('ID поверителя'))->rules(function ($form) {
                 if (!$id = $form->model()->id) {
                     return 'unique:customers';
                 }
