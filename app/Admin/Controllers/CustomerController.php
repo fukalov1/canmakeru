@@ -427,6 +427,7 @@ class CustomerController extends AdminController
             try {
                 Protokol::whereIn($ids)
                     ->update(['exported' => $package_number]);
+                Log::error("Export fgis. Success update protokols for $package_number number. ");
             } catch (\Throwable $exception) {
                 Log::error("Export fgis. Error update protokols for $package_number number. Message: ".$exception->getMessage());
             }

@@ -93,59 +93,7 @@
       <change beforePath="$PROJECT_DIR$/../artisan" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/canmakeru1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/canmakeru1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Actions/Protokol/BatchClearExport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerChartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerChartController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/MyDashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/MyDashboard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/routes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/protokol:delete_dublicates.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Customer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MainController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProtokolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProtokolController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Protokol.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Protokol.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_09_06_171852_customers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_06_080648_protokols.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_12_085118_create_slave_customers.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_12_085118_create_slave_customers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/photos/meter_5bf693b525f64.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/photos/protokol1_5bf693b525f64.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/photos/protokol_5bf693b525f64.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/up.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/up.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/upl.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/upl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Customer/CustomerRoom.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer/CustomerRoom.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Customer/DataGrid.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer/DataGrid.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Customer/ProfileUser.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer/ProfileUser.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/passwords.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/passwords.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/serviceDashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/serviceDashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/showResult.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/showResult.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Post/Slave.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/CustomerChartController.php" beforeDir="false" />
@@ -2585,7 +2533,7 @@
       <workItem from="1612437133163" duration="22224000" />
       <workItem from="1612711234305" duration="9507000" />
       <workItem from="1613071976643" duration="2376000" />
-      <workItem from="1613115013516" duration="1650000" />
+      <workItem from="1613115013516" duration="1814000" />
     </task>
     <servers />
   </component>
