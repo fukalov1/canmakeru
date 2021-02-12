@@ -374,7 +374,7 @@ class CustomerController extends AdminController
                 ++$i;
             };
 
-            $this->updatePackageNumber($package_number, $package_update, $ids);
+            $this->updateProtokolPackage($package_number, $package_update, $ids);
 
             if (file_exists(storage_path('app/temp/') . "$file_name.zip")) {
                 Log::info('Export fgis. Unlink file: '. $file_name . "zip");
@@ -411,7 +411,7 @@ class CustomerController extends AdminController
                 }
             }
 
-            $this->updatePackageNumber($package_number, $package_update, $ids);
+            $this->updateProtokolPackage($package_number, $package_update, $ids);
 
             $result .= $protokol_footer;
             Storage::disk('local')->put('/temp/' . $file_name . ".xml", $result);
