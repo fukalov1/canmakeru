@@ -382,7 +382,6 @@ class CustomerController extends AdminController
                 try {
                     Protokol::whereIn($ids)
                         ->update(['exported' => $package_number]);
-//                    Log::info("Export fgis. Update protokol: {$protokol->id} ({$protokol->protokol_num}) with $package_number number.");
                 } catch (\Throwable $exception) {
                     Log::error("Export fgis. Error update protokols for $package_number number.");
                 }
@@ -420,7 +419,20 @@ class CustomerController extends AdminController
             // подготовливаем xml по результатам поверок
             foreach ($protokols as $protokol) {
                 $result .= $this->getXml2Fgis($protokol, $package_number, $package_update);
+                if ($result) {
+                    $ids[] = $protokol->id;
+                }
             }
+
+            if ($package_update) {
+                try {
+                    Protokol::whereIn($ids)
+                        ->update(['exported' => $package_number]);
+                } catch (\Throwable $exception) {
+                    Log::error("Export fgis. Error update protokols for $package_number number.");
+                }
+            }
+
             $result .= $protokol_footer;
             Storage::disk('local')->put('/temp/' . $file_name . ".xml", $result);
 
