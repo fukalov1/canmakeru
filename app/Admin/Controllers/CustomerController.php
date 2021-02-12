@@ -348,18 +348,14 @@ class CustomerController extends AdminController
 
         Log::info('Export fgis. Select records: '. $protokols->count());
 
+        $ids = [];
         $xml_records = config('xml_records', 4300);
         if ($protokols->count() >= $xml_records) {
-
             $this->refreshDir(storage_path('app/temp/'.$package_number));
 
-//            $protokols = $protokols->chunk($xml_records)->all();
-
-            $ids = [];
             $i = 1;
             $result = '';
             $data = $protokols->chunk($xml_records);
-//            $protokols->chunk($xml_records, function ($items) use ($package_number, $package_update, $result, $protokol_head, $protokol_footer, $file_name, $i) {
             foreach ($data as $items) {
                 $result = $protokol_head;
                 // подготовливаем xml по результатам поверок
@@ -378,16 +374,7 @@ class CustomerController extends AdminController
                 ++$i;
             };
 
-            if ($package_update) {
-                try {
-                    Protokol::whereIn($ids)
-                        ->update(['exported' => $package_number]);
-                } catch (\Throwable $exception) {
-                    Log::error("Export fgis. Error update protokols for $package_number number.");
-                }
-            }
-
-//            dd($i);
+            $this->updatePackageNumber($package_number, $package_update, $ids);
 
             if (file_exists(storage_path('app/temp/') . "$file_name.zip")) {
                 Log::info('Export fgis. Unlink file: '. $file_name . "zip");
@@ -424,14 +411,7 @@ class CustomerController extends AdminController
                 }
             }
 
-            if ($package_update) {
-                try {
-                    Protokol::whereIn($ids)
-                        ->update(['exported' => $package_number]);
-                } catch (\Throwable $exception) {
-                    Log::error("Export fgis. Error update protokols for $package_number number.");
-                }
-            }
+            $this->updatePackageNumber($package_number, $package_update, $ids);
 
             $result .= $protokol_footer;
             Storage::disk('local')->put('/temp/' . $file_name . ".xml", $result);
@@ -439,6 +419,19 @@ class CustomerController extends AdminController
             return response()->download(storage_path('app/temp/')."$file_name.xml", "$file_name.xml", $headers);
         }
 
+    }
+
+    private function updateProtokolPackage($package_number, $package_update, $ids)
+    {
+        if ($package_update) {
+            try {
+                Protokol::whereIn($ids)
+                    ->update(['exported' => $package_number]);
+            } catch (\Throwable $exception) {
+                Log::error("Export fgis. Error update protokols for $package_number number.");
+            }
+        }
+        return true;
     }
 
     private function refreshDir($dir) {
