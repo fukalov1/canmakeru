@@ -188,9 +188,10 @@ class CustomerReport1Controller extends AdminController
 
                     $acts = Act::where('customer_id', $item->id)
                         ->whereBetween('date', [$start, $end])
-                        ->with(['meters' => function($q) use ($start, $end) {
-                            $q->whereBetween('protokol_dt', [$start." 00:00:00", $end." 23:59:59"]);
-                        }])
+//                        ->with(['meters' => function($q) use ($start, $end) {
+//                            $q->whereBetween('protokol_dt', [$start." 00:00:00", $end." 23:59:59"]);
+//                        }])
+                        ->with('meters')
                         ->get();
                     $protokols = 0;
                     foreach ($acts as $act) {
