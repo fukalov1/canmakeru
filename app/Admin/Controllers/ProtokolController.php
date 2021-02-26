@@ -65,6 +65,7 @@ class ProtokolController extends AdminController
             $filter->like('protokol_num', 'Номер свидетельства');
             $filter->between('protokol_dt', 'Дата свидетельства')->date();
             $filter->like('exported', 'Пакет выгрузки')->default(0);
+            $filter->like('regNumber', 'Регистрационный номер');
         });
 
         if (Admin::user()->roles[0]->slug!='administrator') {

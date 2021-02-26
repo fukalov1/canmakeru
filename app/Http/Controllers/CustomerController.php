@@ -46,6 +46,7 @@ class CustomerController extends Controller
     {
         $customer_id = $request->customer_id;
         if ($customer_id) {
+
             return $this->customer->getProtokols($customer_id);
         }
         else {

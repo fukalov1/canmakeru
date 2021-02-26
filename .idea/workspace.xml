@@ -6,6 +6,19 @@
       <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/css/chunk-vendors.2284e9ba.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/favicon.ico" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Cinema/backend/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/js/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/js/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/about.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/customer.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/docs.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/info.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/layouts/footer.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/layouts/header.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/layouts/layout.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/layouts/scripts.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/layouts/styles.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lk.rkc-ks.ru/resources/views/news.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.editorconfig" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.env.example" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitattributes" beforeDir="false" />
@@ -93,7 +106,14 @@
       <change beforePath="$PROJECT_DIR$/../artisan" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/app.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../bootstrap/cache/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/CustomerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/AllProtokolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/AllProtokolController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ProtokolController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Customer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Customer/DataGrid.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer/DataGrid.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Customer/DataGridAct.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Customer/DataGridAct.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Post/Slave.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Actions/Protokol/BatchClearExport.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../canmakeru1/app/Admin/Controllers/CustomerChartController.php" beforeDir="false" />
@@ -2533,7 +2553,19 @@
       <workItem from="1612437133163" duration="22224000" />
       <workItem from="1612711234305" duration="9507000" />
       <workItem from="1613071976643" duration="2376000" />
-      <workItem from="1613115013516" duration="2210000" />
+      <workItem from="1613115013516" duration="3243000" />
+      <workItem from="1613194214035" duration="1328000" />
+      <workItem from="1613198092278" duration="1817000" />
+      <workItem from="1613213153917" duration="8000" />
+      <workItem from="1613216642210" duration="707000" />
+      <workItem from="1613280246138" duration="4248000" />
+      <workItem from="1613470814517" duration="634000" />
+      <workItem from="1613482548021" duration="613000" />
+      <workItem from="1613651527207" duration="1569000" />
+      <workItem from="1613746200000" duration="1033000" />
+      <workItem from="1613793894074" duration="614000" />
+      <workItem from="1614180901061" duration="44000" />
+      <workItem from="1614318447942" duration="3143000" />
     </task>
     <servers />
   </component>

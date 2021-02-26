@@ -226,7 +226,7 @@
         data() {
             return {
                 columns: ['protokol_num','protokol_dt','pin','siType','waterType','regNumber','serialNumber','checkMethod','miowner','nextTest','type','protokol_photo'],
-                column_names: ['Номер св-ва','Дата поверки','Пин-код', 'Тип СИ', 'Тип воды', 'Регистр. номер', 'Заводской номер', 'Методика поверки', 'Владелец','МПИ','Результат', 'Фото поверки'],
+                column_names: ['Номер св-ва','Дата поверки','Пин-код', 'Тип СИ', 'Тип воды', 'Регистр. номер', 'Заводской номер', 'Методика поверки', 'Владелец','Дествительно до','Результат', 'Фото поверки'],
                 sort_columns: {fld: null, type: ''},
                 data: [],
                 page: 1,

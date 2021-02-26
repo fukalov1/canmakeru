@@ -11,6 +11,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Support\Facades\DB;
 
 class Customer extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -59,7 +60,10 @@ class Customer extends Model implements AuthenticatableContract, CanResetPasswor
 //            $data =  $this->find($customer_id)->protokols->with('act');
 //            $data =  Protokol::with('act')->where('customer_id', $customer_id)->get();
             $data =  Protokol::join('acts', 'acts.id', 'protokols.act_id')
-                ->select('acts.id', 'acts.type', 'acts.address', 'protokols.*')
+                ->select('acts.id', 'acts.type', 'acts.address', 'protokols.id','protokols.meter_photo',
+                    DB::raw('date_format(protokols.nextTest,\'%Y-%m-%d\') as nextTest'),
+                    DB::raw('date_format(protokols.protokol_dt,\'%Y-%m-%d\') as protokol_dt'),'protokols.protokol_num','protokols.protokol_photo','protokols.protokol_photo1',
+                    'protokols.regNumber','protokols.serialNumber','protokols.siType','protokols.waterType')
                 ->where('protokols.customer_id', $customer_id)->get();
         }
         return json_encode(['data' => $data, 'customer_id' => $customer_id]);

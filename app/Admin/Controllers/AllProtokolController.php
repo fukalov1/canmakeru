@@ -47,6 +47,7 @@ class AllProtokolController extends AdminController
             $filter->like('customer.email', 'E-mail');
             $filter->like('act.number_act', 'Номер акта');
             $filter->like('protokol_num', 'Номер свидетельства');
+            $filter->like('regNumber', 'Регистрационный номер');
             $filter->like('serialNumber', 'Заводской номер');
             $filter->equal('act.type')->radio([
                 ''   => 'Все',

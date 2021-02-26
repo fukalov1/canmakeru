@@ -366,7 +366,7 @@
                 this.photo = str;
             },
             showAct(item) {
-                document.location = `/up?id=${item.number_act}&pin=${item.pin}`
+                window.open(`/up?id=${item.number_act}&pin=${item.pin}`, '_blank');
             },
             exportPDF(item) {
                 document.location = `/data/act/pdf?id=${item.number_act}&pin=${item.pin}`
